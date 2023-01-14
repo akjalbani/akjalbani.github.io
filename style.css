@@ -37,5 +37,6 @@ section {
 }
 /* Add some styling for the header image */
 .header-img {
-  width: 50%;
+  width: 100%;
+  hieght = 10%
 }

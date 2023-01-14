@@ -1,0 +1,41 @@
+/* Add some basic CSS styling */
+body {
+  font-family: Arial, sans-serif;
+}
+h1, h2, h3 {
+  color: #0071C5;
+}
+a {
+  color: #0071C5;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+/* Add a container to center the content on the page */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+/* Add a navigation bar */
+nav {
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+nav li {
+  display: inline-block;
+  margin-right: 10px;
+}
+/* Add some spacing to the sections */
+section {
+  padding: 50px 0;
+}
+/* Add some styling for the header image */
+.header-img {
+  width: 100%;
+}

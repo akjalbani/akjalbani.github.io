@@ -77,4 +77,4 @@ Visit: `https://akjalbani.github.io`
 
 ## 📄 License
 
-© 2025 Dr. Akhtar Ali Jalbani. All rights reserved.
+© 2026 Dr. Akhtar Ali Jalbani. All rights reserved.

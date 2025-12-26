@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Aneela Yasmin | Teaching Portfolio</title>
+  <meta name="description" content="Dr. Aneela Yasmin — Teaching Portfolio (Chemistry / Biochemistry / Cell Biology). Evidence-based pedagogy, curriculum innovation, student feedback, SoTL projects, and academic service." />
+  <meta name="keywords" content="Aneela Yasmin, Teaching Portfolio, Chemistry, Biochemistry, Cell Biology, SoTL, Curriculum Design, La Trobe University" />
+  <meta name="author" content="Dr. Aneela Yasmin" />
+
+  <meta property="og:title" content="Dr. Aneela Yasmin | Teaching Portfolio" />
+  <meta property="og:description" content="Evidence of teaching effectiveness, curriculum innovation, and scholarship of teaching and learning (SoTL)." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-foreground: #ffffff;
+      --background: #0d0c14;
+      --foreground: #f5f5f5;
+      --card: #12111c;
+      --muted-foreground: #a0a0a0;
+      --border: #2a2a3a;
+      --radius: 0.65rem;
+      --accent: #22c55e;
+      --accent2: #f97316;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--foreground); line-height: 1.6; }
+    .font-poppins { font-family: 'Poppins', sans-serif; }
+    .container { width: 100%; margin: 0 auto; padding: 0 1rem; }
+    @media (min-width: 640px) { .container { padding: 0 1.5rem; } }
+    @media (min-width: 1024px) { .container { padding: 0 2rem; max-width: 1280px; } }
+
+    html { scroll-behavior: smooth; }
+    [data-lucide] { width: 22px; height: 22px; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background-color: rgba(13, 12, 20, 0.8);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    nav h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+    nav .nav-links { display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: flex-end; }
+    nav .nav-links a {
+      font-size: 0.875rem;
+      color: var(--foreground);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      opacity: 0.9;
+    }
+    nav .nav-links a:hover { color: var(--primary); opacity: 1; }
+
+    .hero {
+      position: relative;
+      padding: 5rem 0 3.5rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(1000px 500px at 20% 10%, rgba(99, 102, 241, 0.35), transparent 60%),
+                  radial-gradient(900px 500px at 80% 30%, rgba(34, 197, 94, 0.20), transparent 60%),
+                  radial-gradient(900px 500px at 50% 90%, rgba(249, 115, 22, 0.18), transparent 55%);
+      filter: blur(0px);
+      z-index: 0;
+    }
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(13, 12, 20, 0.55), rgba(13, 12, 20, 0.95));
+      z-index: 0;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--muted-foreground);
+      margin-bottom: 0.75rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(18, 17, 28, 0.6);
+      color: var(--muted-foreground);
+      font-size: 0.825rem;
+      margin: 0.25rem 0.35rem 0 0;
+      white-space: nowrap;
+    }
+    .hero-title {
+      font-size: 3rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 640px) {
+      .hero-title { font-size: 2.3rem; }
+    }
+    .hero-description {
+      color: var(--muted-foreground);
+      font-size: 1.05rem;
+      max-width: 60ch;
+      margin-bottom: 1.5rem;
+    }
+    .hero-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.05rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.2s ease, border 0.2s ease, color 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .btn:active { transform: scale(0.99); }
+    .btn-primary { background: var(--primary); color: var(--primary-foreground); }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-outline { background: transparent; border-color: var(--border); color: var(--foreground); }
+    .btn-outline:hover { border-color: rgba(99, 102, 241, 0.6); color: var(--primary); }
+
+    .hero-card {
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 0.2rem);
+      background: rgba(18, 17, 28, 0.75);
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .hero-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.75rem; }
+    .meta-row { display: flex; gap: 0.65rem; align-items: flex-start; margin-bottom: 0.75rem; color: var(--muted-foreground); font-size: 0.95rem; }
+    .meta-row i { margin-top: 0.15rem; }
+    .quick-links { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    section { padding: 4rem 0; }
+    .section-alt { background: rgba(18, 17, 28, 0.35); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section-header { margin-bottom: 1.5rem; }
+    .section-label { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; color: var(--muted-foreground); }
+    .section-title { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-top: 0.35rem; }
+    @media (max-width: 640px) { .section-title { font-size: 1.65rem; } }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.35rem; }
+    .card p { color: var(--muted-foreground); }
+    .card .role { color: var(--foreground); opacity: 0.9; font-weight: 700; margin-bottom: 0.35rem; }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    @media (max-width: 900px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .kpi-row { grid-template-columns: 1fr; } }
+    .kpi {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(18, 17, 28, 0.55);
+      padding: 1rem;
+    }
+    .kpi .num { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.03em; }
+    .kpi .label { color: var(--muted-foreground); font-size: 0.9rem; margin-top: 0.25rem; }
+
+    .tag-row { margin-top: 0.75rem; display: flex; flex-wrap: wrap; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted-foreground);
+      margin: 0.35rem 0.45rem 0 0;
+      background: rgba(13, 12, 20, 0.35);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--card);
+    }
+    .table th, .table td {
+      padding: 0.9rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 0.95rem;
+    }
+    .table th {
+      text-align: left;
+      color: var(--foreground);
+      font-weight: 800;
+      background: rgba(18, 17, 28, 0.75);
+    }
+    .table td { color: var(--muted-foreground); }
+    .table tr:last-child td { border-bottom: none; }
+
+    .quote {
+      border-left: 3px solid var(--primary);
+      padding-left: 1rem;
+      margin-top: 0.85rem;
+      color: var(--muted-foreground);
+      font-style: italic;
+    }
+
+    .contact {
+      padding-bottom: 3rem;
+    }
+    .contact-content {
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 0.2rem);
+      background: rgba(18, 17, 28, 0.65);
+      padding: 2rem 1.25rem;
+    }
+    .contact-content h2 { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .contact-description { color: var(--muted-foreground); max-width: 70ch; margin: 0 auto 1.25rem; }
+    .contact-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    .footer { margin-top: 1.5rem; color: var(--muted-foreground); font-size: 0.9rem; }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="container">
+      <h1 class="font-poppins">Dr. Aneela Yasmin</h1>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#sotl">SoTL</a>
+        <a href="#development">Development</a>
+        <a href="#service">Service</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="overview">
+    <div class="hero-bg"></div>
+    <div class="hero-gradient"></div>
+
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <p class="hero-label font-poppins">
+            <i data-lucide="flame"></i>
+            Teaching Portfolio • Chemistry / Biochemistry / Cell Biology
+          </p>
+
+          <h2 class="hero-title font-poppins">Burning and Illuminating<br/>with Well-being</h2>
+
+          <p class="hero-description">
+            I design and deliver evidence-based, inclusive, and forward-looking learning experiences in chemistry and biology-related disciplines.
+            My practice integrates structured scaffolding, collaborative learning, and student well-being, aligned to teaching excellence and the Scholarship of Teaching and Learning (SoTL).
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#philosophy" class="btn btn-primary font-poppins"><i data-lucide="sparkles"></i> Explore Portfolio</a>
+            <a href="#contact" class="btn btn-outline"><i data-lucide="send"></i> Contact</a>
+          </div>
+
+          <div class="tag-row">
+            <span class="pill"><i data-lucide="graduation-cap"></i> Teaching Focused (Level B)</span>
+            <span class="pill"><i data-lucide="layers"></i> Blended & Online Delivery</span>
+            <span class="pill"><i data-lucide="activity"></i> Student Feedback → Improvement</span>
+            <span class="pill"><i data-lucide="microscope"></i> Lab-based Teaching</span>
+          </div>
+
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="num">2022–2025</div>
+              <div class="label">Student feedback & reflective improvement</div>
+            </div>
+            <div class="kpi">
+              <div class="num">2024–2025</div>
+              <div class="label">SoTL & education innovation projects</div>
+            </div>
+            <div class="kpi">
+              <div class="num">+12%</div>
+              <div class="label">Student satisfaction uplift (example initiative)</div>
+            </div>
+            <div class="kpi">
+              <div class="num">85%</div>
+              <div class="label">EAL learners reported improved comprehension</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h3 class="font-poppins">Portfolio Snapshot</h3>
+
+          <div class="meta-row">
+            <i data-lucide="building-2"></i>
+            <div>
+              <div style="color: var(--foreground); font-weight: 800;">Candidate: Lecturer (Teaching Focused)</div>
+              <div>Department of Biochemistry & Chemistry</div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <i data-lucide="calendar"></i>
+            <div>
+              <div style="color: var(--foreground); font-weight: 800;">Portfolio Date</div>
+              <div>December 2025</div>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <i data-lucide="target"></i>
+            <div>
+              <div style="color: var(--foreground); font-weight: 800;">Core Focus</div>
+              <div>Evidence-based pedagogy, curriculum innovation, inclusive learning, and SoTL.</div>
+            </div>
+          </div>
+
+          <div class="quick-links">
+            <a class="pill" href="#curriculum"><i data-lucide="book-open"></i> Unit Design</a>
+            <a class="pill" href="#feedback"><i data-lucide="message-square"></i> Feedback</a>
+            <a class="pill" href="#sotl"><i data-lucide="beaker"></i> SoTL</a>
+            <a class="pill" href="#service"><i data-lucide="users"></i> Service</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING PHILOSOPHY -->
+  <section id="philosophy" class="section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label font-poppins">Teaching Philosophy</p>
+        <h2 class="section-title font-poppins">Three Pillars: Burning • Illuminating • Well-being</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="flame"></i> Burning</h3>
+          <p class="role">Evidence-based pedagogy & curriculum design</p>
+          <p>
+            I use research-informed scaffolding to teach complex scientific concepts, drawing on Bloom’s Taxonomy and cognitive load theory.
+            I sequence and chunk learning, apply formative assessment with timely feedback, and integrate digital tools and simulations to make abstract processes tangible.
+          </p>
+          <div class="tag-row">
+            <span class="tag"><i data-lucide="check-circle-2"></i> Scaffolding</span>
+            <span class="tag"><i data-lucide="list-checks"></i> Formative feedback</span>
+            <span class="tag"><i data-lucide="monitor-smartphone"></i> Simulations & digital tools</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="lightbulb"></i> Illuminating</h3>
+          <p class="role">Collaboration & reflective learning</p>
+          <p>
+            I design learning as a social and reflective process through peer instruction, cooperative problem-solving, and mentoring.
+            My teaching aims to build confident, independent learners who can contribute to scientific and community discourse.
+          </p>
+          <div class="quote">“You encourage us to explain things, so we know what we are learning.”</div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="heart-handshake"></i> Well-being</h3>
+          <p class="role">Inclusive, supportive & holistic education</p>
+          <p>
+            I embed inclusivity and well-being by connecting science to real-world contexts (e.g., nutrition, metabolic health, ethical implications).
+            I use accessible resources, supportive check-ins, and participation strategies that reduce barriers for diverse learners.
+          </p>
+          <div class="tag-row">
+            <span class="tag"><i data-lucide="accessibility"></i> UDL-aligned</span>
+            <span class="tag"><i data-lucide="smile"></i> Student confidence</span>
+            <span class="tag"><i data-lucide="route"></i> Real-world relevance</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="search"></i> Scholarship of Teaching & Learning</h3>
+          <p class="role">Inquiry-driven improvement</p>
+          <p>
+            I gather and analyse feedback, engagement data, and learning outcomes to evaluate and improve teaching.
+            Recent projects include UDL readiness mapping, equitable collaboration, LLN embedding, and AI-mediated creativity in science education.
+          </p>
+          <div class="tag-row">
+            <span class="tag"><i data-lucide="bar-chart-3"></i> Learning analytics</span>
+            <span class="tag"><i data-lucide="scroll-text"></i> Reflective practice</span>
+            <span class="tag"><i data-lucide="sparkles"></i> Innovation & evaluation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRICULUM DESIGN -->
+  <section id="curriculum">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label font-poppins">Curriculum Design & Innovation</p>
+        <h2 class="section-title font-poppins">Sample Unit: Biochemistry & Genetics (Blended Delivery)</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="book-open"></i> Unit Overview</h3>
+          <p>
+            This unit introduces core principles of biochemistry and genetics with practical application and interdisciplinary connection.
+            Students explore biomolecules, metabolic pathways, gene expression, and inheritance through a blended approach using theory, virtual labs,
+            case-based learning, and collaborative projects.
+          </p>
+          <div class="tag-row">
+            <span class="tag"><i data-lucide="laptop"></i> Canvas LMS</span>
+            <span class="tag"><i data-lucide="flask-conical"></i> Virtual labs</span>
+            <span class="tag"><i data-lucide="users"></i> Collaborative projects</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="goal"></i> Learning Outcomes</h3>
+          <p class="role">Students will be able to:</p>
+          <p>
+            1) Explain structures and functions of key biomolecules in cellular processes.<br/>
+            2) Describe core genetic mechanisms (replication, transcription, translation, inheritance).<br/>
+            3) Analyse biochemical/genetic data using virtual and simulated labs.<br/>
+            4) Collaborate in teams to research and present contemporary issues.<br/>
+            5) Reflect on ethical, social, and health-related implications of technologies.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem;" class="card">
+        <h3 class="font-poppins"><i data-lucide="calendar-range"></i> Weekly Flow (Example Summary)</h3>
+        <div style="overflow-x:auto; margin-top: 0.75rem;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 90px;">Week</th>
+                <th>Topic</th>
+                <th>Key learning activity</th>
+                <th style="width: 200px;">Assessment link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Introduction to Biomolecules</td>
+                <td>Interactive lecture; virtual lab (protein structure)</td>
+                <td>Quiz 1</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Enzymes & Metabolism</td>
+                <td>Case study (metabolic disorders); enzyme kinetics simulation</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>DNA Structure & Replication</td>
+                <td>Collaborative problem set; DNA extraction virtual lab</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Transcription & Translation</td>
+                <td>Gene expression simulation; mRNA vaccine context discussion</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Mendelian Genetics</td>
+                <td>Pedigree workshop; peer teaching activity</td>
+                <td>Quiz 2</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Genetic Technologies</td>
+                <td>Ethics debate; industry guest speaker (geneticist)</td>
+                <td>Project topic due</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Project Presentations</td>
+                <td>Team presentations; reflective discussion</td>
+                <td>Team project & reflection due</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>Review & Wrap-up</td>
+                <td>Unit consolidation; future pathways in biochemistry/genetics</td>
+                <td>Final quiz</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem;" class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="clipboard-check"></i> Assessment Design</h3>
+          <p>
+            Assessment aligns with learning outcomes through quizzes (formative), virtual lab reports (analysis and interpretation),
+            a team research project (science communication), and a reflective journal (ethical/social/health connections).
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="cpu"></i> Tools & Learning Technology</h3>
+          <p>
+            Canvas LMS for delivery and assessment, supported by virtual lab tools and curated readings/media.
+            Students also receive structured support through drop-in sessions, forums, and guided study opportunities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section id="feedback" class="section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label font-poppins">Student Feedback & Reflection</p>
+        <h2 class="section-title font-poppins">Feedback → Action → Impact</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="messages-square"></i> Strengths (Common Themes)</h3>
+          <p>
+            Students consistently highlight clarity, approachability, and supportive check-ins.
+            I use this feedback to sustain strong formative practices and inclusive teaching routines.
+          </p>
+          <div class="quote">“You are very friendly and helpful, you make sure we understand the lesson.”</div>
+          <div class="quote">“I liked how you individually checked in with everyone to make sure they understood the topic.”</div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="wrench"></i> Improvements Implemented</h3>
+          <p>
+            When students requested clearer slides and broader participation, I reduced text density, increased visual explanations,
+            added guided notes, and introduced Think–Pair–Share plus inclusive questioning strategies.
+          </p>
+          <div class="tag-row">
+            <span class="tag"><i data-lucide="image"></i> More visuals</span>
+            <span class="tag"><i data-lucide="pen-line"></i> Guided notes</span>
+            <span class="tag"><i data-lucide="shuffle"></i> Participation routines</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem;" class="card">
+        <h3 class="font-poppins"><i data-lucide="route"></i> Reflective Summary</h3>
+        <p>
+          Feedback is treated as data. I analyse patterns across cohorts, trial targeted changes, and re-check impact through engagement,
+          confidence, and performance indicators. This cycle supports continuous improvement and underpins my SoTL approach.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOTL -->
+  <section id="sotl">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label font-poppins">Scholarship of Teaching & Learning</p>
+        <h2 class="section-title font-poppins">SoTL Projects (2024–2025)</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="layout-template"></i> UDL Readiness Mapping</h3>
+          <p>
+            Mixed-methods evaluation of how teachers integrate Universal Design for Learning into planning.
+            Findings identified barriers/enablers and informed a UDL readiness self-assessment tool used in professional development contexts.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="users"></i> Equity in Collaborative Work</h3>
+          <p>
+            Structured group roles (Technician, Recorder, Calculator, Spokesperson) were introduced to promote equitable participation in lab settings.
+            Rotation and choice improved buy-in and reduced dominance by high-achieving students.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="languages"></i> Embedding LLN in Science Labs</h3>
+          <p>
+            Scaffolded language, literacy, and numeracy supports improved accessibility for EAL learners without reducing scientific rigor.
+            Plain-language protocols and visual guides strengthened safety and confidence.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="sparkles"></i> AI & Creativity in Science Education</h3>
+          <p>
+            Developed a structured “AI-mediated creativity” model integrating prompt engineering, ethical AI use,
+            and scaffolded creative tasks. Presented within a higher education innovation context, with follow-up evaluation planned.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem;" class="card">
+        <h3 class="font-poppins"><i data-lucide="table-2"></i> Outcomes, Challenges, Next Steps</h3>
+        <div style="overflow-x:auto; margin-top: 0.75rem;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Outcome</th>
+                <th>Challenge & adaptation</th>
+                <th>Next step</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>UDL readiness mapping</td>
+                <td>UDL use identified; readiness tool developed</td>
+                <td>Low awareness → co-designed examples; framed as time-saving</td>
+                <td>Expand study; develop digital planner; publication pathway</td>
+              </tr>
+              <tr>
+                <td>Equity in collaboration</td>
+                <td>Balanced participation; improved accountability</td>
+                <td>Role resistance → rotation/choice; tracking → digital tool</td>
+                <td>Pilot in second-year labs; study retention impact</td>
+              </tr>
+              <tr>
+                <td>LLN in labs</td>
+                <td>Improved comprehension/confidence for EAL learners</td>
+                <td>Simplify without losing rigor → visuals/glossaries/templates</td>
+                <td>Develop LLN resource bank; study long-term performance</td>
+              </tr>
+              <tr>
+                <td>AI & creativity</td>
+                <td>Framework created for ethical, scaffolded creativity support</td>
+                <td>Over-reliance → guided prompts; limited guidance → protocols</td>
+                <td>Validate in tutorials; seek innovation support; manuscript</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL DEVELOPMENT -->
+  <section id="development" class="section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label font-poppins">Professional Development</p>
+        <h2 class="section-title font-poppins">Continuous Pedagogical Growth</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="award"></i> Innovation & Higher Education Practice</h3>
+          <p>
+            Participation in higher education innovation programs and engagement with emerging teaching practices,
+            including AI-enhanced learning design and evidence-based pedagogy.
+          </p>
+          <div class="tag-row">
+            <span class="tag"><i data-lucide="brain"></i> Learning science</span>
+            <span class="tag"><i data-lucide="sparkle"></i> AI in teaching</span>
+            <span class="tag"><i data-lucide="compass"></i> Reflective growth</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="book-marked"></i> Examples of Structured Learning</h3>
+          <p>
+            I engage with professional learning focused on practical classroom implementation—improving clarity,
+            pacing, assessment design, and inclusive learning supports, particularly in laboratory and science education contexts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACADEMIC SERVICE -->
+  <section id="service">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label font-poppins">Academic Service & Collaboration</p>
+        <h2 class="section-title font-poppins">Committee Work • Peer Collaboration • Mentorship</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="clipboard"></i> Committee Roles</h3>
+          <p>
+            Active member of a course quality and innovation working group, contributing to curriculum quality assurance and
+            discussions on embedding digital skills and AI literacy. In school contexts, contributed to science department planning,
+            compliance support, and resource sharing.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="layers"></i> Collaborative Teaching Initiatives</h3>
+          <p>
+            Co-designed blended resources (virtual labs, video explanations, interactive quizzes), exchanged peer observations and feedback,
+            and contributed to assessment moderation to support consistency and fairness across tutorial groups.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="line-chart"></i> Data-informed Support</h3>
+          <p>
+            Collaborated with teaching teams to analyse student data, identify learning gaps, and implement targeted revision workshops,
+            including literacy/numeracy support resources for students needing additional scaffolding.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="font-poppins"><i data-lucide="user-heart"></i> Mentorship & Guidance</h3>
+          <p>
+            Provided one-on-one and small-group mentoring for VCE students focused on study skills, exam preparation, and scientific literacy.
+            Also supported higher education students with pathway advice, lab skill development, and career awareness.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem;" class="card">
+        <h3 class="font-poppins"><i data-lucide="handshake"></i> Collegial Culture</h3>
+        <p>
+          These experiences reinforce my commitment to collaborative teaching communities: contributing to systemic improvement through committee work,
+          strengthening practice via peer collaboration, and supporting student and staff growth through mentorship.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-alt contact">
+    <div class="container">
+      <div class="contact-content">
+        <h2 class="font-poppins">Let’s Connect</h2>
+        <p class="contact-description">
+          Interested in teaching collaboration, curriculum innovation, or discussing evidence-based approaches in chemistry/biochemistry/cell biology education?
+          I’d love to connect.
+        </p>
+
+        <div class="contact-buttons">
+          <a href="mailto:aneelayasmin@yahoo.com" class="btn btn-primary font-poppins"><i data-lucide="mail"></i> Send Email</a>
+          <a href="#overview" class="btn btn-outline"><i data-lucide="arrow-up"></i> Back to Top</a>
+        </div>
+
+        <div class="footer">
+          <p>© 2026 Dr. Aneela Yasmin. All rights reserved.</p>
+          <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            Chemistry • Biochemistry • Cell Biology • Evidence-based Teaching • Inclusive Learning • SoTL • Curriculum Innovation
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

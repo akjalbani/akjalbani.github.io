@@ -3,30 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dr Akhtar Ali Jalbani — Resume (Australia) | Cybersecurity, Cloud, Higher Education</title>
-  <meta name="description" content="Dr Akhtar Ali Jalbani — Cybersecurity & Cloud Computing Lecturer (Australia). Higher education and VET educator with research background in security modelling, AI, and blockchain-based data provenance. AWS certified; ACS Certified Professional." />
+  <title>Dr Akhtar Ali Jalbani — Lecturer (Cyber Security / Cloud) | Resume</title>
+  <meta name="description" content="Dr Akhtar Ali Jalbani — University Lecturer in Cyber Security and Cloud Computing (AWS). Higher education and VET educator with research background in security modelling, AI and blockchain-based data provenance. AWS certified; ACS Certified Professional." />
   <meta name="robots" content="index,follow" />
 
-  <!-- Fonts (safe on GitHub Pages) -->
+  <!-- Fonts (safe for GitHub Pages) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --ink:#111827;          /* near-black */
-      --muted:#374151;        /* slate */
-      --soft:#6B7280;         /* grey */
-      --line:#E5E7EB;         /* light grey */
+      --ink:#111827;
+      --muted:#374151;
+      --soft:#6B7280;
+      --line:#E5E7EB;
       --paper:#FFFFFF;
-      --accent:#1D4ED8;       /* professional blue */
-      --accent2:#0F766E;      /* teal accent */
-      --bg:#F6F7FB;           /* page background */
-      --chip:#EEF2FF;         /* skill chip bg */
-      --chip2:#ECFDF5;
+      --bg:#F6F7FB;
+
+      /* Professional accents (subtle, ATS-safe) */
+      --accent:#1D4ED8;
+      --accent2:#0F766E;
+
       --shadow: 0 10px 30px rgba(17,24,39,0.10);
       --radius: 14px;
-      --max: 980px;
+      --max: 1020px;
     }
 
     *{box-sizing:border-box}
@@ -36,7 +37,7 @@
       background:var(--bg);
       color:var(--ink);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      line-height:1.5;
+      line-height:1.55;
     }
 
     /* Top utility bar */
@@ -44,7 +45,7 @@
       position: sticky;
       top:0;
       z-index:10;
-      background: rgba(246,247,251,0.88);
+      background: rgba(246,247,251,0.90);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
@@ -98,27 +99,28 @@
 
     /* Header */
     header{
-      padding: 26px 26px 18px;
+      padding: 28px 28px 18px;
       border-bottom: 1px solid var(--line);
       background:
-        radial-gradient(900px 180px at 10% 10%, rgba(29,78,216,0.08), transparent 60%),
-        radial-gradient(700px 160px at 90% 0%, rgba(15,118,110,0.08), transparent 60%),
+        radial-gradient(900px 200px at 10% 5%, rgba(29,78,216,0.08), transparent 60%),
+        radial-gradient(700px 170px at 90% 0%, rgba(15,118,110,0.08), transparent 60%),
         #fff;
     }
     .name{
       font-family: "Source Serif 4", serif;
-      font-size: 34px;
-      line-height:1.1;
+      font-size: 36px;
+      line-height:1.05;
       margin:0;
       letter-spacing:-0.2px;
     }
     .headline{
-      margin: 8px 0 0;
+      margin: 10px 0 0;
       font-weight:700;
       color: var(--muted);
+      font-size: 14.5px;
     }
     .meta{
-      margin-top: 10px;
+      margin-top: 12px;
       display:flex;
       flex-wrap:wrap;
       gap:10px 14px;
@@ -141,29 +143,28 @@
     /* Layout */
     .content{
       display:grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 340px;
       gap: 0;
     }
-    @media (max-width: 920px){
+    @media (max-width: 980px){
       .content{grid-template-columns: 1fr}
     }
-
     .main{
-      padding: 22px 26px 26px;
+      padding: 22px 28px 28px;
       border-right: 1px solid var(--line);
     }
-    @media (max-width: 920px){
+    @media (max-width: 980px){
       .main{border-right:none; border-bottom:1px solid var(--line)}
     }
     .side{
-      padding: 22px 20px 26px;
+      padding: 22px 20px 28px;
       background: #FCFCFF;
     }
 
     /* Sections */
     section{margin: 0 0 18px}
     h2{
-      font-size: 14px;
+      font-size: 13.5px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--soft);
@@ -207,19 +208,17 @@
     .side section{margin-bottom: 16px}
     .chips{display:flex; flex-wrap:wrap; gap:8px}
     .chip{
-      background: var(--chip);
-      border: 1px solid #E0E7FF;
+      border: 1px solid #E5E7EB;
+      background: #fff;
       color: #1F2A44;
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 12.5px;
       font-weight: 600;
+      white-space: nowrap;
     }
-    .chip.alt{
-      background: var(--chip2);
-      border-color: #A7F3D0;
-      color:#064E3B;
-    }
+    .chip.a{border-color: rgba(29,78,216,0.25); background: rgba(29,78,216,0.06)}
+    .chip.b{border-color: rgba(15,118,110,0.25); background: rgba(15,118,110,0.06)}
 
     .list{
       margin: 8px 0 0;
@@ -237,9 +236,20 @@
     .linkline a{color: var(--accent); text-decoration:none}
     .linkline a:hover{text-decoration:underline}
 
+    .kpi{
+      border:1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background:#fff;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .kpi strong{color:var(--ink)}
+
     /* Footer note */
     footer{
-      padding: 14px 26px;
+      padding: 14px 28px;
       border-top: 1px solid var(--line);
       color: var(--soft);
       font-size: 12px;
@@ -250,55 +260,57 @@
       background:#fff;
     }
 
-    /* ATS / print (PDF) */
+    /* Print / PDF */
     @media print{
       body{background:#fff}
       .topbar{display:none !important}
       .page{margin:0; padding:0}
       .sheet{border:none; box-shadow:none; border-radius:0}
-
-      /* Ensure clean PDF */
       a{color:#111827 !important; text-decoration:none !important}
       .side{background:#fff}
-
       @page{size:A4; margin:14mm}
     }
   </style>
 </head>
 
 <body>
-  <!-- Top bar: GitHub Pages friendly -->
   <div class="topbar" aria-label="Resume actions">
     <div class="topbar-inner">
-      <strong>Resume</strong>
+      <strong>Dr Akhtar Ali Jalbani — Resume</strong>
       <div class="actions">
-        <!-- Best-practice PDF on static hosting -->
+        <!-- Static-hosting compatible PDF -->
         <button class="btn primary" type="button" onclick="downloadPDF()">Download PDF</button>
 
-        <!-- Optional: direct PDF download (works ONLY if you add the file to your repo) -->
-        <a class="btn" href="./Dr_Akhtar_Jalbani_Resume.pdf" download>
-          Direct PDF File (optional)
-        </a>
+        <!-- Optional direct file download (works once you upload PDF into repo) -->
+        <a class="btn" href="./Dr_Akhtar_Jalbani_Resume.pdf" download>Direct PDF File (optional)</a>
 
-        <a class="btn" href="./index.html" title="Back to portfolio page (if you keep index.html)">Back to website</a>
+        <!-- Optional navigation if you keep a portfolio index.html -->
+        <a class="btn" href="./index.html">Back to website</a>
       </div>
     </div>
   </div>
 
   <main class="page">
-    <article class="sheet" role="document" aria-label="Dr Akhtar Ali Jalbani Resume">
+    <article class="sheet" role="document" aria-label="Resume: Dr Akhtar Ali Jalbani">
 
       <header>
         <h1 class="name">Dr Akhtar Ali Jalbani</h1>
-        <p class="headline">Lecturer — Cybersecurity, Cloud Computing (AWS), Digital Infrastructure | Higher Education & VET</p>
+        <p class="headline">
+          Lecturer (Cyber Security / Cloud Computing) — Higher Education & VET | AWS Certified | Academic & Industry-aligned Teaching
+        </p>
 
         <div class="meta">
           <span class="pill">Melbourne, Victoria, Australia</span>
-          <span class="pill">Open to: Higher Education / VET / Cloud & Cybersecurity Education</span>
+          <span class="pill">Target: University Lecturer — Cyber Security / Cloud</span>
           <span class="linkline">Email: <a href="mailto:jalbani.vic@outlook.com">jalbani.vic@outlook.com</a></span>
           <span class="linkline">LinkedIn: <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener">linkedin.com/in/akhtar-jalbani</a></span>
           <span class="linkline">Google Scholar: <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener">Scholar Profile</a></span>
           <span class="linkline">Medium: <a href="https://medium.com/@akjalbani_15286" target="_blank" rel="noopener">@akjalbani_15286</a></span>
+        </div>
+
+        <div class="kpi" aria-label="Profile highlights">
+          <strong>Highlights:</strong> University teaching (Cyber Security / Cloud), curriculum and assessment design, blended delivery, research publications,
+          AWS certifications, ACS Certified Professional, and mentoring (WorldSkills outcomes).
         </div>
       </header>
 
@@ -306,25 +318,33 @@
         <!-- MAIN -->
         <div class="main">
 
-          <section aria-label="Professional summary">
-            <h2>Professional Summary</h2>
+          <section aria-label="Professional profile">
+            <h2>Professional Profile</h2>
             <p class="summary">
-              Cybersecurity and cloud computing educator with over 20 years of experience across higher education and vocational education and training (VET).
-              Current Lecturer at RMIT University delivering industry-aligned teaching in cybersecurity, cloud computing, virtualization, networking, and digital infrastructure.
-              Research background in security modelling, software engineering, and emerging technologies including AI and blockchain-based data provenance.
-              AWS certified and active community contributor, with a strong record of curriculum development, assessment design, student support, and mentoring for skills competitions.
+              Cyber security and cloud computing educator with over 20 years of experience across higher education and vocational education and training (VET).
+              Currently Lecturer at RMIT University delivering teaching in cyber security, cloud computing (AWS), virtualization, networking and digital infrastructure.
+              Research background in security modelling and emerging technology areas including AI and blockchain-based data provenance, with peer-reviewed publications.
+              Known for industry-aligned learning design, hands-on labs, assessment quality, and strong student support, mentoring and supervision.
             </p>
           </section>
 
-          <section aria-label="Core competencies">
-            <h2>Core Competencies</h2>
+          <section aria-label="University teaching focus">
+            <h2>Teaching Focus (University)</h2>
             <ul class="bullets">
-              <li><strong>Cybersecurity teaching:</strong> network security, web application security, security fundamentals, secure architectures, threat awareness, governance and compliance concepts</li>
-              <li><strong>Cloud computing (AWS):</strong> IAM, VPC and networking, cloud security foundations, solutions architecture, labs and hands-on delivery</li>
-              <li><strong>Teaching delivery:</strong> lectures, tutorials, labs, blended learning, LMS-supported delivery, industry tools integration</li>
-              <li><strong>Assessment & quality:</strong> competency-based assessment design and validation, moderation, academic integrity, continuous improvement</li>
-              <li><strong>Research & scholarship:</strong> peer-reviewed publications, software and security modelling, AI and blockchain research themes</li>
-              <li><strong>Leadership & mentoring:</strong> program coordination, student project supervision, mentoring for competitions and career readiness</li>
+              <li><strong>Cyber security:</strong> security fundamentals, network security, web application security, threat concepts, security governance foundations, secure design thinking</li>
+              <li><strong>Cloud computing (AWS):</strong> identity and access management (IAM), VPC and networking, cloud security fundamentals, secure architecture, foundational DevOps concepts</li>
+              <li><strong>Digital infrastructure:</strong> virtualization, networking concepts, applied infrastructure labs, secure configuration principles</li>
+              <li><strong>Learning design:</strong> lectures, tutorials, labs, LMS-supported blended delivery, applied case studies and assessment scaffolding</li>
+            </ul>
+          </section>
+
+          <section aria-label="Academic service and leadership">
+            <h2>Academic Service & Leadership</h2>
+            <ul class="bullets">
+              <li><strong>Curriculum and quality:</strong> curriculum development support, assessment design, moderation/validation, continuous improvement activities</li>
+              <li><strong>Student supervision:</strong> capstone and project supervision; academic mentoring aligned to professional standards</li>
+              <li><strong>Professional engagement:</strong> AWS Community Builder (Security), conference committee contribution, technical writing and knowledge sharing</li>
+              <li><strong>Mentoring:</strong> WorldSkills Australia mentoring in cloud computing and cyber security with national medal outcomes</li>
             </ul>
           </section>
 
@@ -333,37 +353,37 @@
 
             <div class="role">
               <h3>Lecturer — RMIT University</h3>
-              <div class="sub">Cybersecurity, Cloud Computing, Virtualization, Digital Infrastructure</div>
+              <div class="sub">Cyber Security, Cloud Computing, Virtualization, Digital Infrastructure</div>
               <div class="whenwhere">Jul 2024 – Present | Melbourne, Victoria, Australia</div>
               <ul class="bullets">
-                <li>Deliver vocational and higher education teaching across cybersecurity, cloud computing, virtualization, and digital infrastructure units.</li>
-                <li>Design and deliver industry-aligned lectures, labs, and assessments incorporating AWS concepts, secure cloud architecture, and applied infrastructure practices.</li>
-                <li>Support technology-enhanced learning via LMS, structured lab environments, and applied case studies.</li>
-                <li>Supervise student capstones and projects with academic and technical guidance aligned to professional standards.</li>
-                <li>Contribute to curriculum development, learning design enhancement, and continuous improvement activities aligned to quality frameworks.</li>
-              </ul>
-            </div>
-
-            <div class="role">
-              <h3>Senior Lecturer — Holmesglen Institute</h3>
-              <div class="sub">Cybersecurity, Networking, Cloud Computing, Information Technology (Higher Education & VET)</div>
-              <div class="whenwhere">Apr 2019 – Jul 2024 | Melbourne, Victoria, Australia</div>
-              <ul class="bullets">
-                <li>Delivered face-to-face, online and blended teaching for domestic and international cohorts across cybersecurity, networking and cloud topics.</li>
-                <li>Designed, assessed and validated competency-based assessments aligned with AQF, ASQA and training package requirements.</li>
-                <li>Performed moderation and quality assurance activities to maintain consistent outcomes and assessment integrity.</li>
-                <li>Provided academic support and mentoring to improve student progress, engagement, and employability readiness.</li>
+                <li>Deliver teaching across cyber security, cloud computing and digital infrastructure units, including lectures, tutorials and labs.</li>
+                <li>Design and deliver industry-aligned learning activities and assessments incorporating AWS concepts, secure cloud architecture and applied infrastructure practice.</li>
+                <li>Support blended delivery through LMS, structured lab environments, and applied case studies.</li>
+                <li>Supervise capstones and projects, providing academic and technical guidance aligned to professional standards.</li>
+                <li>Contribute to curriculum enhancement and continuous improvement activities aligned to institutional quality frameworks.</li>
               </ul>
             </div>
 
             <div class="role">
               <h3>Casual Lecturer — La Trobe University</h3>
-              <div class="sub">Cybersecurity Principles, Network Security, Applied Cyber Defence</div>
+              <div class="sub">Cyber Security Principles, Network Security, Applied Cyber Defence</div>
               <div class="whenwhere">Mar 2020 – Jun 2024 | Melbourne, Victoria, Australia</div>
               <ul class="bullets">
-                <li>Delivered tutorials and laboratories supporting undergraduate and postgraduate learning in cybersecurity.</li>
+                <li>Delivered tutorials and labs supporting undergraduate and postgraduate cohorts in cyber security.</li>
                 <li>Marked assessments and provided constructive feedback aligned to learning outcomes and academic standards.</li>
-                <li>Supported subject teams to ensure consistency across delivery modes and student cohorts.</li>
+                <li>Supported academic teams to maintain consistent teaching quality across delivery modes.</li>
+              </ul>
+            </div>
+
+            <div class="role">
+              <h3>Senior Lecturer — Holmesglen Institute</h3>
+              <div class="sub">Cyber Security, Networking, Cloud Computing (Higher Education & VET)</div>
+              <div class="whenwhere">Apr 2019 – Jul 2024 | Melbourne, Victoria, Australia</div>
+              <ul class="bullets">
+                <li>Delivered face-to-face, online and blended teaching across cyber security, networking and cloud computing content.</li>
+                <li>Designed and validated competency-based assessments aligned with AQF/ASQA training requirements and quality practices.</li>
+                <li>Performed moderation/validation activities supporting consistency and assessment integrity.</li>
+                <li>Provided student academic support and mentoring to improve engagement and completion outcomes.</li>
               </ul>
             </div>
 
@@ -372,9 +392,9 @@
               <div class="sub">Information Technology and Computing Disciplines</div>
               <div class="whenwhere">Mar 2018 – Dec 2019 | Melbourne, Victoria, Australia</div>
               <ul class="bullets">
-                <li>Delivered lectures, tutorials, and lab facilitation for IT and computing units aligned to Federation University curriculum.</li>
-                <li>Supported international cohorts through structured teaching, mentoring and learning guidance.</li>
-                <li>Assisted with assessment marking and moderation under university academic standards.</li>
+                <li>Delivered lectures, tutorials and labs for IT and computing units aligned to university curriculum requirements.</li>
+                <li>Supported international cohorts through structured tutorials, lab facilitation, and academic mentoring.</li>
+                <li>Assisted with assessment marking and moderation under academic standards.</li>
               </ul>
             </div>
 
@@ -384,20 +404,19 @@
               <div class="whenwhere">Apr 2011 – Apr 2018 | Tandojam, Pakistan</div>
               <ul class="bullets">
                 <li>Delivered teaching and conducted research in software engineering with a focus on model-driven software engineering and software quality.</li>
-                <li>Coordinated postgraduate programs including curriculum planning, assessment oversight, and supervision processes.</li>
-                <li>Supervised Masters and PhD research projects in software quality, modelling, and system design.</li>
-                <li>Published research and contributed to academic governance and quality assurance activities.</li>
+                <li>Coordinated postgraduate programs including curriculum planning and assessment oversight.</li>
+                <li>Supervised Masters and PhD research projects in software quality, modelling and system design.</li>
+                <li>Published peer-reviewed research and contributed to academic governance and quality activities.</li>
               </ul>
             </div>
 
             <div class="role">
               <h3>Director IT — Sindh Agricultural University</h3>
-              <div class="sub">IT Strategy, Infrastructure, Systems and Institutional Technology Services</div>
+              <div class="sub">Institutional IT Leadership, Systems, Infrastructure and Governance</div>
               <div class="whenwhere">Apr 2013 – Dec 2014 | Tandojam, Pakistan</div>
               <ul class="bullets">
-                <li>Provided strategic leadership for institutional IT systems, infrastructure, and academic technology services.</li>
-                <li>Oversaw enterprise systems, databases, and IT governance practices supporting teaching, research and administration.</li>
-                <li>Supported postgraduate supervision and delivery of advanced topics including programming, databases and big data technologies.</li>
+                <li>Led institutional IT systems, infrastructure operations and governance supporting teaching, research and administration.</li>
+                <li>Oversaw enterprise systems and database environments; supported digital transformation initiatives.</li>
               </ul>
             </div>
 
@@ -406,8 +425,7 @@
               <div class="sub">Software Engineering Research and Teaching Support</div>
               <div class="whenwhere">Apr 2007 – Apr 2011 | Göttingen, Germany</div>
               <ul class="bullets">
-                <li>Supported funded research projects in software engineering and software quality.</li>
-                <li>Conducted empirical research, data analysis and technical documentation for peer-reviewed publications.</li>
+                <li>Supported funded research in software engineering and software quality; conducted empirical research and analysis for publications.</li>
                 <li>Supported teaching activities and student research supervision in software engineering subjects.</li>
               </ul>
             </div>
@@ -417,31 +435,30 @@
               <div class="sub">Computing (Teaching, Coordination, Student Supervision)</div>
               <div class="whenwhere">Apr 2002 – Apr 2018 | Tandojam, Pakistan</div>
               <ul class="bullets">
-                <li>Taught core computing subjects including programming, databases, information systems and big data fundamentals.</li>
-                <li>Coordinated undergraduate programs including curriculum delivery, assessments, and progression oversight.</li>
-                <li>Supervised undergraduate projects and contributed to curriculum review and teaching quality initiatives.</li>
+                <li>Taught computing subjects including programming, databases, information systems and big data fundamentals.</li>
+                <li>Coordinated undergraduate program delivery, assessments and student progression oversight.</li>
+                <li>Supervised undergraduate final-year projects and contributed to curriculum review and teaching quality initiatives.</li>
               </ul>
             </div>
 
           </section>
 
-          <section aria-label="Selected publications">
-            <h2>Selected Publications</h2>
+          <section aria-label="Research and publications">
+            <h2>Research & Publications (Selected)</h2>
             <ul class="bullets">
-              <li><strong>Enhancing Data Provenance in AI with Blockchain Technology</strong> — CSI Transactions on ICT (Springer), 2025. (See Google Scholar profile for full publication list.)</li>
+              <li><strong>Enhancing Data Provenance in AI with Blockchain Technology</strong> — CSI Transactions on ICT (Springer), 2025. (Full list: Google Scholar.)</li>
               <li><strong>Security Modeling for Service-Oriented Systems</strong> — Software & Systems Modeling (Springer), 2014.</li>
             </ul>
           </section>
 
-          <section aria-label="Leadership and community">
-            <h2>Leadership, Speaking & Community</h2>
+          <section aria-label="Professional engagement">
+            <h2>Professional Engagement</h2>
             <ul class="bullets">
-              <li><strong>Founding Member</strong>, Asia-Europe for Artificial Intelligence (AE4AI) Network (established Oct 2023, Shanghai).</li>
-              <li><strong>Committee Member</strong>, SAI Conference — Computing Conference 2026.</li>
-              <li><strong>AWS Community Builder</strong> (Security Category) — workshops and knowledge sharing on cloud security and architecture.</li>
-              <li><strong>Technical Writer</strong> — Medium / Dev.to (cybersecurity, AWS, VPC peering, cloud architecture).</li>
-              <li><strong>WorldSkills Australia Mentor</strong> — Cloud Computing & Cyber Security; supported medal outcomes at National Competition 2025 and progression to international pathway 2026.</li>
-              <li><strong>SummerTechLive Mentor</strong> — multiple mentor grants.</li>
+              <li><strong>AWS Community Builder</strong> (Security Category) — knowledge sharing and community contribution.</li>
+              <li><strong>Founding Member</strong> — Asia-Europe for Artificial Intelligence (AE4AI) Network (established Oct 2023).</li>
+              <li><strong>Committee Member</strong> — SAI Conference (Computing Conference 2026).</li>
+              <li><strong>Technical Writer</strong> — Medium / Dev.to topics include cybersecurity, AWS, VPC peering, and cloud architecture.</li>
+              <li><strong>WorldSkills Australia Mentor</strong> — Cloud Computing & Cyber Security; supported medal outcomes at National Competition 2025 and progression pathway 2026.</li>
             </ul>
           </section>
 
@@ -450,25 +467,31 @@
         <!-- SIDE -->
         <aside class="side" aria-label="Skills, certifications, education, awards">
 
-          <section aria-label="Key skills">
-            <h2>Key Skills</h2>
+          <section aria-label="Keywords and capabilities">
+            <h2>Key Skills (ATS Keywords)</h2>
             <div class="chips" aria-label="Skill keywords">
-              <span class="chip">Cybersecurity</span>
-              <span class="chip">Network Security</span>
-              <span class="chip">Web Application Security</span>
-              <span class="chip">Security Fundamentals</span>
-              <span class="chip">Cloud Computing</span>
-              <span class="chip">AWS</span>
-              <span class="chip">IAM</span>
-              <span class="chip">VPC & Networking</span>
-              <span class="chip">Virtualization</span>
-              <span class="chip">Infrastructure</span>
-              <span class="chip alt">Teaching & Learning</span>
-              <span class="chip alt">Curriculum Development</span>
-              <span class="chip alt">Assessment Design</span>
-              <span class="chip alt">Moderation</span>
-              <span class="chip alt">Student Supervision</span>
-              <span class="chip alt">Blended Learning</span>
+              <span class="chip a">Cyber Security</span>
+              <span class="chip a">Network Security</span>
+              <span class="chip a">Web Application Security</span>
+              <span class="chip a">Security Fundamentals</span>
+              <span class="chip a">Secure Architecture</span>
+              <span class="chip a">Governance (foundations)</span>
+
+              <span class="chip b">Cloud Computing</span>
+              <span class="chip b">AWS</span>
+              <span class="chip b">IAM</span>
+              <span class="chip b">VPC & Networking</span>
+              <span class="chip b">Cloud Security</span>
+              <span class="chip b">Virtualization</span>
+
+              <span class="chip">Lectures & Tutorials</span>
+              <span class="chip">Lab-based Teaching</span>
+              <span class="chip">Blended Learning</span>
+              <span class="chip">LMS Delivery</span>
+              <span class="chip">Assessment Design</span>
+              <span class="chip">Moderation / Validation</span>
+              <span class="chip">Student Supervision</span>
+              <span class="chip">Curriculum Support</span>
             </div>
           </section>
 
@@ -487,12 +510,12 @@
           </section>
 
           <section aria-label="Professional memberships">
-            <h2>Professional Memberships</h2>
+            <h2>Memberships</h2>
             <ul class="list">
               <li>ACS Certified Professional (CP) — Australian Computer Society</li>
               <li>ACS Professional Member — Australian Computer Society</li>
               <li>SDL-Forum Member — System Design Language Forum</li>
-              <li>Founding Member — AE4AI Network</li>
+              <li>AE4AI Network — Founding Member</li>
             </ul>
           </section>
 
@@ -519,7 +542,7 @@
           <section aria-label="Links">
             <h2>Links</h2>
             <p class="mini linkline">LinkedIn: <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener">linkedin.com/in/akhtar-jalbani</a></p>
-            <p class="mini linkline">Scholar: <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener">Google Scholar</a></p>
+            <p class="mini linkline">Google Scholar: <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener">scholar.google.com</a></p>
             <p class="mini linkline">Medium: <a href="https://medium.com/@akjalbani_15286" target="_blank" rel="noopener">medium.com/@akjalbani_15286</a></p>
             <p class="mini">Email: <a href="mailto:jalbani.vic@outlook.com">jalbani.vic@outlook.com</a></p>
           </section>
@@ -528,19 +551,18 @@
       </div>
 
       <footer>
-        <span>Target roles: Lecturer (Cybersecurity / Cloud), Program Coordinator, Learning Designer (Cyber/Cloud), Academic / VET Trainer & Assessor</span>
-        <span>Document format: ATS-friendly HTML → Print to PDF</span>
+        <span>Role target: Lecturer — Cyber Security / Cloud Computing (University)</span>
+        <span>ATS-ready format: clean headings, keyword-aligned content, PDF via Print</span>
       </footer>
 
     </article>
   </main>
 
   <script>
-    // GitHub Pages / static hosting PDF approach:
-    // This opens the browser Print dialog, where users select "Save as PDF".
+    // GitHub Pages / static hosting: opens Print dialog for "Save as PDF"
     function downloadPDF(){
       const originalTitle = document.title;
-      document.title = "Dr_Akhtar_Ali_Jalbani_Resume_AU";
+      document.title = "Dr_Akhtar_Ali_Jalbani_Resume_Lecturer_Cyber_Cloud_AU";
       window.print();
       setTimeout(() => { document.title = originalTitle; }, 600);
     }

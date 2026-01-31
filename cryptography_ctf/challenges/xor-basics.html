@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOR Basics | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / XOR Basics
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 05</span>
+            <span class="card-difficulty medium">MEDIUM</span>
+        </div>
+        <h1 class="challenge-title">XOR Basics</h1>
+        <p class="challenge-desc">Master the fundamental bitwise XOR operation - the building block of cryptography.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>XOR (Exclusive OR) is a bitwise operator that returns 1 if the bits are different, and 0 if they're the same. In Python, the XOR operator is the caret (^).</p>
+            
+            <h3 style="color: var(--accent-cyan); margin: 20px 0 15px;">XOR Truth Table</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>A ⊕ B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><td>0</td><td>1</td><td style="color: var(--accent-green); font-weight: bold;">1</td></tr>
+                    <tr><td>1</td><td>0</td><td style="color: var(--accent-green); font-weight: bold;">1</td></tr>
+                    <tr><td>1</td><td>1</td><td>0</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; color: var(--text-muted); font-style: italic;">Remember: XOR returns 1 when bits are <strong>different</strong></p>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Given the string <code style="color: var(--accent-green);">label</code>, XOR each character with the integer <code style="color: var(--accent-green);">13</code>. Convert the results back to a string and submit as <code>crypto{new_string}</code>.</p>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Hint</div>
+                    <div class="tip-text">Use <code>ord(c)</code> to get the integer value, XOR with 13, then use <code>chr()</code> to convert back.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Python Code</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>string = 'label'
+result = ''.join(chr(ord(c) ^ 13) for c in string)
+print(result)  # Output: aloha</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Step-by-Step Calculation</h3>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Char</th>
+                            <th>ASCII</th>
+                            <th>Binary</th>
+                            <th>13 (Binary)</th>
+                            <th>XOR Result</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>l</td><td>108</td><td>01101100</td><td>00001101</td><td>97</td><td>a</td></tr>
+                        <tr><td>a</td><td>97</td><td>01100001</td><td>00001101</td><td>108</td><td>l</td></tr>
+                        <tr><td>b</td><td>98</td><td>01100010</td><td>00001101</td><td>111</td><td>o</td></tr>
+                        <tr><td>e</td><td>101</td><td>01100101</td><td>00001101</td><td>104</td><td>h</td></tr>
+                        <tr><td>l</td><td>108</td><td>01101100</td><td>00001101</td><td>97</td><td>a</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Detailed Example: 'b' XOR 13</h3>
+                
+                <div class="code-block">
+                    <div class="code-body">
+<pre style="color: var(--accent-cyan);">  01100010  (98 = 'b')
+^ 00001101  (13)
+----------
+  01101111  (111 = 'o')</pre>
+                    </div>
+                </div>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{aloha}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="bigint.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">Big Integers</div>
+            </div>
+        </a>
+        <a href="xor-properties.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">XOR Properties →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

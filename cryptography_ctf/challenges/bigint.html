@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bytes & Big Integers | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / Big Integers
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 04</span>
+            <span class="card-difficulty medium">MEDIUM</span>
+        </div>
+        <h1 class="challenge-title">Bytes & Big Integers</h1>
+        <p class="challenge-desc">Convert between messages and large integers - essential for RSA cryptography.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>Cryptosystems like RSA work on numbers, but messages are text. The standard approach is to convert each character to its ASCII byte, combine into hexadecimal, then interpret as a decimal integer.</p>
+            
+            <h3 style="color: var(--accent-cyan); margin: 20px 0 15px;">Example: Converting "HELLO"</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Message</td><td>HELLO</td></tr>
+                    <tr><td>ASCII bytes</td><td>[72, 69, 76, 76, 79]</td></tr>
+                    <tr><td>Hex bytes</td><td>[0x48, 0x45, 0x4c, 0x4c, 0x4f]</td></tr>
+                    <tr><td>Combined hex</td><td>0x48454c4c4f</td></tr>
+                    <tr><td>Decimal</td><td>310400273487</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Convert this integer back into a message:</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Large Integer</div>
+                <div class="cipher-text">11515195063862318899931685488813747395775516287289682636499965282714637259206269</div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Hint</div>
+                    <div class="tip-text">PyCryptodome's <code>long_to_bytes()</code> function handles this conversion. Install with <code>pip install pycryptodome</code></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Method 1: Using PyCryptodome</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>from Crypto.Util.number import long_to_bytes
+
+n = 11515195063862318899931685488813747395775516287289682636499965282714637259206269
+result = long_to_bytes(n)
+print(result)</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Method 2: Manual Conversion</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>n = 11515195063862318899931685488813747395775516287289682636499965282714637259206269
+
+# Convert to hex, remove '0x' prefix
+hex_string = hex(n)[2:]
+
+# Convert hex to bytes
+result = bytes.fromhex(hex_string)
+print(result)</pre>
+                    </div>
+                </div>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{3nc0d1ng_4ll_7h3_w4y_d0wn}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="base64.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">Base64</div>
+            </div>
+        </a>
+        <a href="xor-basics.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">XOR Basics →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

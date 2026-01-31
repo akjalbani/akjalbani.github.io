@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOR Properties | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / XOR Properties
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 06</span>
+            <span class="card-difficulty hard">HARD</span>
+        </div>
+        <h1 class="challenge-title">XOR Properties</h1>
+        <p class="challenge-desc">Use the mathematical properties of XOR to undo a chain of operations.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>XOR has four essential properties that make it fundamental to cryptography:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Formula</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Commutative</td><td>A ⊕ B = B ⊕ A</td><td>Order doesn't matter</td></tr>
+                    <tr><td>Associative</td><td>(A ⊕ B) ⊕ C = A ⊕ (B ⊕ C)</td><td>Grouping doesn't matter</td></tr>
+                    <tr><td>Identity</td><td>A ⊕ 0 = A</td><td>XOR with 0 does nothing</td></tr>
+                    <tr><td>Self-Inverse</td><td>A ⊕ A = 0</td><td>XOR with itself gives 0</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Three random keys have been XORed together with the flag. Use XOR properties to recover the flag.</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Given Values</div>
+                <div class="cipher-text" style="line-height: 2;">
+KEY1 = a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313<br>
+KEY2 ^ KEY1 = 37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e<br>
+KEY2 ^ KEY3 = c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1<br>
+FLAG ^ KEY1 ^ KEY3 ^ KEY2 = 04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Strategy</div>
+                    <div class="tip-text">If you XOR both sides of an equation with the same value, the equation remains true. Use this to isolate unknowns!</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Strategy</h3>
+                
+                <p><strong>Step 1:</strong> Get KEY2 from (KEY2 ^ KEY1) by XORing with KEY1:</p>
+                <p style="font-family: var(--font-mono); color: var(--accent-green); margin: 10px 0;">KEY2 = (KEY2 ^ KEY1) ^ KEY1</p>
+                
+                <p><strong>Step 2:</strong> Get KEY3 from (KEY2 ^ KEY3) by XORing with KEY2:</p>
+                <p style="font-family: var(--font-mono); color: var(--accent-green); margin: 10px 0;">KEY3 = (KEY2 ^ KEY3) ^ KEY2</p>
+                
+                <p><strong>Step 3:</strong> Get FLAG by XORing the final value with all three keys:</p>
+                <p style="font-family: var(--font-mono); color: var(--accent-green); margin: 10px 0;">FLAG = (FLAG ^ KEY1 ^ KEY3 ^ KEY2) ^ KEY1 ^ KEY2 ^ KEY3</p>
+                
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Python Code</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>KEY1 = bytes.fromhex('a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313')
+KEY2_XOR_KEY1 = bytes.fromhex('37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e')
+KEY2_XOR_KEY3 = bytes.fromhex('c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1')
+FLAG_XOR_ALL = bytes.fromhex('04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf')
+
+# Step 1: Get KEY2
+KEY2 = bytes(a ^ b for a, b in zip(KEY2_XOR_KEY1, KEY1))
+
+# Step 2: Get KEY3  
+KEY3 = bytes(a ^ b for a, b in zip(KEY2_XOR_KEY3, KEY2))
+
+# Step 3: Get FLAG
+FLAG = bytes(a ^ b ^ c ^ d for a, b, c, d in 
+             zip(FLAG_XOR_ALL, KEY1, KEY2, KEY3))
+
+print(FLAG)</pre>
+                    </div>
+                </div>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{x0r_i5_ass0c1at1v3}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="xor-basics.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">XOR Basics</div>
+            </div>
+        </a>
+        <a href="single-byte-xor.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">Single Byte XOR →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

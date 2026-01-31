@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Conversion | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <!-- Challenge Header -->
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / ASCII Conversion
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 01</span>
+            <span class="card-difficulty easy">EASY</span>
+        </div>
+        <h1 class="challenge-title">ASCII Conversion</h1>
+        <p class="challenge-desc">Learn to convert integers to characters using the ASCII standard - the foundation of text encoding.</p>
+    </header>
+
+    <!-- Challenge Content -->
+    <main class="challenge-content">
+        <!-- Background Section -->
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>ASCII (American Standard Code for Information Interchange) is a 7-bit encoding standard that represents text using integers 0-127. Each character maps to a unique number, making it the foundation of modern text encoding.</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Character Range</th>
+                        <th>Decimal</th>
+                        <th>Hex</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A-Z (uppercase)</td>
+                        <td>65-90</td>
+                        <td>0x41-0x5A</td>
+                    </tr>
+                    <tr>
+                        <td>a-z (lowercase)</td>
+                        <td>97-122</td>
+                        <td>0x61-0x7A</td>
+                    </tr>
+                    <tr>
+                        <td>0-9 (digits)</td>
+                        <td>48-57</td>
+                        <td>0x30-0x39</td>
+                    </tr>
+                    <tr>
+                        <td>{ (open brace)</td>
+                        <td>123</td>
+                        <td>0x7B</td>
+                    </tr>
+                    <tr>
+                        <td>} (close brace)</td>
+                        <td>125</td>
+                        <td>0x7D</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Challenge Section -->
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Using the integer array below, convert each number to its corresponding ASCII character to reveal the flag.</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Integer Array</div>
+                <div class="cipher-text">[99, 114, 121, 112, 116, 111, 123, 65, 83, 67, 73, 73, 95, 112, 114, 49, 110, 116, 52, 98, 108, 51, 125]</div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Hint</div>
+                    <div class="tip-text">In Python, <code>chr(n)</code> converts an integer to its ASCII character, and <code>ord(c)</code> does the reverse.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solution Section -->
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Python Code</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(`ords = [99, 114, 121, 112, 116, 111, 123, 65, 83, 67, 73, 73, 95, 112, 114, 49, 110, 116, 52, 98, 108, 51, 125]
+
+flag = ''.join(chr(o) for o in ords)
+print(flag)`, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>ords = [99, 114, 121, 112, 116, 111, 123, 65, 83, 67, 
+        73, 73, 95, 112, 114, 49, 110, 116, 52, 98, 
+        108, 51, 125]
+
+flag = <span class="string">''</span>.join(<span class="function">chr</span>(o) <span class="keyword">for</span> o <span class="keyword">in</span> ords)
+<span class="function">print</span>(flag)</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Step-by-Step Conversion</h3>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Decimal</th>
+                            <th>chr()</th>
+                            <th>Character</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>99</td><td>chr(99)</td><td>c</td></tr>
+                        <tr><td>114</td><td>chr(114)</td><td>r</td></tr>
+                        <tr><td>121</td><td>chr(121)</td><td>y</td></tr>
+                        <tr><td>112</td><td>chr(112)</td><td>p</td></tr>
+                        <tr><td>116</td><td>chr(116)</td><td>t</td></tr>
+                        <tr><td>111</td><td>chr(111)</td><td>o</td></tr>
+                        <tr><td>123</td><td>chr(123)</td><td>{</td></tr>
+                        <tr><td>65</td><td>chr(65)</td><td>A</td></tr>
+                        <tr><td>83</td><td>chr(83)</td><td>S</td></tr>
+                        <tr><td>67</td><td>chr(67)</td><td>C</td></tr>
+                        <tr><td>73</td><td>chr(73)</td><td>I</td></tr>
+                        <tr><td>73</td><td>chr(73)</td><td>I</td></tr>
+                        <tr><td>95</td><td>chr(95)</td><td>_</td></tr>
+                        <tr><td>112</td><td>chr(112)</td><td>p</td></tr>
+                        <tr><td>114</td><td>chr(114)</td><td>r</td></tr>
+                        <tr><td>49</td><td>chr(49)</td><td>1</td></tr>
+                        <tr><td>110</td><td>chr(110)</td><td>n</td></tr>
+                        <tr><td>116</td><td>chr(116)</td><td>t</td></tr>
+                        <tr><td>52</td><td>chr(52)</td><td>4</td></tr>
+                        <tr><td>98</td><td>chr(98)</td><td>b</td></tr>
+                        <tr><td>108</td><td>chr(108)</td><td>l</td></tr>
+                        <tr><td>51</td><td>chr(51)</td><td>3</td></tr>
+                        <tr><td>125</td><td>chr(125)</td><td>}</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{ASCII_pr1nt4bl3}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navigation Footer -->
+    <footer class="challenge-nav">
+        <a href="../index.html#challenges" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Back to</div>
+                <div class="nav-btn-title">All Challenges</div>
+            </div>
+        </a>
+        <a href="hex.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">Hexadecimal →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

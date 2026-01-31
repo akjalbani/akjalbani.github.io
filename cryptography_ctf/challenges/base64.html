@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / Base64
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 03</span>
+            <span class="card-difficulty easy">EASY</span>
+        </div>
+        <h1 class="challenge-title">Base64 Encoding</h1>
+        <p class="challenge-desc">Transform binary data into a portable ASCII format using Base64.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>Base64 encodes binary data using 64 printable ASCII characters (A-Z, a-z, 0-9, +, /). Each Base64 character represents 6 bits, so 4 Base64 characters encode 3 bytes (24 bits).</p>
+            <p>The term "ASCII armor" refers to encoding binary encrypted data in Base64 so it can be safely transmitted through text-only channels like email.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Take this hex string, decode it into bytes, then encode it into Base64.</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Hex String</div>
+                <div class="cipher-text">72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf</div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>import base64
+
+hex_string = '72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf'
+
+# Step 1: Hex to bytes
+raw_bytes = bytes.fromhex(hex_string)
+
+# Step 2: Bytes to Base64
+result = base64.b64encode(raw_bytes).decode()
+print(result)</pre>
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px;"><strong>Conversion Pipeline:</strong></p>
+                <p style="font-family: var(--font-mono); color: var(--accent-cyan);">Hex String → bytes.fromhex() → Raw Bytes → b64encode() → Base64 String</p>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{base64_is_part_of_ascii_armor}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="hex.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">Hexadecimal</div>
+            </div>
+        </a>
+        <a href="bigint.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">Big Integers →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

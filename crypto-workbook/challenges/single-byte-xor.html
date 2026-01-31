@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Byte XOR | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / Single Byte XOR
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 07</span>
+            <span class="card-difficulty hard">HARD</span>
+        </div>
+        <h1 class="challenge-title">Single Byte XOR</h1>
+        <p class="challenge-desc">Break a single-byte XOR cipher using brute force or known plaintext attack.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>When data is XORed with a single byte, there are only 256 possible keys (0-255). This makes it trivially weak and susceptible to brute force attacks.</p>
+            <p>If you know part of the plaintext (like the flag format <code>crypto{</code>), you can recover the key instantly using a known plaintext attack.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Data has been XORed with a single secret byte. Decrypt the ciphertext to reveal the flag.</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Ciphertext (Hex)</div>
+                <div class="cipher-text">73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d</div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Hint</div>
+                    <div class="tip-text">Remember the flag format! If you know the first character should be 'c', what key value would make that work?</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Finding the Key</h3>
+                <p>Since we know the flag starts with 'c' (ASCII 99 = 0x63) and the first ciphertext byte is 0x73:</p>
+                
+                <div class="code-block">
+                    <div class="code-body">
+<pre style="color: var(--accent-cyan);">First ciphertext byte: 0x73 (115 in decimal)
+Expected plaintext:    'c'  (99 in decimal)
+
+Key = 0x73 ^ ord('c')
+Key = 115 ^ 99
+Key = 16 (0x10)</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Method 1: Known Plaintext Attack</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>cipher = bytes.fromhex('73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d')
+
+# Deduce key from known plaintext
+key = cipher[0] ^ ord('c')  # 0x73 ^ 0x63 = 0x10 = 16
+print(f"Key: {key}")
+
+# Decrypt
+plaintext = bytes(b ^ key for b in cipher)
+print(plaintext)</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Method 2: Brute Force</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>cipher = bytes.fromhex('73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d')
+
+for key in range(256):
+    result = bytes(b ^ key for b in cipher)
+    if result.startswith(b'crypto{'):
+        print(f"Key found: {key}")
+        print(result)
+        break</pre>
+                    </div>
+                </div>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{0x10_15_my_f4v0ur173_by73}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="xor-properties.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">XOR Properties</div>
+            </div>
+        </a>
+        <a href="repeating-xor.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">Repeating Key XOR →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

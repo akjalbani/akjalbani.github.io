@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexadecimal | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / Hexadecimal
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 02</span>
+            <span class="card-difficulty easy">EASY</span>
+        </div>
+        <h1 class="challenge-title">Hexadecimal Encoding</h1>
+        <p class="challenge-desc">Learn to decode hex strings - the most common way to represent binary data in a readable format.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>Hexadecimal (base-16) uses digits 0-9 and letters A-F to represent values. It's commonly used in cryptography because each hex digit maps to exactly 4 bits, making it compact and easy to read.</p>
+            <p>When we encrypt data, the result often contains non-printable bytes. Hex encoding lets us represent any binary data as readable text.</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Hex</th>
+                        <th>Decimal</th>
+                        <th>Binary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>0-9</td><td>0-9</td><td>0000-1001</td></tr>
+                    <tr><td>A</td><td>10</td><td>1010</td></tr>
+                    <tr><td>B</td><td>11</td><td>1011</td></tr>
+                    <tr><td>C</td><td>12</td><td>1100</td></tr>
+                    <tr><td>D</td><td>13</td><td>1101</td></tr>
+                    <tr><td>E</td><td>14</td><td>1110</td></tr>
+                    <tr><td>F</td><td>15</td><td>1111</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>Decode this hex string back into bytes to get the flag.</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Hex String</div>
+                <div class="cipher-text">63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d</div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Hint</div>
+                    <div class="tip-text">In Python, <code>bytes.fromhex()</code> converts a hex string to bytes. The <code>.hex()</code> method does the reverse.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Python Code</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(`hex_string = '63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d'
+
+result = bytes.fromhex(hex_string)
+print(result.decode())`, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>hex_string = <span class="string">'63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d'</span>
+
+result = <span class="function">bytes.fromhex</span>(hex_string)
+<span class="function">print</span>(result.decode())</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">How It Works</h3>
+                <p>Each pair of hex digits represents one byte (one ASCII character):</p>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Hex Pair</th>
+                            <th>Decimal</th>
+                            <th>ASCII</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>63</td><td>99</td><td>c</td></tr>
+                        <tr><td>72</td><td>114</td><td>r</td></tr>
+                        <tr><td>79</td><td>121</td><td>y</td></tr>
+                        <tr><td>70</td><td>112</td><td>p</td></tr>
+                        <tr><td>74</td><td>116</td><td>t</td></tr>
+                        <tr><td>6f</td><td>111</td><td>o</td></tr>
+                        <tr><td>7b</td><td>123</td><td>{</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{You_will_be_working_with_hex_strings_a_lot}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="ascii.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">ASCII Conversion</div>
+            </div>
+        </a>
+        <a href="base64.html" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Next Challenge</div>
+                <div class="nav-btn-title">Base64 →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

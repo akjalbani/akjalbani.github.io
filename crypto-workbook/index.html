@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptography Fundamentals | Student Workbook</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="matrix-bg" id="matrix-bg"></div>
+    <div class="scanlines"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#challenges" class="nav-link">Challenges</a>
+            <a href="#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <div class="glitch-wrapper">
+                <h1 class="hero-title glitch" data-text="CRYPTOGRAPHY">CRYPTOGRAPHY</h1>
+            </div>
+            <h2 class="hero-subtitle">FUNDAMENTALS</h2>
+            <p class="hero-desc">Master encoding, XOR operations & CTF challenges</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number" data-count="8">0</span>
+                    <span class="stat-label">Challenges</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-count="4">0</span>
+                    <span class="stat-label">Encodings</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-count="100">0</span>
+                    <span class="stat-label">% Solutions</span>
+                </div>
+            </div>
+            <a href="#challenges" class="cta-button">
+                <span class="cta-text">BEGIN TRAINING</span>
+                <span class="cta-icon">→</span>
+            </a>
+        </div>
+        <div class="hero-terminal">
+            <div class="terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">crypto_init.py</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line" data-delay="0">
+                    <span class="prompt">$</span> python3 crypto_init.py
+                </div>
+                <div class="terminal-line" data-delay="500">
+                    <span class="output">[*] Initializing cryptography modules...</span>
+                </div>
+                <div class="terminal-line" data-delay="1000">
+                    <span class="output success">[✓] ASCII encoder loaded</span>
+                </div>
+                <div class="terminal-line" data-delay="1500">
+                    <span class="output success">[✓] Hexadecimal converter ready</span>
+                </div>
+                <div class="terminal-line" data-delay="2000">
+                    <span class="output success">[✓] Base64 module initialized</span>
+                </div>
+                <div class="terminal-line" data-delay="2500">
+                    <span class="output success">[✓] XOR cipher engine active</span>
+                </div>
+                <div class="terminal-line" data-delay="3000">
+                    <span class="output highlight">[!] Ready to decrypt flags...</span>
+                </div>
+                <div class="terminal-line cursor-line" data-delay="3500">
+                    <span class="prompt">$</span> <span class="cursor">_</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Challenges Section -->
+    <section class="challenges-section" id="challenges">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="title-decorator">[</span>
+                CHALLENGES
+                <span class="title-decorator">]</span>
+            </h2>
+            <p class="section-desc">8 progressively difficult cryptography challenges</p>
+        </div>
+
+        <div class="challenges-grid">
+            <!-- Challenge 1: ASCII -->
+            <a href="challenges/ascii.html" class="challenge-card" data-difficulty="easy">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">01</span>
+                    <span class="card-difficulty easy">EASY</span>
+                </div>
+                <h3 class="card-title">ASCII Conversion</h3>
+                <p class="card-desc">Convert integers to characters using the ASCII standard</p>
+                <div class="card-tags">
+                    <span class="tag">chr()</span>
+                    <span class="tag">ord()</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 2: Hex -->
+            <a href="challenges/hex.html" class="challenge-card" data-difficulty="easy">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">02</span>
+                    <span class="card-difficulty easy">EASY</span>
+                </div>
+                <h3 class="card-title">Hexadecimal</h3>
+                <p class="card-desc">Decode hex strings back into readable bytes</p>
+                <div class="card-tags">
+                    <span class="tag">bytes.fromhex()</span>
+                    <span class="tag">Base-16</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 3: Base64 -->
+            <a href="challenges/base64.html" class="challenge-card" data-difficulty="easy">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">03</span>
+                    <span class="card-difficulty easy">EASY</span>
+                </div>
+                <h3 class="card-title">Base64 Encoding</h3>
+                <p class="card-desc">Transform hex to bytes to Base64 representation</p>
+                <div class="card-tags">
+                    <span class="tag">b64encode()</span>
+                    <span class="tag">ASCII Armor</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 4: Big Integers -->
+            <a href="challenges/bigint.html" class="challenge-card" data-difficulty="medium">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">04</span>
+                    <span class="card-difficulty medium">MEDIUM</span>
+                </div>
+                <h3 class="card-title">Bytes & Big Integers</h3>
+                <p class="card-desc">Convert large integers to messages for RSA</p>
+                <div class="card-tags">
+                    <span class="tag">long_to_bytes()</span>
+                    <span class="tag">PyCryptodome</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 5: XOR Basics -->
+            <a href="challenges/xor-basics.html" class="challenge-card" data-difficulty="medium">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">05</span>
+                    <span class="card-difficulty medium">MEDIUM</span>
+                </div>
+                <h3 class="card-title">XOR Basics</h3>
+                <p class="card-desc">Learn the fundamental XOR bitwise operation</p>
+                <div class="card-tags">
+                    <span class="tag">^</span>
+                    <span class="tag">Bitwise</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 6: XOR Properties -->
+            <a href="challenges/xor-properties.html" class="challenge-card" data-difficulty="hard">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">06</span>
+                    <span class="card-difficulty hard">HARD</span>
+                </div>
+                <h3 class="card-title">XOR Properties</h3>
+                <p class="card-desc">Use associative & commutative properties</p>
+                <div class="card-tags">
+                    <span class="tag">A⊕B=B⊕A</span>
+                    <span class="tag">A⊕A=0</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 7: Single Byte XOR -->
+            <a href="challenges/single-byte-xor.html" class="challenge-card" data-difficulty="hard">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">07</span>
+                    <span class="card-difficulty hard">HARD</span>
+                </div>
+                <h3 class="card-title">Single Byte XOR</h3>
+                <p class="card-desc">Brute force a single-byte XOR cipher</p>
+                <div class="card-tags">
+                    <span class="tag">Brute Force</span>
+                    <span class="tag">256 Keys</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+
+            <!-- Challenge 8: Repeating Key XOR -->
+            <a href="challenges/repeating-xor.html" class="challenge-card" data-difficulty="hard">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <span class="card-number">08</span>
+                    <span class="card-difficulty hard">HARD</span>
+                </div>
+                <h3 class="card-title">Repeating Key XOR</h3>
+                <p class="card-desc">Break encryption with known plaintext attack</p>
+                <div class="card-tags">
+                    <span class="tag">Known Plaintext</span>
+                    <span class="tag">Key Recovery</span>
+                </div>
+                <div class="card-footer">
+                    <span class="card-status">START →</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Reference Section -->
+    <section class="reference-section" id="reference">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="title-decorator">[</span>
+                QUICK REFERENCE
+                <span class="title-decorator">]</span>
+            </h2>
+            <p class="section-desc">Essential Python functions & XOR properties</p>
+        </div>
+
+        <div class="reference-grid">
+            <!-- Python Functions -->
+            <div class="reference-card">
+                <h3 class="ref-title">
+                    <span class="ref-icon">🐍</span>
+                    Python Functions
+                </h3>
+                <div class="ref-table">
+                    <div class="ref-row header">
+                        <span>Function</span>
+                        <span>Purpose</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>chr(n)</code>
+                        <span>Integer → Character</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>ord(c)</code>
+                        <span>Character → Integer</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>hex(n)</code>
+                        <span>Integer → Hex string</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>bytes.fromhex(s)</code>
+                        <span>Hex string → Bytes</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>b.hex()</code>
+                        <span>Bytes → Hex string</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>base64.b64encode(b)</code>
+                        <span>Bytes → Base64</span>
+                    </div>
+                    <div class="ref-row">
+                        <code>long_to_bytes(n)</code>
+                        <span>Big int → Bytes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XOR Properties -->
+            <div class="reference-card">
+                <h3 class="ref-title">
+                    <span class="ref-icon">⊕</span>
+                    XOR Properties
+                </h3>
+                <div class="ref-table">
+                    <div class="ref-row header">
+                        <span>Property</span>
+                        <span>Formula</span>
+                    </div>
+                    <div class="ref-row">
+                        <span>Commutative</span>
+                        <code>A ⊕ B = B ⊕ A</code>
+                    </div>
+                    <div class="ref-row">
+                        <span>Associative</span>
+                        <code>(A⊕B)⊕C = A⊕(B⊕C)</code>
+                    </div>
+                    <div class="ref-row">
+                        <span>Identity</span>
+                        <code>A ⊕ 0 = A</code>
+                    </div>
+                    <div class="ref-row">
+                        <span>Self-Inverse</span>
+                        <code>A ⊕ A = 0</code>
+                    </div>
+                    <div class="ref-row">
+                        <span>Reversibility</span>
+                        <code>C=A⊕K → A=C⊕K</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XOR Truth Table -->
+            <div class="reference-card">
+                <h3 class="ref-title">
+                    <span class="ref-icon">📊</span>
+                    XOR Truth Table
+                </h3>
+                <div class="truth-table">
+                    <div class="truth-row header">
+                        <span>A</span>
+                        <span>B</span>
+                        <span>A ⊕ B</span>
+                    </div>
+                    <div class="truth-row">
+                        <span class="bit">0</span>
+                        <span class="bit">0</span>
+                        <span class="bit result">0</span>
+                    </div>
+                    <div class="truth-row">
+                        <span class="bit">0</span>
+                        <span class="bit">1</span>
+                        <span class="bit result highlight">1</span>
+                    </div>
+                    <div class="truth-row">
+                        <span class="bit">1</span>
+                        <span class="bit">0</span>
+                        <span class="bit result highlight">1</span>
+                    </div>
+                    <div class="truth-row">
+                        <span class="bit">1</span>
+                        <span class="bit">1</span>
+                        <span class="bit result">0</span>
+                    </div>
+                </div>
+                <p class="truth-note">Returns 1 if bits are <em>different</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Flags Section -->
+    <section class="flags-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="title-decorator">[</span>
+                ALL FLAGS
+                <span class="title-decorator">]</span>
+            </h2>
+            <p class="section-desc">Complete solutions for all challenges</p>
+        </div>
+
+        <div class="flags-container">
+            <div class="flag-item">
+                <span class="flag-num">01</span>
+                <code class="flag-code">crypto{ASCII_pr1nt4bl3}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">02</span>
+                <code class="flag-code">crypto{You_will_be_working_with_hex_strings_a_lot}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">03</span>
+                <code class="flag-code">crypto{base64_is_part_of_ascii_armor}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">04</span>
+                <code class="flag-code">crypto{3nc0d1ng_4ll_7h3_w4y_d0wn}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">05</span>
+                <code class="flag-code">crypto{aloha}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">06</span>
+                <code class="flag-code">crypto{x0r_i5_ass0c1at1v3}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">07</span>
+                <code class="flag-code">crypto{0x10_15_my_f4v0ur173_by73}</code>
+            </div>
+            <div class="flag-item">
+                <span class="flag-num">08</span>
+                <code class="flag-code">crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="nav-logo">&lt;/&gt;</span>
+                <span>CRYPTO<span class="accent">LAB</span></span>
+            </div>
+            <p class="footer-text">Cryptography Fundamentals Workbook</p>
+            <p class="footer-credit">Built for students learning encoding & XOR operations</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

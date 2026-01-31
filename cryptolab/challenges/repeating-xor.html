@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repeating Key XOR | CryptoLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">&lt;/&gt;</span>
+            <span class="nav-title">CRYPTO<span class="accent">LAB</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#challenges" class="nav-link active">Challenges</a>
+            <a href="../index.html#reference" class="nav-link">Reference</a>
+        </div>
+    </nav>
+
+    <header class="challenge-header">
+        <div class="challenge-breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../index.html#challenges">Challenges</a> / Repeating Key XOR
+        </div>
+        <div class="challenge-meta">
+            <span class="challenge-number">CHALLENGE 08</span>
+            <span class="card-difficulty hard">HARD</span>
+        </div>
+        <h1 class="challenge-title">Repeating Key XOR</h1>
+        <p class="challenge-desc">Break a repeating-key XOR cipher using known plaintext attack.</p>
+    </header>
+
+    <main class="challenge-content">
+        <section class="content-section">
+            <h2>Background</h2>
+            <p>Repeating key XOR (also called Vigenère cipher for XOR) uses a key that cycles through the message. Each byte of plaintext is XORed with the corresponding byte of the key, wrapping around when the key is exhausted.</p>
+            
+            <div class="code-block">
+                <div class="code-body">
+<pre style="color: var(--text-secondary);">Plaintext:  H  E  L  L  O  W  O  R  L  D
+Key:        K  E  Y  K  E  Y  K  E  Y  K
+            ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓
+Ciphertext: XOR each pair</pre>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px;">If you know part of the plaintext, you can recover the key by XORing the known plaintext with the corresponding ciphertext bytes.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Challenge</h2>
+            <p>The flag has been encrypted with a secret key. Decrypt the ciphertext.</p>
+            
+            <div class="cipher-display">
+                <div class="cipher-label">Ciphertext (Hex)</div>
+                <div class="cipher-text">0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e263451150104</div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <div class="tip-title">Key Insight</div>
+                    <div class="tip-text">The flag format <code>crypto{</code> gives you 7 known plaintext bytes - enough to recover a short key!</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Solution</h2>
+            
+            <div class="solution-toggle">
+                <button class="toggle-btn" data-solution="solution1" onclick="toggleSolution('solution1')">Show Solution</button>
+            </div>
+
+            <div id="solution1" class="solution-content hidden">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">Recovering the Key</h3>
+                <p>XOR the known plaintext <code>crypto{</code> with the first 7 bytes of ciphertext:</p>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Cipher (hex)</th>
+                            <th>Plaintext</th>
+                            <th>Key Byte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0</td><td>0e</td><td>c (0x63)</td><td>0x0e ^ 0x63 = 'm'</td></tr>
+                        <tr><td>1</td><td>0b</td><td>r (0x72)</td><td>0x0b ^ 0x72 = 'y'</td></tr>
+                        <tr><td>2</td><td>21</td><td>y (0x79)</td><td>0x21 ^ 0x79 = 'X'</td></tr>
+                        <tr><td>3</td><td>3f</td><td>p (0x70)</td><td>0x3f ^ 0x70 = 'O'</td></tr>
+                        <tr><td>4</td><td>26</td><td>t (0x74)</td><td>0x26 ^ 0x74 = 'R'</td></tr>
+                        <tr><td>5</td><td>04</td><td>o (0x6f)</td><td>0x04 ^ 0x6f = 'k'</td></tr>
+                        <tr><td>6</td><td>1e</td><td>{ (0x7b)</td><td>0x1e ^ 0x7b = 'e'</td></tr>
+                    </tbody>
+                </table>
+                
+                <p style="margin-top: 20px;">The key fragment is <code style="color: var(--accent-green);">myXORke</code> - likely <code style="color: var(--accent-green);">myXORkey</code>!</p>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">Python Code</h3>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Python</span>
+                        <button class="copy-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.textContent, this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>cipher = bytes.fromhex('0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e263451150104')
+
+# Recover key using known plaintext
+known = b'crypto{'
+key_fragment = bytes(c ^ p for c, p in zip(cipher, known))
+print(f"Key fragment: {key_fragment}")  # b'myXORke'
+
+# The key is likely 'myXORkey'
+key = b'myXORkey'
+
+# Decrypt using repeating key
+plaintext = bytes(c ^ key[i % len(key)] for i, c in enumerate(cipher))
+print(plaintext)</pre>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-cyan); margin: 30px 0 20px;">How Repeating Key Works</h3>
+                
+                <div class="code-block">
+                    <div class="code-body">
+<pre style="color: var(--text-secondary);">Position:   0  1  2  3  4  5  6  7  8  9  10 11 12 ...
+Key index:  0  1  2  3  4  5  6  7  0  1  2  3  4  ...
+Key byte:   m  y  X  O  R  k  e  y  m  y  X  O  R  ...
+
+Formula: key[i % len(key)]</pre>
+                    </div>
+                </div>
+
+                <div class="flag-display">
+                    <div class="flag-label">🚩 Flag</div>
+                    <div class="flag-value">crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="challenge-nav">
+        <a href="single-byte-xor.html" class="nav-btn">
+            <span>←</span>
+            <div>
+                <div class="nav-btn-label">Previous</div>
+                <div class="nav-btn-title">Single Byte XOR</div>
+            </div>
+        </a>
+        <a href="../index.html#challenges" class="nav-btn">
+            <div>
+                <div class="nav-btn-label">Completed!</div>
+                <div class="nav-btn-title">All Challenges →</div>
+            </div>
+        </a>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

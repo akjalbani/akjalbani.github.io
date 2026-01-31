@@ -6,7 +6,7 @@ An interactive web-based workbook for learning cryptography fundamentals, includ
 
 ## 🚀 Live Demo
 
-Visit the live site: `https://[your-username].github.io/crypto-workbook/`
+Visit the live site: `https://akjalbani.github.io/crypto-workbook/`
 
 ## 📚 What's Included
 

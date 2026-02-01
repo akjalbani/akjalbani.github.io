@@ -11,7 +11,7 @@ A cyberpunk-themed, interactive learning platform for teaching Splunk Enterprise
 4. Under "Source", select **Deploy from a branch**
 5. Select **main** branch and **/ (root)** folder
 6. Click **Save**
-7. Your site will be live at: `https://YOUR-USERNAME.github.io/splunk-ctf/`
+7. Your site will be live at: `https://akjalbani.github.io/splunk-ctf/`
 
 ### Option 2: Using Git CLI
 ```bash

@@ -1,0 +1,13 @@
+Jan 15 09:15:00 WKSTN-PC12 EventCode=4624 LogonType=2 TargetUserName=admin_backup src_ip=LOCAL SubjectUserName=admin_backup dest_host=WKSTN-PC12
+Jan 15 09:23:00 WKSTN-PC45 EventCode=4624 LogonType=10 TargetUserName=admin_backup src_ip=10.10.1.12 SubjectUserName=- dest_host=WKSTN-PC45
+Jan 15 09:25:00 WKSTN-PC45 EventCode=4648 TargetUserName=admin_backup src_ip=10.10.1.12 SubjectUserName=admin_backup dest_host=WKSTN-PC45
+Jan 15 09:30:00 WKSTN-PC20 EventCode=4624 LogonType=3 TargetUserName=jsmith src_ip=10.10.1.20 SubjectUserName=- dest_host=WKSTN-PC20
+Jan 15 09:45:00 SRV-FILE01 EventCode=4624 LogonType=3 TargetUserName=admin_backup src_ip=10.10.1.45 SubjectUserName=- dest_host=SRV-FILE01
+Jan 15 09:46:00 SRV-FILE01 EventCode=5140 ShareName=\\SRV-FILE01\C$ SubjectUserName=admin_backup src_ip=10.10.1.45 AccessMask=0x1
+Jan 15 09:50:00 WKSTN-PC30 EventCode=4624 LogonType=2 TargetUserName=analyst1 src_ip=LOCAL SubjectUserName=analyst1 dest_host=WKSTN-PC30
+Jan 15 10:02:00 SRV-APP02 EventCode=4624 LogonType=3 TargetUserName=admin_backup src_ip=10.10.2.10 SubjectUserName=- dest_host=SRV-APP02
+Jan 15 10:03:00 SRV-APP02 EventCode=7045 ServiceName=PSEXESVC ImagePath=C:\Windows\PSEXESVC.exe User=admin_backup dest_host=SRV-APP02
+Jan 15 10:15:00 SRV-DB01 EventCode=4624 LogonType=3 TargetUserName=svc_sql src_ip=10.10.2.50 SubjectUserName=- dest_host=SRV-DB01
+Jan 15 10:31:00 DC01 EventCode=4624 LogonType=3 TargetUserName=admin_backup src_ip=10.10.2.20 SubjectUserName=- dest_host=DC01
+Jan 15 10:32:00 DC01 EventCode=4672 SubjectUserName=admin_backup PrivilegeList=SeDebugPrivilege dest_host=DC01
+Jan 15 10:35:00 DC01 EventCode=4648 TargetUserName=Administrator src_ip=10.10.2.20 SubjectUserName=admin_backup dest_host=DC01

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 4: PowerShell Empire | SPLUNK SENTINEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="challenge-page">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="logo"><div class="logo-icon">◈</div>SENTINEL</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">All CTFs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="challenge-hero">
+        <div class="challenge-hero-bg"></div>
+        <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Challenges</a> / Challenge 04</div>
+        <h1 class="challenge-title">🖥️ PowerShell Empire</h1>
+        <div class="challenge-badges">
+            <span class="difficulty-badge difficulty-medium">MEDIUM</span>
+            <span class="badge badge-points">250 POINTS</span>
+            <span class="badge badge-time">~40 MIN</span>
+            <span class="badge badge-mitre">T1059.001</span>
+        </div>
+        <p class="page-description">Detect malicious PowerShell execution and encoded command attacks.</p>
+    </header>
+
+    <main class="main-content">
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📚</span>CONCEPTS TO LEARN</h2>
+
+            <div class="concept-box">
+                <h4>PowerShell as an Attack Vector</h4>
+                <p>PowerShell is a powerful scripting language built into Windows. Attackers love it because it's:</p>
+                <ul>
+                    <li><strong>Native:</strong> Pre-installed on all modern Windows systems</li>
+                    <li><strong>Powerful:</strong> Can access .NET, WMI, COM objects, and more</li>
+                    <li><strong>Flexible:</strong> Can execute code in memory without touching disk</li>
+                    <li><strong>Trusted:</strong> Often whitelisted by security tools</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>Malicious PowerShell Indicators</h4>
+                <table class="data-table">
+                    <tr><th>Indicator</th><th>Why It's Suspicious</th><th>Example</th></tr>
+                    <tr><td>-EncodedCommand / -enc</td><td>Hides command in Base64</td><td>powershell -enc JABz...</td></tr>
+                    <tr><td>-ExecutionPolicy Bypass</td><td>Circumvents security controls</td><td>-ep bypass</td></tr>
+                    <tr><td>-NoProfile / -nop</td><td>Avoids loading user profiles</td><td>powershell -nop</td></tr>
+                    <tr><td>-WindowStyle Hidden</td><td>Hides the window</td><td>-w hidden</td></tr>
+                    <tr><td>IEX / Invoke-Expression</td><td>Executes strings as code</td><td>IEX (iwr http://...)</td></tr>
+                    <tr><td>DownloadString / WebClient</td><td>Fetches remote code</td><td>Net.WebClient</td></tr>
+                </table>
+            </div>
+
+            <div class="concept-box">
+                <h4>Windows Event IDs for PowerShell</h4>
+                <ul>
+                    <li><strong>4104:</strong> Script Block Logging - Records PowerShell scripts</li>
+                    <li><strong>4103:</strong> Module Logging - Records module usage</li>
+                    <li><strong>400/403:</strong> Engine start/stop (legacy)</li>
+                    <li><strong>Sysmon 1:</strong> Process creation with command line</li>
+                </ul>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">SPL</span></div>
+                    <div class="code-content">
+<pre>index=windows (EventCode=4104 OR source="WinEventLog:Microsoft-Windows-PowerShell/Operational")
+| search ScriptBlockText="*EncodedCommand*" OR ScriptBlockText="*-enc*"</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <h4>Decoding Base64 in Splunk</h4>
+                <p>Attackers often Base64 encode commands. You can decode them in SPL:</p>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">SPL</span></div>
+                    <div class="code-content">
+<pre>| eval decoded=base64decode(encoded_command)
+| eval decoded_utf16=urldecode(replace(decoded,"(..)","\\x\1"))</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🎯</span>THE CHALLENGE</h2>
+            <div class="scenario-box">
+                <p><strong>SITUATION:</strong> Your EDR flagged suspicious PowerShell activity on a workstation. The analyst believes an attacker is using encoded commands to download and execute malware. Analyze the PowerShell logs to find:</p>
+                <br>
+                <p>1. The hostname of the compromised machine<br>
+                2. The URL the attacker tried to download malware from</p>
+            </div>
+            <div class="flag-box">
+                <div class="flag-label">FLAG FORMAT</div>
+                <div class="flag-format">FLAG{HOSTNAME_DOMAIN}</div>
+            </div>
+            <a href="../data/challenge4_powershell.log" download class="download-btn">📥 Download Challenge Data</a>
+            <div class="tip-box">
+                <strong>💡 HINT</strong>
+                <p>Look for -EncodedCommand or -enc flags. The Base64 may need decoding. Search for patterns like "DownloadString" or "WebClient".</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🔓</span>SOLUTION</h2>
+            <div class="solution-wrapper">
+                <button class="solution-toggle" onclick="toggleSolution(this)">
+                    <span>REVEAL STEP-BY-STEP SOLUTION</span>
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="solution-content">
+                    <div class="step" data-step="1">
+                        <h4>Find Encoded PowerShell Commands</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows sourcetype=WinEventLog:PowerShell
+| search "*-enc*" OR "*EncodedCommand*" OR "*-e *"
+| table _time, host, CommandLine</pre></div>
+                        </div>
+                        <p>This finds PowerShell events with encoding indicators. Host WKSTN-PC47 appears!</p>
+                    </div>
+                    <div class="step" data-step="2">
+                        <h4>Look for Download Indicators</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows sourcetype=WinEventLog:PowerShell
+| search "*DownloadString*" OR "*WebClient*" OR "*Invoke-WebRequest*" OR "*iwr*"
+| table _time, host, Message</pre></div>
+                        </div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <h4>Extract and Analyze Suspicious Commands</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows sourcetype=WinEventLog:PowerShell host="WKSTN-PC47"
+| rex field=Message "http[s]?://(?<malicious_url>[^\s'\"]+)"
+| where isnotnull(malicious_url)
+| stats count by malicious_url</pre></div>
+                        </div>
+                        <p>Extracted URL: evil-payload.attacker.net</p>
+                    </div>
+                    <div class="step" data-step="4">
+                        <h4>Alternative: Decode Base64</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows sourcetype=WinEventLog:PowerShell
+| rex field=CommandLine "-[eE](?:nc|ncodedcommand)?\s+(?<b64cmd>[A-Za-z0-9+/=]+)"
+| where len(b64cmd) > 20
+| eval decoded=base64decode(b64cmd)
+| table host, b64cmd, decoded</pre></div>
+                        </div>
+                    </div>
+                    <div class="answer-reveal">
+                        <div class="answer-label">🚩 THE FLAG</div>
+                        <div class="answer-value">FLAG{WKSTN-PC47_evil-payload.attacker.net}</div>
+                    </div>
+                    <div class="warning-box">
+                        <strong>⚠️ REAL WORLD NOTE</strong>
+                        <p>In production, create alerts for these patterns. PowerShell 5.0+ has Script Block Logging (Event 4104) which captures the decoded command automatically!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="challenge3.html" class="nav-btn">← <div><span class="nav-btn-label">PREVIOUS</span>Web Shell</div></a>
+            <a href="challenge5.html" class="nav-btn"><div><span class="nav-btn-label">NEXT</span>Data Exfiltration</div> →</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">SPLUNK SENTINEL</div>
+        <p class="footer-text">// THREAT DETECTION CTF ACADEMY //</p>
+    </footer>
+
+    <script>
+        function toggleSolution(btn) { btn.classList.toggle('active'); btn.nextElementSibling.classList.toggle('show'); }
+        function copyCode(btn) { navigator.clipboard.writeText(btn.closest('.code-block').querySelector('pre').textContent); btn.textContent = 'COPIED!'; setTimeout(() => btn.textContent = 'COPY', 2000); }
+    </script>
+</body>
+</html>

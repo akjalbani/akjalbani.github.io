@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 8: Persistence Hunter | SPLUNK SENTINEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="challenge-page">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="logo"><div class="logo-icon">◈</div>SENTINEL</a>
+            <ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="index.html">All CTFs</a></li></ul>
+        </div>
+    </nav>
+    <header class="challenge-hero">
+        <div class="challenge-hero-bg"></div>
+        <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Challenges</a> / Challenge 08</div>
+        <h1 class="challenge-title">⏰ Persistence Hunter</h1>
+        <div class="challenge-badges">
+            <span class="difficulty-badge difficulty-hard">HARD</span>
+            <span class="badge badge-points">500 POINTS</span>
+            <span class="badge badge-mitre">T1547</span>
+        </div>
+        <p class="page-description">Find registry-based persistence and scheduled tasks planted by attackers.</p>
+    </header>
+    <main class="main-content">
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📚</span>CONCEPTS TO LEARN</h2>
+            <div class="concept-box">
+                <h4>Common Persistence Locations</h4>
+                <table class="data-table">
+                    <tr><th>Location</th><th>MITRE ID</th><th>Description</th></tr>
+                    <tr><td>Run/RunOnce Keys</td><td>T1547.001</td><td>HKLM/HKCU\...\Run</td></tr>
+                    <tr><td>Scheduled Tasks</td><td>T1053.005</td><td>schtasks.exe</td></tr>
+                    <tr><td>Services</td><td>T1543.003</td><td>sc.exe, New-Service</td></tr>
+                    <tr><td>WMI Subscriptions</td><td>T1546.003</td><td>Event-based persistence</td></tr>
+                </table>
+            </div>
+            <div class="concept-box">
+                <h4>Registry Autorun Locations</h4>
+                <div class="code-block"><div class="code-header"><span class="code-lang">Registry</span></div>
+                    <div class="code-content"><pre>HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell</pre></div>
+                </div>
+            </div>
+            <div class="concept-box">
+                <h4>Sysmon Events for Persistence</h4>
+                <ul>
+                    <li><strong>Event ID 12:</strong> Registry object added/deleted</li>
+                    <li><strong>Event ID 13:</strong> Registry value set</li>
+                    <li><strong>Event ID 1:</strong> Process creation (schtasks, reg.exe)</li>
+                </ul>
+            </div>
+        </section>
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🎯</span>THE CHALLENGE</h2>
+            <div class="scenario-box">
+                <p><strong>SITUATION:</strong> After remediating an incident, find all persistence mechanisms. Identify:</p>
+                <p>1. The malicious scheduled task name<br>2. The registry Run key value name<br>3. The malicious executable path</p>
+            </div>
+            <div class="flag-box">
+                <div class="flag-label">FLAG FORMAT</div>
+                <div class="flag-format">FLAG{TASKNAME_REGVALUE_EXEPATH}</div>
+            </div>
+            <a href="../data/challenge8_persistence.log" download class="download-btn">📥 Download Challenge Data</a>
+        </section>
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🔓</span>SOLUTION</h2>
+            <div class="solution-wrapper">
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span>REVEAL SOLUTION</span><span class="toggle-icon">+</span></button>
+                <div class="solution-content">
+                    <div class="step" data-step="1">
+                        <h4>Find Registry Persistence</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=sysmon EventCode=13 TargetObject="*CurrentVersion\\Run*"
+| table _time, host, TargetObject, Details</pre></div></div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <h4>Find Scheduled Tasks</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows EventCode=4698
+| table _time, host, TaskName, SubjectUserName</pre></div></div>
+                    </div>
+                    <div class="answer-reveal">
+                        <div class="answer-label">🚩 THE FLAG</div>
+                        <div class="answer-value">FLAG{SystemHealthCheck_WindowsUpdate_C:\Users\Public\svchost.exe}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="nav-buttons">
+            <a href="challenge7.html" class="nav-btn">← <div><span class="nav-btn-label">PREVIOUS</span>Credential Theft</div></a>
+            <a href="index.html" class="nav-btn"><div><span class="nav-btn-label">COMPLETE!</span>All Challenges</div> →</a>
+        </div>
+    </main>
+    <footer><div class="footer-logo">SPLUNK SENTINEL</div><p class="footer-text">// THREAT DETECTION CTF ACADEMY //</p></footer>
+    <script>
+        function toggleSolution(btn) { btn.classList.toggle('active'); btn.nextElementSibling.classList.toggle('show'); }
+        function copyCode(btn) { navigator.clipboard.writeText(btn.closest('.code-block').querySelector('pre').textContent); btn.textContent = 'COPIED!'; setTimeout(() => btn.textContent = 'COPY', 2000); }
+    </script>
+</body>
+</html>

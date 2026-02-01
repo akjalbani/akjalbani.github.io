@@ -1,0 +1,16 @@
+Jan 15 11:00:00 DNS01 query: 10.10.5.23 -> google.com A
+Jan 15 11:00:01 DNS01 query: 10.10.5.50 -> microsoft.com A
+Jan 15 11:00:02 DNS01 query: 10.10.5.23 -> dGhpcyBpcyBlbmNvZGVkIGRhdGEgcGFydCAxIG9mIG1hbnk.data-sync.evil.com TXT
+Jan 15 11:00:03 DNS01 query: 10.10.5.23 -> c2VjcmV0IGRvY3VtZW50IGNvbnRlbnRzIGhlcmUgcGFydCAy.data-sync.evil.com TXT
+Jan 15 11:00:04 DNS01 query: 10.10.5.60 -> github.com A
+Jan 15 11:00:05 DNS01 query: 10.10.5.23 -> ZW5jcnlwdGVkIHBhc3N3b3JkIGRhdGFiYXNlIGV4cG9ydA.data-sync.evil.com TXT
+Jan 15 11:00:06 DNS01 query: 10.10.5.23 -> Y29uZmlkZW50aWFsIGN1c3RvbWVyIGxpc3QgZG9jdW1lbnQ.data-sync.evil.com TXT
+Jan 15 11:00:07 DNS01 query: 10.10.5.55 -> office.com A
+Jan 15 11:00:08 DNS01 query: 10.10.5.23 -> ZmluYW5jaWFsIHJlcG9ydCBRNCBleHRyYWN0aW9uIGRhdGE.data-sync.evil.com TXT
+Jan 15 11:00:09 DNS01 query: 10.10.5.23 -> cHJvcHJpZXRhcnkgc291cmNlIGNvZGUgZXhmaWx0cmF0aW9u.data-sync.evil.com TXT
+Jan 15 11:00:10 DNS01 query: 10.10.5.70 -> slack.com A
+Jan 15 11:00:11 DNS01 query: 10.10.5.23 -> aW50ZXJuYWwgbmV0d29yayBkaWFncmFtIGFuZCBjcmVkZW50.data-sync.evil.com TXT
+Jan 15 11:00:12 DNS01 query: 10.10.5.23 -> cGFzc3dvcmQgdmF1bHQgZXhwb3J0IGVuY3J5cHRlZCBkYXRh.data-sync.evil.com TXT
+Jan 15 11:00:13 DNS01 query: 10.10.5.80 -> zoom.us A
+Jan 15 11:00:14 DNS01 query: 10.10.5.23 -> c3NuIGFuZCBwZXJzb25hbCBpbmZvcm1hdGlvbiBvZiBlbXBs.data-sync.evil.com TXT
+Jan 15 11:00:15 DNS01 query: 10.10.5.23 -> Y3JlZGl0IGNhcmQgbnVtYmVycyBhbmQgY3ZjIGNvZGVzIGV4.data-sync.evil.com TXT

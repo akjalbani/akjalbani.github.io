@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Challenges | SPLUNK SENTINEL CTF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">◈</div>
+                SENTINEL
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#path">Learning Path</a></li>
+                <li><a href="index.html" class="active">All CTFs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-bg"></div>
+        <span class="section-tag">// MISSION DATABASE</span>
+        <h1 class="page-title">ALL CTF CHALLENGES</h1>
+        <p class="page-description">
+            Complete challenges in order for the best learning experience. 
+            Each challenge builds upon skills learned in previous missions.
+        </p>
+    </section>
+
+    <!-- Challenges List -->
+    <section class="challenges-section">
+        <div class="difficulty-filter">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="easy">EASY</button>
+            <button class="filter-btn" data-filter="medium">MEDIUM</button>
+            <button class="filter-btn" data-filter="hard">HARD</button>
+        </div>
+
+        <div class="challenges-list">
+            <!-- Challenge 1 -->
+            <a href="challenge1.html" class="challenge-item" data-difficulty="easy">
+                <div class="challenge-number">01</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>Operation First Search</h3>
+                        <span class="difficulty-badge difficulty-easy">EASY</span>
+                    </div>
+                    <p>Introduction to Splunk SPL basics and your first threat hunt. Learn search fundamentals, time ranges, and field extraction.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">100</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~20 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">SKILLS</span>
+                            <span class="meta-value">SPL, Search, Fields</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 2 -->
+            <a href="challenge2.html" class="challenge-item" data-difficulty="easy">
+                <div class="challenge-number">02</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>The Failed Login Mystery</h3>
+                        <span class="difficulty-badge difficulty-easy">EASY</span>
+                    </div>
+                    <p>Detect brute force attacks by analyzing authentication logs. Learn stats, count, and aggregation commands.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">150</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~25 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">SKILLS</span>
+                            <span class="meta-value">stats, where, sort</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 3 -->
+            <a href="challenge3.html" class="challenge-item" data-difficulty="medium">
+                <div class="challenge-number">03</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>Web Shell Hunter</h3>
+                        <span class="difficulty-badge difficulty-medium">MEDIUM</span>
+                    </div>
+                    <p>Find the hidden web shell in Apache access logs. Learn regex, eval, and web log analysis techniques.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">200</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~35 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">MITRE</span>
+                            <span class="meta-value">T1505.003</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 4 -->
+            <a href="challenge4.html" class="challenge-item" data-difficulty="medium">
+                <div class="challenge-number">04</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>PowerShell Empire</h3>
+                        <span class="difficulty-badge difficulty-medium">MEDIUM</span>
+                    </div>
+                    <p>Detect malicious PowerShell execution patterns. Analyze Windows Event Logs for encoded commands and suspicious activity.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">250</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~40 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">MITRE</span>
+                            <span class="meta-value">T1059.001</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 5 -->
+            <a href="challenge5.html" class="challenge-item" data-difficulty="medium">
+                <div class="challenge-number">05</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>Data Exfiltration</h3>
+                        <span class="difficulty-badge difficulty-medium">MEDIUM</span>
+                    </div>
+                    <p>Identify unusual data transfers in network logs. Learn DNS analysis, data volume tracking, and exfiltration detection.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">300</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~45 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">MITRE</span>
+                            <span class="meta-value">T1048</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 6 -->
+            <a href="challenge6.html" class="challenge-item" data-difficulty="hard">
+                <div class="challenge-number">06</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>Lateral Movement</h3>
+                        <span class="difficulty-badge difficulty-hard">HARD</span>
+                    </div>
+                    <p>Track an attacker moving through the network using RDP, PsExec, and WMI. Master event correlation and timeline analysis.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">400</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~60 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">MITRE</span>
+                            <span class="meta-value">T1021</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 7 -->
+            <a href="challenge7.html" class="challenge-item" data-difficulty="hard">
+                <div class="challenge-number">07</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>Credential Theft</h3>
+                        <span class="difficulty-badge difficulty-hard">HARD</span>
+                    </div>
+                    <p>Detect LSASS memory dumping and credential access attempts. Analyze Sysmon logs for Mimikatz-like activity.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">450</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~60 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">MITRE</span>
+                            <span class="meta-value">T1003</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+
+            <!-- Challenge 8 -->
+            <a href="challenge8.html" class="challenge-item" data-difficulty="hard">
+                <div class="challenge-number">08</div>
+                <div class="challenge-content">
+                    <div class="challenge-header">
+                        <h3>Persistence Hunter</h3>
+                        <span class="difficulty-badge difficulty-hard">HARD</span>
+                    </div>
+                    <p>Find registry-based persistence mechanisms and scheduled tasks. Hunt for autorun locations and boot persistence.</p>
+                    <div class="challenge-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">POINTS</span>
+                            <span class="meta-value">500</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TIME</span>
+                            <span class="meta-value">~75 min</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">MITRE</span>
+                            <span class="meta-value">T1547</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-arrow">→</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Total Points -->
+    <section class="total-section">
+        <div class="total-card">
+            <div class="total-label">TOTAL AVAILABLE POINTS</div>
+            <div class="total-value">2,350</div>
+            <div class="total-subtitle">Complete all challenges to become a Splunk Sentinel Master</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">SPLUNK SENTINEL</div>
+        <p class="footer-text">// THREAT DETECTION CTF ACADEMY //</p>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const challenges = document.querySelectorAll('.challenge-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                
+                challenges.forEach(challenge => {
+                    if (filter === 'all' || challenge.dataset.difficulty === filter) {
+                        challenge.style.display = 'flex';
+                        challenge.style.animation = 'fadeIn 0.3s ease forwards';
+                    } else {
+                        challenge.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

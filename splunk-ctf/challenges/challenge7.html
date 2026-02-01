@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 7: Credential Theft | SPLUNK SENTINEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="challenge-page">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="logo"><div class="logo-icon">◈</div>SENTINEL</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">All CTFs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="challenge-hero">
+        <div class="challenge-hero-bg"></div>
+        <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Challenges</a> / Challenge 07</div>
+        <h1 class="challenge-title">🔐 Credential Theft</h1>
+        <div class="challenge-badges">
+            <span class="difficulty-badge difficulty-hard">HARD</span>
+            <span class="badge badge-points">450 POINTS</span>
+            <span class="badge badge-time">~60 MIN</span>
+            <span class="badge badge-mitre">T1003</span>
+        </div>
+        <p class="page-description">Detect LSASS memory dumping and credential access attempts.</p>
+    </header>
+
+    <main class="main-content">
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📚</span>CONCEPTS TO LEARN</h2>
+
+            <div class="concept-box">
+                <h4>LSASS and Credential Storage</h4>
+                <p>The Local Security Authority Subsystem Service (lsass.exe) handles Windows authentication. It stores credentials in memory, making it a prime target for attackers.</p>
+                <ul>
+                    <li><strong>NTLM hashes:</strong> Used for pass-the-hash attacks</li>
+                    <li><strong>Kerberos tickets:</strong> Used for pass-the-ticket attacks</li>
+                    <li><strong>Plaintext passwords:</strong> Sometimes cached in memory</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>Credential Dumping Techniques (T1003)</h4>
+                <table class="data-table">
+                    <tr><th>Sub-technique</th><th>Tool/Method</th><th>Detection</th></tr>
+                    <tr><td>T1003.001</td><td>LSASS Memory (Mimikatz)</td><td>Process access to lsass.exe</td></tr>
+                    <tr><td>T1003.002</td><td>SAM Database</td><td>reg.exe accessing SAM</td></tr>
+                    <tr><td>T1003.003</td><td>NTDS.dit</td><td>ntdsutil.exe, vssadmin</td></tr>
+                    <tr><td>T1003.004</td><td>LSA Secrets</td><td>Registry access to LSA</td></tr>
+                    <tr><td>T1003.005</td><td>Cached Credentials</td><td>Registry access to Cache</td></tr>
+                </table>
+            </div>
+
+            <div class="concept-box">
+                <h4>Sysmon Event ID 10 - Process Access</h4>
+                <p>Sysmon Event ID 10 logs when a process accesses another process's memory. Critical for LSASS monitoring!</p>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">SPL</span></div>
+                    <div class="code-content">
+<pre>index=sysmon EventCode=10 TargetImage="*lsass.exe"
+| eval access_rights=case(
+    GrantedAccess="0x1010", "PROCESS_QUERY_LIMITED_INFO + PROCESS_VM_READ",
+    GrantedAccess="0x1fffff", "PROCESS_ALL_ACCESS",
+    GrantedAccess="0x1410", "Memory Read Access"
+)
+| stats count by SourceImage, access_rights</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <h4>Known Dumping Tools</h4>
+                <ul>
+                    <li><strong>mimikatz.exe:</strong> Classic credential dumper</li>
+                    <li><strong>procdump.exe:</strong> Microsoft Sysinternals (abused)</li>
+                    <li><strong>comsvcs.dll:</strong> MiniDump via rundll32</li>
+                    <li><strong>Task Manager:</strong> Create dump file feature</li>
+                    <li><strong>Out-Minidump:</strong> PowerShell method</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🎯</span>THE CHALLENGE</h2>
+            <div class="scenario-box">
+                <p><strong>SITUATION:</strong> Your Sysmon deployment detected suspicious access to lsass.exe. An attacker may have dumped credentials. Analyze the logs to find:</p>
+                <br>
+                <p>1. The tool/process used to access LSASS<br>
+                2. The user account that executed it<br>
+                3. The hostname where this occurred</p>
+            </div>
+            <div class="flag-box">
+                <div class="flag-label">FLAG FORMAT</div>
+                <div class="flag-format">FLAG{PROCESS_USER_HOST}</div>
+            </div>
+            <a href="../data/challenge7_sysmon.log" download class="download-btn">📥 Download Challenge Data</a>
+            <div class="tip-box">
+                <strong>💡 HINT</strong>
+                <p>Look for Sysmon Event ID 10 where TargetImage is lsass.exe. Focus on unusual SourceImage processes and suspicious GrantedAccess values (0x1fffff = FULL_ACCESS).</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🔓</span>SOLUTION</h2>
+            <div class="solution-wrapper">
+                <button class="solution-toggle" onclick="toggleSolution(this)">
+                    <span>REVEAL STEP-BY-STEP SOLUTION</span>
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="solution-content">
+                    <div class="step" data-step="1">
+                        <h4>Find All LSASS Access Events</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=sysmon EventCode=10 TargetImage="*lsass.exe"
+| stats count by SourceImage, GrantedAccess
+| sort -count</pre></div>
+                        </div>
+                        <p>Most access is from legitimate Windows processes. Look for anomalies!</p>
+                    </div>
+                    <div class="step" data-step="2">
+                        <h4>Filter for Suspicious Access Rights</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=sysmon EventCode=10 TargetImage="*lsass.exe"
+| where GrantedAccess="0x1fffff" OR GrantedAccess="0x1010" OR GrantedAccess="0x1410"
+| stats count by SourceImage, GrantedAccess, User, host</pre></div>
+                        </div>
+                        <p>rundll32.exe accessing LSASS with 0x1fffff? That's credential dumping!</p>
+                    </div>
+                    <div class="step" data-step="3">
+                        <h4>Investigate the Suspicious Process</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=sysmon EventCode=10 SourceImage="*rundll32.exe" TargetImage="*lsass.exe"
+| table _time, host, User, SourceImage, GrantedAccess, CallTrace</pre></div>
+                        </div>
+                        <p>The CallTrace shows comsvcs.dll - this is the MiniDump technique!</p>
+                    </div>
+                    <div class="step" data-step="4">
+                        <h4>Correlate with Process Creation</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=sysmon EventCode=1 Image="*rundll32.exe" CommandLine="*comsvcs*MiniDump*"
+| table _time, host, User, CommandLine, ParentImage</pre></div>
+                        </div>
+                        <p>Confirms: rundll32.exe comsvcs.dll MiniDump [LSASS_PID] - run by CORP\jsmith on SRV-FILE01</p>
+                    </div>
+                    <div class="answer-reveal">
+                        <div class="answer-label">🚩 THE FLAG</div>
+                        <div class="answer-value">FLAG{rundll32.exe_CORP\jsmith_SRV-FILE01}</div>
+                    </div>
+                    <div class="warning-box">
+                        <strong>⚠️ DETECTION TIP</strong>
+                        <p>Create alerts for: ANY non-Windows process accessing lsass.exe, GrantedAccess 0x1fffff to lsass.exe, and rundll32.exe with comsvcs.dll in CommandLine.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="challenge6.html" class="nav-btn">← <div><span class="nav-btn-label">PREVIOUS</span>Lateral Movement</div></a>
+            <a href="challenge8.html" class="nav-btn"><div><span class="nav-btn-label">NEXT</span>Persistence Hunter</div> →</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">SPLUNK SENTINEL</div>
+        <p class="footer-text">// THREAT DETECTION CTF ACADEMY //</p>
+    </footer>
+
+    <script>
+        function toggleSolution(btn) { btn.classList.toggle('active'); btn.nextElementSibling.classList.toggle('show'); }
+        function copyCode(btn) { navigator.clipboard.writeText(btn.closest('.code-block').querySelector('pre').textContent); btn.textContent = 'COPIED!'; setTimeout(() => btn.textContent = 'COPY', 2000); }
+    </script>
+</body>
+</html>

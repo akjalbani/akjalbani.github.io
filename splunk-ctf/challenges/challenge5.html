@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 5: Data Exfiltration | SPLUNK SENTINEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="challenge-page">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="logo"><div class="logo-icon">◈</div>SENTINEL</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">All CTFs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="challenge-hero">
+        <div class="challenge-hero-bg"></div>
+        <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Challenges</a> / Challenge 05</div>
+        <h1 class="challenge-title">📡 Data Exfiltration</h1>
+        <div class="challenge-badges">
+            <span class="difficulty-badge difficulty-medium">MEDIUM</span>
+            <span class="badge badge-points">300 POINTS</span>
+            <span class="badge badge-time">~45 MIN</span>
+            <span class="badge badge-mitre">T1048</span>
+        </div>
+        <p class="page-description">Identify unusual data transfers and DNS tunneling attempts.</p>
+    </header>
+
+    <main class="main-content">
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📚</span>CONCEPTS TO LEARN</h2>
+
+            <div class="concept-box">
+                <h4>Data Exfiltration Techniques</h4>
+                <p>Attackers use various methods to steal data from compromised networks:</p>
+                <ul>
+                    <li><strong>DNS Tunneling:</strong> Encoding data in DNS queries to bypass firewalls</li>
+                    <li><strong>HTTP/HTTPS:</strong> Using web traffic to blend in with normal traffic</li>
+                    <li><strong>Cloud Services:</strong> Uploading to legitimate cloud storage</li>
+                    <li><strong>Email:</strong> Sending data via corporate email</li>
+                    <li><strong>FTP/SFTP:</strong> Traditional file transfer</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>DNS Tunneling Detection</h4>
+                <p>DNS tunneling hides data in DNS queries. Detection indicators:</p>
+                <table class="data-table">
+                    <tr><th>Indicator</th><th>Normal</th><th>Suspicious</th></tr>
+                    <tr><td>Query length</td><td>< 50 chars</td><td>> 100 chars</td></tr>
+                    <tr><td>Subdomain depth</td><td>2-3 levels</td><td>5+ levels</td></tr>
+                    <tr><td>Query volume</td><td>Varies</td><td>High frequency to same domain</td></tr>
+                    <tr><td>TXT record requests</td><td>Rare</td><td>Frequent TXT queries</td></tr>
+                    <tr><td>Entropy</td><td>Low (readable)</td><td>High (encoded data)</td></tr>
+                </table>
+            </div>
+
+            <div class="concept-box">
+                <h4>Detecting Large Data Transfers</h4>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">SPL</span></div>
+                    <div class="code-content">
+<pre>index=network sourcetype=firewall
+| stats sum(bytes_out) as total_bytes by src_ip, dest_ip
+| where total_bytes > 100000000
+| eval MB=round(total_bytes/1024/1024,2)
+| sort -MB</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <h4>DNS Analysis Queries</h4>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">SPL</span></div>
+                    <div class="code-content">
+<pre>index=dns 
+| eval query_length=len(query)
+| eval subdomain_count=mvcount(split(query,"."))
+| where query_length > 50 OR subdomain_count > 4
+| stats count by query, src_ip
+| sort -count</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🎯</span>THE CHALLENGE</h2>
+            <div class="scenario-box">
+                <p><strong>SITUATION:</strong> Your DLP system detected potential data leakage but couldn't identify the method. Network logs show unusual traffic patterns. Analyze the DNS and network logs to find:</p>
+                <br>
+                <p>1. The internal IP performing DNS tunneling<br>
+                2. The domain used for the tunnel<br>
+                3. The approximate data size exfiltrated (in MB)</p>
+            </div>
+            <div class="flag-box">
+                <div class="flag-label">FLAG FORMAT</div>
+                <div class="flag-format">FLAG{IP_DOMAIN_SIZE}</div>
+            </div>
+            <a href="../data/challenge5_network.log" download class="download-btn">📥 Download Challenge Data</a>
+            <div class="tip-box">
+                <strong>💡 HINT</strong>
+                <p>Look for unusually long DNS queries or high volume of queries to the same domain. Calculate the data based on query count × average encoded bytes per query.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🔓</span>SOLUTION</h2>
+            <div class="solution-wrapper">
+                <button class="solution-toggle" onclick="toggleSolution(this)">
+                    <span>REVEAL STEP-BY-STEP SOLUTION</span>
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="solution-content">
+                    <div class="step" data-step="1">
+                        <h4>Identify Unusually Long DNS Queries</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=dns sourcetype=dns_logs
+| eval query_len=len(query)
+| where query_len > 60
+| stats count, avg(query_len) as avg_len by src_ip
+| sort -count</pre></div>
+                        </div>
+                        <p>IP 10.10.5.23 has 4,782 queries with avg length 127 chars!</p>
+                    </div>
+                    <div class="step" data-step="2">
+                        <h4>Find the Tunnel Domain</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=dns sourcetype=dns_logs src_ip="10.10.5.23"
+| rex field=query "\.(?<base_domain>[^.]+\.[^.]+)$"
+| stats count by base_domain
+| sort -count</pre></div>
+                        </div>
+                        <p>Tunnel domain: data-sync.evil.com (4,782 queries)</p>
+                    </div>
+                    <div class="step" data-step="3">
+                        <h4>Analyze Query Patterns</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=dns sourcetype=dns_logs src_ip="10.10.5.23" query="*data-sync.evil.com"
+| eval encoded_data=replace(query,"\.data-sync\.evil\.com$","")
+| eval data_bytes=len(encoded_data)*0.75
+| stats sum(data_bytes) as total_bytes, count
+| eval MB=round(total_bytes/1024/1024,0)</pre></div>
+                        </div>
+                        <p>Total data: ~15 MB exfiltrated via DNS!</p>
+                    </div>
+                    <div class="step" data-step="4">
+                        <h4>Timeline the Exfiltration</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=dns sourcetype=dns_logs src_ip="10.10.5.23" query="*data-sync.evil.com"
+| timechart span=5m count
+| where count > 50</pre></div>
+                        </div>
+                    </div>
+                    <div class="answer-reveal">
+                        <div class="answer-label">🚩 THE FLAG</div>
+                        <div class="answer-value">FLAG{10.10.5.23_data-sync.evil.com_15}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="challenge4.html" class="nav-btn">← <div><span class="nav-btn-label">PREVIOUS</span>PowerShell</div></a>
+            <a href="challenge6.html" class="nav-btn"><div><span class="nav-btn-label">NEXT</span>Lateral Movement</div> →</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">SPLUNK SENTINEL</div>
+        <p class="footer-text">// THREAT DETECTION CTF ACADEMY //</p>
+    </footer>
+
+    <script>
+        function toggleSolution(btn) { btn.classList.toggle('active'); btn.nextElementSibling.classList.toggle('show'); }
+        function copyCode(btn) { navigator.clipboard.writeText(btn.closest('.code-block').querySelector('pre').textContent); btn.textContent = 'COPIED!'; setTimeout(() => btn.textContent = 'COPY', 2000); }
+    </script>
+</body>
+</html>

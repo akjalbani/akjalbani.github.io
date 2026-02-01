@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 6: Lateral Movement | SPLUNK SENTINEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body class="challenge-page">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="logo"><div class="logo-icon">◈</div>SENTINEL</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="index.html">All CTFs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="challenge-hero">
+        <div class="challenge-hero-bg"></div>
+        <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Challenges</a> / Challenge 06</div>
+        <h1 class="challenge-title">👤 Lateral Movement</h1>
+        <div class="challenge-badges">
+            <span class="difficulty-badge difficulty-hard">HARD</span>
+            <span class="badge badge-points">400 POINTS</span>
+            <span class="badge badge-time">~60 MIN</span>
+            <span class="badge badge-mitre">T1021</span>
+        </div>
+        <p class="page-description">Track an attacker moving through the network using RDP, PsExec, and WMI.</p>
+    </header>
+
+    <main class="main-content">
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">📚</span>CONCEPTS TO LEARN</h2>
+
+            <div class="concept-box">
+                <h4>What is Lateral Movement?</h4>
+                <p>Lateral movement is when attackers move from one compromised system to another within a network. They do this to:</p>
+                <ul>
+                    <li>Find valuable targets (domain controllers, file servers)</li>
+                    <li>Escalate privileges</li>
+                    <li>Maintain persistence</li>
+                    <li>Access sensitive data</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>Common Lateral Movement Techniques</h4>
+                <table class="data-table">
+                    <tr><th>Technique</th><th>Event IDs</th><th>Description</th></tr>
+                    <tr><td>RDP (T1021.001)</td><td>4624 (Type 10)</td><td>Remote Desktop connections</td></tr>
+                    <tr><td>SMB/Windows Admin Shares (T1021.002)</td><td>5140, 5145</td><td>Accessing \\host\C$ or \\host\ADMIN$</td></tr>
+                    <tr><td>PsExec</td><td>7045, Sysmon 1</td><td>Service installation, PSEXESVC</td></tr>
+                    <tr><td>WMI (T1047)</td><td>Sysmon 1</td><td>WmiPrvSE.exe spawning processes</td></tr>
+                    <tr><td>WinRM/PS Remoting</td><td>4624 (Type 3), 91, 168</td><td>Remote PowerShell sessions</td></tr>
+                </table>
+            </div>
+
+            <div class="concept-box">
+                <h4>Key Windows Event IDs</h4>
+                <ul>
+                    <li><strong>4624:</strong> Successful logon - check Logon Type field</li>
+                    <li><strong>4648:</strong> Explicit credentials used (RunAs)</li>
+                    <li><strong>5140:</strong> Network share accessed</li>
+                    <li><strong>7045:</strong> New service installed</li>
+                    <li><strong>4688:</strong> Process creation (needs audit policy)</li>
+                </ul>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">Logon Types</span></div>
+                    <div class="code-content">
+<pre>Type 2:  Interactive (local console)
+Type 3:  Network (SMB, remote access)
+Type 7:  Unlock
+Type 10: RemoteInteractive (RDP)
+Type 11: CachedInteractive</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <h4>Building a Movement Timeline</h4>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">SPL</span></div>
+                    <div class="code-content">
+<pre>index=windows (EventCode=4624 OR EventCode=4648)
+| eval movement_type=case(
+    LogonType=10, "RDP",
+    LogonType=3, "Network",
+    EventCode=4648, "Explicit Creds"
+)
+| stats earliest(_time) as first_seen by src_ip, dest_host, user, movement_type
+| sort first_seen</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🎯</span>THE CHALLENGE</h2>
+            <div class="scenario-box">
+                <p><strong>SITUATION:</strong> An attacker compromised a workstation and is moving through your network. Your task is to map their path by analyzing Windows Security and Sysmon logs. Find:</p>
+                <br>
+                <p>1. The initial compromised host<br>
+                2. The number of unique hosts the attacker accessed<br>
+                3. The final target (domain controller name)</p>
+            </div>
+            <div class="flag-box">
+                <div class="flag-label">FLAG FORMAT</div>
+                <div class="flag-format">FLAG{INITIAL_HOST:COUNT:DC_NAME}</div>
+            </div>
+            <a href="../data/challenge6_lateral.log" download class="download-btn">📥 Download Challenge Data</a>
+            <div class="tip-box">
+                <strong>💡 HINT</strong>
+                <p>Start by finding the earliest logon with a suspicious source. Then trace that user's activity across hosts. Use the <code>transaction</code> command to group related events.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title"><span class="section-icon">🔓</span>SOLUTION</h2>
+            <div class="solution-wrapper">
+                <button class="solution-toggle" onclick="toggleSolution(this)">
+                    <span>REVEAL STEP-BY-STEP SOLUTION</span>
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="solution-content">
+                    <div class="step" data-step="1">
+                        <h4>Find All Network Logons</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows EventCode=4624 (LogonType=3 OR LogonType=10)
+| stats count by src_ip, dest_host, user, LogonType
+| sort -count</pre></div>
+                        </div>
+                        <p>Unusual: User "admin_backup" logging in from multiple workstations!</p>
+                    </div>
+                    <div class="step" data-step="2">
+                        <h4>Trace the Attack Path</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows EventCode=4624 user="admin_backup"
+| table _time, src_ip, dest_host, LogonType
+| sort _time</pre></div>
+                        </div>
+                        <p>Timeline shows: WKSTN-PC12 → WKSTN-PC45 → SRV-FILE01 → SRV-APP02 → DC01</p>
+                    </div>
+                    <div class="step" data-step="3">
+                        <h4>Count Unique Hosts</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows EventCode=4624 user="admin_backup"
+| stats dc(dest_host) as unique_hosts, values(dest_host) as hosts</pre></div>
+                        </div>
+                        <p>5 unique hosts accessed</p>
+                    </div>
+                    <div class="step" data-step="4">
+                        <h4>Identify Initial Compromise</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows EventCode=4624 user="admin_backup"
+| stats earliest(_time) as first_access by src_ip
+| sort first_access
+| head 1</pre></div>
+                        </div>
+                        <p>Initial source was WKSTN-PC12 (first lateral movement originated here)</p>
+                    </div>
+                    <div class="step" data-step="5">
+                        <h4>Visualize the Attack Path</h4>
+                        <div class="code-block">
+                            <div class="code-header"><span class="code-lang">SPL</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+                            <div class="code-content"><pre>index=windows EventCode=4624 user="admin_backup"
+| transaction user maxspan=4h
+| table _time, src_ip, dest_host
+| sort _time</pre></div>
+                        </div>
+                    </div>
+                    <div class="answer-reveal">
+                        <div class="answer-label">🚩 THE FLAG</div>
+                        <div class="answer-value">FLAG{WKSTN-PC12:5:DC01}</div>
+                    </div>
+                    <div class="tip-box">
+                        <strong>📝 ATTACK TIMELINE</strong>
+                        <p>09:15 - Compromise WKSTN-PC12 → 09:23 - RDP to WKSTN-PC45 → 09:45 - SMB to SRV-FILE01 → 10:02 - PsExec to SRV-APP02 → 10:31 - WMI to DC01</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="challenge5.html" class="nav-btn">← <div><span class="nav-btn-label">PREVIOUS</span>Exfiltration</div></a>
+            <a href="challenge7.html" class="nav-btn"><div><span class="nav-btn-label">NEXT</span>Credential Theft</div> →</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">SPLUNK SENTINEL</div>
+        <p class="footer-text">// THREAT DETECTION CTF ACADEMY //</p>
+    </footer>
+
+    <script>
+        function toggleSolution(btn) { btn.classList.toggle('active'); btn.nextElementSibling.classList.toggle('show'); }
+        function copyCode(btn) { navigator.clipboard.writeText(btn.closest('.code-block').querySelector('pre').textContent); btn.textContent = 'COPIED!'; setTimeout(() => btn.textContent = 'COPY', 2000); }
+    </script>
+</body>
+</html>

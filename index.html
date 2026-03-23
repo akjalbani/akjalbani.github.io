@@ -1,455 +1,1099 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dr. Akhtar Jalbani | Cybersecurity, AI & Cloud Computing Expert</title>
-  <meta name="description" content="Dr. Akhtar Ali Jalbani - Cybersecurity, AI & Cloud Computing Expert, Lecturer at RMIT University, AWS Community Builder, ACS Professional Member">
-  <meta name="keywords" content="Akhtar Jalbani, Cybersecurity, Cloud Computing, AWS, Holmesglen, PhD Computer Science, ACS, AWS Certified">
-  <meta name="author" content="Dr. Akhtar Ali Jalbani">
-  <meta property="og:title" content="Dr. Akhtar Jalbani | Cybersecurity, AI, & Cloud Computing Expert">
-  <meta property="og:description" content="Over two decades of expertise in cybersecurity, cloud computing, and AI. Lecturer at RMIT University, AWS Community Builder, and ACS Professional Member.">
-  <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    :root {
-      --primary: #6366f1;
-      --primary-foreground: #ffffff;
-      --background: #0d0c14;
-      --foreground: #f5f5f5;
-      --card: #12111c;
-      --muted-foreground: #a0a0a0;
-      --border: #2a2a3a;
-      --radius: 0.65rem;
-      --aws-orange: #FF9900;
-      --acs-blue: #0066CC;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--foreground); line-height: 1.6; }
-    .font-poppins { font-family: 'Poppins', sans-serif; }
-    .container { width: 100%; margin: 0 auto; padding: 0 1rem; }
-    @media (min-width: 640px) { .container { padding: 0 1.5rem; } }
-    @media (min-width: 1024px) { .container { padding: 0 2rem; max-width: 1280px; } }
-    nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background-color: rgba(13, 12, 20, 0.8); border-bottom: 1px solid var(--border); }
-    nav .container { padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
-    nav h1 { font-size: 1.5rem; font-weight: 700; }
-    nav .nav-links { display: flex; gap: 1.5rem; }
-    nav .nav-links a { font-size: 0.875rem; color: var(--foreground); text-decoration: none; transition: color 0.3s; }
-    nav .nav-links a:hover { color: var(--primary); }
-    .hero { position: relative; overflow: hidden; padding: 5rem 0 8rem; }
-    .hero-bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.05) 50%, rgba(139, 92, 246, 0.1) 100%); }
-    .hero-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, rgba(13, 12, 20, 0.5) 50%, var(--background) 100%); z-index: 1; }
-    .hero .container { position: relative; z-index: 10; }
-    .hero-grid { display: grid; gap: 3rem; align-items: center; }
-    @media (min-width: 768px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
-    .hero-content { display: flex; flex-direction: column; gap: 1.5rem; }
-    .hero-label { color: var(--primary); font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; }
-    .hero-title { font-size: 3rem; font-weight: 700; line-height: 1.1; }
-    @media (min-width: 768px) { .hero-title { font-size: 3.75rem; } }
-    .hero-description { font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; line-height: 1.7; }
-    .hero-buttons { display: flex; gap: 1rem; padding-top: 1rem; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.5rem; border-radius: var(--radius); font-weight: 500; font-size: 0.875rem; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
-    .btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-outline { background-color: transparent; border: 1px solid var(--primary); color: var(--primary); }
-    .btn-outline:hover { background-color: rgba(99, 102, 241, 0.1); }
-    .social-links { display: flex; gap: 1.5rem; padding-top: 2rem; }
-    .social-links a { color: var(--muted-foreground); transition: color 0.3s; }
-    .social-links a:hover { color: var(--primary); }
-    .hero-image { position: relative; height: 24rem; }
-    .hero-image-glow { position: absolute; inset: 0; background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.2), transparent); border-radius: 1rem; filter: blur(48px); }
-    .hero-image-box { position: relative; border-radius: 1rem; overflow: hidden; height: 100%; border: 1px solid rgba(99, 102, 241, 0.3); background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(30, 30, 50, 0.8) 100%); display: flex; align-items: center; justify-content: center; }
-    .expertise-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; padding: 2rem; }
-    .expertise-icon-item { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 1rem; border: 1px solid rgba(99, 102, 241, 0.2); transition: all 0.3s; }
-    .expertise-icon-item:hover { background: rgba(99, 102, 241, 0.1); transform: translateY(-5px); }
-    .expertise-icon-item svg { width: 2.5rem; height: 2.5rem; color: var(--primary); }
-    .expertise-icon-item span { font-size: 0.75rem; text-align: center; color: var(--muted-foreground); }
-    .stats { padding: 4rem 0; background-color: rgba(18, 17, 28, 0.5); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(5, 1fr); } }
-    .stat-item { text-align: center; }
-    .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
-    .stat-label { color: var(--muted-foreground); font-size: 0.875rem; }
-    section { padding: 6rem 0; }
-    .section-alt { background-color: rgba(18, 17, 28, 0.3); }
-    .section-header { margin-bottom: 4rem; }
-    .section-label { color: var(--primary); font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-    .section-title { font-size: 2.5rem; font-weight: 700; }
-    .card { background-color: rgba(18, 17, 28, 0.8); border: 1px solid var(--border); border-radius: var(--radius); transition: all 0.3s; height: 100%; }
-    .card:hover { border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1); }
-    .card-content { padding: 2rem; }
-    .card-icon { width: 3rem; height: 3rem; border-radius: 0.5rem; background-color: rgba(99, 102, 241, 0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: background-color 0.3s; }
-    .card:hover .card-icon { background-color: rgba(99, 102, 241, 0.3); }
-    .card-icon svg { width: 1.5rem; height: 1.5rem; color: var(--primary); }
-    .card-icon.aws-icon { background-color: rgba(255, 153, 0, 0.2); }
-    .card:hover .card-icon.aws-icon { background-color: rgba(255, 153, 0, 0.3); }
-    .card-icon.aws-icon svg { color: var(--aws-orange); }
-    .card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .card p { color: var(--muted-foreground); margin-bottom: 1rem; }
-    .card ul { list-style: none; }
-    .card ul li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; margin-bottom: 0.5rem; }
-    .card ul li::before { content: ''; width: 0.375rem; height: 0.375rem; border-radius: 50%; background-color: var(--primary); flex-shrink: 0; }
-    .grid-3 { display: grid; gap: 1.5rem; }
-    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
-    .grid-2 { display: grid; gap: 2rem; }
-    @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
-    .edu-section h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-    .edu-section h3 svg { width: 1.5rem; height: 1.5rem; color: var(--primary); }
-    .edu-item { border-left: 2px solid var(--primary); padding-left: 1.5rem; padding-bottom: 1.5rem; }
-    .edu-item h4 { font-weight: 700; font-size: 1.125rem; }
-    .edu-item .school { color: var(--primary); font-size: 0.875rem; font-weight: 600; }
-    .edu-item .date { color: var(--muted-foreground); font-size: 0.875rem; }
-    .cert-grid { display: grid; gap: 0.75rem; }
-    .cert-item { background-color: rgba(18, 17, 28, 0.8); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; transition: all 0.3s; display: flex; align-items: center; gap: 0.75rem; }
-    .cert-item:hover { border-color: rgba(99, 102, 241, 0.5); transform: translateX(5px); }
-    .cert-item.aws { border-left: 3px solid var(--aws-orange); }
-    .cert-item.acs { border-left: 3px solid var(--acs-blue); }
-    .cert-item.cisco { border-left: 3px solid #1BA0D7; }
-    .cert-badge { width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
-    .cert-badge.aws { background-color: rgba(255, 153, 0, 0.2); color: var(--aws-orange); }
-    .cert-badge.acs { background-color: rgba(0, 102, 204, 0.2); color: var(--acs-blue); }
-    .cert-badge.cisco { background-color: rgba(27, 160, 215, 0.2); color: #1BA0D7; }
-    .cert-info p:first-child { font-weight: 600; font-size: 0.9rem; }
-    .cert-info p:last-child { font-size: 0.75rem; color: var(--muted-foreground); }
-    .timeline-item { display: flex; gap: 1.5rem; }
-    .timeline-marker { display: flex; flex-direction: column; align-items: center; }
-    .timeline-dot { width: 1rem; height: 1rem; border-radius: 50%; background-color: var(--primary); margin-top: 0.5rem; }
-    .timeline-line { width: 0.25rem; height: 6rem; background: linear-gradient(to bottom, var(--primary), rgba(99, 102, 241, 0.2)); }
-    .timeline-content { padding-bottom: 3rem; }
-    .timeline-content h3 { font-size: 1.25rem; font-weight: 700; }
-    .timeline-content .date { color: var(--primary); font-size: 0.875rem; font-weight: 600; }
-    .timeline-content .location { color: var(--muted-foreground); margin-top: 0.5rem; }
-    .timeline-content .description { margin-top: 0.75rem; }
-    .pub-card { background-color: rgba(18, 17, 28, 0.8); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; transition: all 0.3s; }
-    .pub-card:hover { border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1); }
-    .pub-year { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; background-color: rgba(99, 102, 241, 0.2); color: var(--primary); font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
-    .pub-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; transition: color 0.3s; }
-    .pub-card:hover h3 { color: var(--primary); }
-    .pub-journal { color: var(--primary); font-size: 0.875rem; font-weight: 600; margin-bottom: 0.75rem; }
-    .pub-description { color: var(--muted-foreground); margin-bottom: 1.5rem; }
-    .pub-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.875rem; transition: gap 0.3s; }
-    .pub-link:hover { gap: 0.75rem; }
-    .pub-link svg { width: 1rem; height: 1rem; }
-    .community-item { border-left: 4px solid var(--primary); padding-left: 1.5rem; }
-    .community-item h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .community-item .role { color: var(--primary); font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .community-item p { color: var(--muted-foreground); }
-    .contact { text-align: center; }
-    .contact-content { max-width: 42rem; margin: 0 auto; }
-    .contact h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; }
-    .contact-description { font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 3rem; }
-    .contact-buttons { display: flex; flex-direction: column; gap: 1rem; justify-content: center; }
-    @media (min-width: 640px) { .contact-buttons { flex-direction: row; } }
-    .contact-buttons .btn { padding: 0.75rem 2rem; }
-    .contact-buttons .btn svg { width: 1rem; height: 1rem; margin-right: 0.5rem; }
-    .footer { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border); }
-    .footer p { font-size: 0.875rem; color: var(--muted-foreground); }
-    .text-center { text-align: center; }
-    .mt-8 { margin-top: 2rem; }
-    @media (max-width: 640px) { nav .nav-links { display: none; } .hero-title { font-size: 2.5rem; } .hero-buttons { flex-direction: column; } .expertise-icons { gap: 1rem; padding: 1rem; } .expertise-icon-item { padding: 1rem; } }
-    html { scroll-behavior: smooth; }
-    [data-lucide] { width: 24px; height: 24px; }
-    .expertise-visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
-    @media (max-width: 768px) { .expertise-visual { grid-template-columns: 1fr; } }
-    .expertise-visual-card { position: relative; height: 200px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-    .expertise-visual-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 12, 20, 0.9), rgba(13, 12, 20, 0.3)); z-index: 1; }
-    .expertise-visual-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; z-index: 2; }
-    .expertise-visual-content h4 { font-weight: 700; margin-bottom: 0.25rem; }
-    .expertise-visual-content p { font-size: 0.875rem; color: var(--muted-foreground); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Akhtar Jalbani | Cybersecurity, AI &amp; Cloud Scholar</title>
+<meta name="description" content="Dr. Akhtar Ali Jalbani — Academic, Researcher &amp; Practitioner in Cybersecurity, Cloud Computing and AI. AWS Community Builder. ACS Professional Member.">
+<meta name="author" content="Dr. Akhtar Ali Jalbani">
+<meta property="og:title" content="Dr. Akhtar Jalbani | Cybersecurity, AI &amp; Cloud Scholar">
+<meta property="og:description" content="Scholar, researcher and practitioner with 20+ years in cybersecurity, cloud computing, and AI.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --ink:       #0b0c14;
+  --ink-2:     #12131f;
+  --ink-3:     #1a1b2d;
+  --ink-4:     #232438;
+  --gold:      #c9a84c;
+  --gold-dim:  rgba(201,168,76,0.12);
+  --gold-dim2: rgba(201,168,76,0.22);
+  --violet:    #7b6cf6;
+  --violet-dim:rgba(123,108,246,0.14);
+  --cyan:      #38bdf8;
+  --cyan-dim:  rgba(56,189,248,0.12);
+  --fg:        #e8e9f4;
+  --fg-2:      #a0a3c0;
+  --fg-3:      #6062838a;
+  --border:    rgba(255,255,255,0.07);
+  --border-2:  rgba(255,255,255,0.13);
+  --aws:       #FF9900;
+  --acs:       #0f9bef;
+  --cisco:     #1dbde6;
+  --r:         0.75rem;
+  --r2:        1.25rem;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--ink);
+  color:var(--fg);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ── NOISE ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ── LAYOUT ── */
+.container{width:100%;max-width:1160px;margin:0 auto;padding:0 1.5rem}
+@media(min-width:768px){.container{padding:0 2.5rem}}
+
+/* ══════════════════════════════════
+   NAV
+══════════════════════════════════ */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(11,12,20,0.88);
+  backdrop-filter:blur(20px) saturate(1.5);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+.nav-brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.nav-emblem{
+  width:2.2rem;height:2.2rem;border-radius:.45rem;
+  background:linear-gradient(135deg,var(--violet),var(--gold));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.nav-emblem svg{width:1rem;height:1rem;color:#fff}
+.nav-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--fg);line-height:1.2}
+.nav-name small{display:block;font-family:'DM Sans',sans-serif;font-size:.65rem;font-weight:400;color:var(--fg-2);letter-spacing:.06em;text-transform:uppercase}
+.nav-links{display:flex;gap:.1rem}
+.nav-links a{font-size:.775rem;font-weight:500;color:var(--fg-2);text-decoration:none;padding:.38rem .65rem;border-radius:.45rem;transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--fg);background:rgba(255,255,255,.06)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* ══════════════════════════════════
+   HERO — two-column editorial layout
+══════════════════════════════════ */
+.hero{
+  position:relative;
+  padding:5.5rem 0 6rem;
+  overflow:hidden;
+}
+.hero-mesh{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 90% 60% at 0% 10%, rgba(123,108,246,.14) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 100% 90%, rgba(56,189,248,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 55% 50%, rgba(201,168,76,.06) 0%, transparent 55%);
+}
+/* subtle diagonal grid lines */
+.hero-grid-lines{
+  position:absolute;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);
+}
+.hero-inner{position:relative;z-index:2}
+
+/* identity strip across top */
+.identity-strip{
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:2.5rem;flex-wrap:wrap;
+}
+.id-tag{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .8rem;border-radius:9999px;
+  border:1px solid;
+}
+.id-tag.scholar{color:var(--gold);border-color:rgba(201,168,76,.35);background:var(--gold-dim)}
+.id-tag.cyber  {color:var(--violet);border-color:rgba(123,108,246,.35);background:var(--violet-dim)}
+.id-tag.cloud  {color:var(--cyan);border-color:rgba(56,189,248,.35);background:var(--cyan-dim)}
+.id-tag svg{width:.75rem;height:.75rem;flex-shrink:0}
+
+.hero-layout{display:grid;gap:3rem;align-items:start}
+@media(min-width:960px){.hero-layout{grid-template-columns:1fr 360px;gap:5rem;align-items:center}}
+
+/* left: text */
+.hero-kicker{
+  font-family:'DM Mono',monospace;
+  font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.85rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.hero-kicker::before{content:'';width:2rem;height:1px;background:var(--gold);flex-shrink:0}
+.hero-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5.2vw,4rem);
+  font-weight:800;line-height:1.05;
+  letter-spacing:-.02em;
+  margin-bottom:1.4rem;
+}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-lead{font-size:1rem;color:var(--fg-2);max-width:28rem;line-height:1.8;margin-bottom:2rem;font-weight:300}
+
+.hero-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.pill{
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.72rem;font-weight:500;color:var(--fg-2);
+  background:var(--ink-3);border:1px solid var(--border-2);
+  padding:.28rem .75rem;border-radius:9999px;
+  transition:all .2s;
+}
+.pill svg{width:.8rem;height:.8rem;flex-shrink:0;color:var(--gold)}
+.pill:hover{border-color:rgba(201,168,76,.4);color:var(--fg);background:var(--gold-dim)}
+
+.hero-cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
+.hero-social{display:flex;gap:.55rem}
+.hero-social a{
+  width:2.1rem;height:2.1rem;border-radius:.5rem;
+  border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;
+  color:var(--fg-2);transition:all .2s;
+}
+.hero-social a:hover{color:var(--gold);border-color:var(--gold-dim2);background:var(--gold-dim)}
+.hero-social a svg{width:.95rem;height:.95rem}
+
+/* right: profile card */
+.profile-card{
+  background:var(--ink-2);
+  border:1px solid var(--border-2);
+  border-radius:var(--r2);
+  overflow:hidden;
+  position:relative;
+}
+.profile-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--violet),var(--gold),var(--cyan));
+}
+.profile-avatar{
+  width:100%;aspect-ratio:1/0.9;
+  background:linear-gradient(135deg,var(--ink-3) 0%,var(--ink-4) 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.avatar-icon-ring{
+  width:7rem;height:7rem;border-radius:50%;
+  border:2px solid var(--gold-dim2);
+  display:flex;align-items:center;justify-content:center;
+  background:var(--gold-dim);
+  position:relative;
+}
+.avatar-icon-ring svg{width:3.5rem;height:3.5rem;color:var(--gold)}
+.avatar-orb{
+  position:absolute;width:12rem;height:12rem;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* floating micro-badges on the avatar */
+.float-badge{
+  position:absolute;
+  display:flex;align-items:center;gap:.35rem;
+  background:rgba(11,12,20,.85);backdrop-filter:blur(8px);
+  border:1px solid var(--border-2);border-radius:.5rem;
+  padding:.35rem .7rem;font-size:.65rem;font-weight:600;
+}
+.float-badge svg{width:.8rem;height:.8rem;flex-shrink:0}
+.fb-scholar{top:1rem;left:1rem;color:var(--gold)}
+.fb-aws   {top:1rem;right:1rem;color:var(--aws)}
+.fb-acs   {bottom:1rem;left:1rem;color:var(--acs)}
+.fb-pub   {bottom:1rem;right:1rem;color:var(--violet)}
+
+.profile-body{padding:1.5rem}
+.profile-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.2rem}
+.profile-title{font-size:.78rem;color:var(--fg-2);margin-bottom:1.1rem;font-weight:300;line-height:1.5}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ps-item{
+  background:var(--ink-3);border:1px solid var(--border);border-radius:.6rem;
+  padding:.65rem .8rem;text-align:center;
+}
+.ps-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold);line-height:1}
+.ps-label{font-size:.63rem;color:var(--fg-2);margin-top:.2rem;text-transform:uppercase;letter-spacing:.06em}
+
+/* ══════════════════════════════════
+   ROLE STRIP
+══════════════════════════════════ */
+.role-strip{
+  background:var(--ink-2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:1.75rem 0;
+  position:relative;z-index:2;
+  overflow:hidden;
+}
+.role-strip-inner{
+  display:flex;align-items:stretch;gap:0;
+  flex-wrap:wrap;
+}
+.role-item{
+  flex:1;min-width:160px;
+  display:flex;align-items:center;gap:.85rem;
+  padding:.75rem 1.5rem;
+  border-right:1px solid var(--border);
+}
+.role-item:last-child{border-right:none}
+.role-icon{
+  width:2.6rem;height:2.6rem;border-radius:.6rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.ri-gold  {background:var(--gold-dim);color:var(--gold)}
+.ri-violet{background:var(--violet-dim);color:var(--violet)}
+.ri-cyan  {background:var(--cyan-dim);color:var(--cyan)}
+.ri-aws   {background:rgba(255,153,0,.12);color:var(--aws)}
+.ri-acs   {background:rgba(15,155,239,.12);color:var(--acs)}
+.role-icon svg{width:1.2rem;height:1.2rem}
+.role-text strong{display:block;font-size:.82rem;font-weight:600;color:var(--fg);line-height:1.3}
+.role-text span  {font-size:.7rem;color:var(--fg-2)}
+@media(max-width:640px){
+  .role-item{border-right:none;border-bottom:1px solid var(--border);flex:1 1 calc(50% - 0px)}
+  .role-item:last-child{border-bottom:none}
+}
+
+/* ══════════════════════════════════
+   SECTION CHROME
+══════════════════════════════════ */
+.msec{padding:5.5rem 0;position:relative;z-index:2}
+.msec.shaded{background:var(--ink-2)}
+.sec-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.55rem;
+}
+.sec-eyebrow::before{content:'';width:1.5rem;height:1px;background:var(--gold);flex-shrink:0}
+.sec-h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.7rem,2.8vw,2.1rem);
+  font-weight:700;letter-spacing:-.02em;
+  margin-bottom:3rem;line-height:1.2;
+}
+.sec-h2 em{font-style:italic;color:var(--gold)}
+
+/* grids */
+.g3{display:grid;gap:1.25rem}
+@media(min-width:768px){.g3{grid-template-columns:repeat(3,1fr)}}
+.g2{display:grid;gap:1.4rem}
+@media(min-width:768px){.g2{grid-template-columns:1fr 1fr}}
+
+/* ══════════════════════════════════
+   EXPERTISE CARDS
+══════════════════════════════════ */
+.xcard{
+  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:2rem;transition:transform .25s,border-color .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.msec.shaded .xcard{background:var(--ink-3)}
+.xcard::before{
+  content:'';position:absolute;top:0;left:0;width:3px;height:0;
+  background:linear-gradient(to bottom,var(--gold),var(--violet));
+  transition:height .3s;border-radius:0 0 3px 3px;
+}
+.xcard:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.45);border-color:rgba(201,168,76,.25)}
+.xcard:hover::before{height:100%}
+.xcard-icon{
+  width:3rem;height:3rem;border-radius:.7rem;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;border:1px solid;
+}
+.xi-gold  {background:var(--gold-dim);border-color:rgba(201,168,76,.25);color:var(--gold)}
+.xi-violet{background:var(--violet-dim);border-color:rgba(123,108,246,.25);color:var(--violet)}
+.xi-cyan  {background:var(--cyan-dim);border-color:rgba(56,189,248,.25);color:var(--cyan)}
+.xcard-icon svg{width:1.35rem;height:1.35rem}
+.xcard h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.xcard > p{font-size:.85rem;color:var(--fg-2);margin-bottom:1.2rem;font-weight:300;line-height:1.7}
+.xcard ul{list-style:none}
+.xcard ul li{
+  display:flex;align-items:center;gap:.55rem;
+  font-size:.8rem;color:var(--fg-2);
+  padding:.28rem 0;border-bottom:1px solid var(--border);
+}
+.xcard ul li:last-child{border-bottom:none}
+.xcard ul li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+/* visual strip */
+.vstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.75rem}
+@media(max-width:767px){.vstrip{grid-template-columns:1fr}}
+.vtile{
+  border-radius:var(--r);padding:1.6rem;border:1px solid var(--border);
+  transition:border-color .25s,transform .25s;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.vtile:hover{border-color:rgba(201,168,76,.35);transform:translateY(-2px)}
+.vt1{background:linear-gradient(140deg,#0d0e1f,#141533)}
+.vt2{background:linear-gradient(140deg,#0e0f1e,#0e1830)}
+.vt3{background:linear-gradient(140deg,#0e0c1e,#190c32)}
+.vtile-emoji{font-size:1.6rem}
+.vtile h4{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700}
+.vtile p{font-size:.78rem;color:var(--fg-2);margin:0;line-height:1.5}
+
+/* ══════════════════════════════════
+   CERTS / MEMBERSHIPS
+══════════════════════════════════ */
+.subsect-hd{
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.5rem;margin-bottom:.85rem;
+}
+.subsect-hd svg{width:.95rem;height:.95rem;flex-shrink:0}
+.clist{display:flex;flex-direction:column;gap:.55rem}
+.crow{
+  display:flex;align-items:center;gap:.85rem;
+  background:var(--ink-3);border:1px solid var(--border);
+  border-radius:.65rem;padding:.8rem 1rem;
+  transition:border-color .2s,transform .2s;
+}
+.msec.shaded .crow{background:var(--ink-4)}
+.crow:hover{border-color:rgba(201,168,76,.3);transform:translateX(4px)}
+.crow.aws-c{border-left:3px solid var(--aws)}
+.crow.acs-c{border-left:3px solid var(--acs)}
+.crow.ccna-c{border-left:3px solid var(--cisco)}
+.cbadge{
+  width:2.2rem;height:2.2rem;border-radius:.4rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:800;flex-shrink:0;
+  font-family:'DM Mono',monospace;letter-spacing:0;
+}
+.b-aws {background:rgba(255,153,0,.15);color:var(--aws)}
+.b-acs {background:rgba(15,155,239,.15);color:var(--acs)}
+.b-ccna{background:rgba(29,189,230,.15);color:var(--cisco)}
+.cname{font-size:.83rem;font-weight:600;line-height:1.3}
+.cissue{font-size:.7rem;color:var(--fg-2)}
+.edu-stack{display:flex;flex-direction:column}
+.edu-row{display:flex;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.edu-row:last-child{border-bottom:none}
+.edot{width:.6rem;height:.6rem;border-radius:50%;background:var(--gold);margin-top:.42rem;flex-shrink:0}
+.edeg{font-size:.875rem;font-weight:600;margin-bottom:.1rem}
+.eschool{font-size:.77rem;color:var(--gold);font-weight:500}
+.edate{font-size:.7rem;color:var(--fg-2);margin-top:.1rem}
+
+/* ══════════════════════════════════
+   TIMELINE — wide left column layout
+══════════════════════════════════ */
+.tl{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:1.5rem}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:1.2rem}
+.tl-dot{
+  width:.95rem;height:.95rem;border-radius:50%;
+  background:var(--gold);border:2px solid var(--gold-dim2);
+  margin-top:.3rem;flex-shrink:0;
+}
+.tl-line{
+  width:2px;flex:1;min-height:2rem;
+  background:linear-gradient(to bottom,var(--gold),rgba(201,168,76,.06));
+  margin:.35rem 0;
+}
+.tl-last .tl-line{background:transparent}
+.tl-card{
+  flex:1;min-width:0;margin-bottom:1.75rem;
+  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:1.6rem 1.75rem;
+  transition:border-color .25s,transform .25s;
+  position:relative;overflow:hidden;
+}
+.tl-card::after{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.tl-card:hover{border-color:rgba(201,168,76,.3);transform:translateX(4px)}
+.tl-card:hover::after{opacity:1}
+.tl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.6rem}
+.tl-role{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;line-height:1.25}
+.tl-meta{display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;flex-shrink:0}
+.tl-date{
+  font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;
+  color:var(--gold);background:var(--gold-dim);
+  border:1px solid rgba(201,168,76,.25);
+  padding:.2rem .6rem;border-radius:9999px;white-space:nowrap;
+}
+.tl-date.current{color:#4ade80;background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.25)}
+.tl-loc{font-size:.75rem;color:var(--fg-2);display:flex;align-items:center;gap:.3rem;margin-bottom:.7rem}
+.tl-loc svg{width:.75rem;height:.75rem;flex-shrink:0}
+.tl-desc{font-size:.84rem;color:var(--fg-2);line-height:1.75;font-weight:300}
+
+/* ══════════════════════════════════
+   PUBLICATIONS
+══════════════════════════════════ */
+.pub-grid{display:grid;gap:1.4rem}
+@media(min-width:768px){.pub-grid{grid-template-columns:1fr 1fr}}
+.pubcard{
+  background:var(--ink-2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:2rem;display:flex;flex-direction:column;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+.msec.shaded .pubcard{background:var(--ink-3)}
+.pubcard:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px);box-shadow:0 16px 50px rgba(0,0,0,.3)}
+.pub-yr{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;
+  color:var(--gold);background:var(--gold-dim);
+  border:1px solid rgba(201,168,76,.22);
+  padding:.22rem .65rem;border-radius:9999px;margin-bottom:1rem;
+  width:fit-content;
+}
+.pub-yr svg{width:.7rem;height:.7rem}
+.pubcard h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.4rem;transition:color .2s;line-height:1.4}
+.pubcard:hover h3{color:var(--gold)}
+.pub-journal{font-size:.75rem;color:var(--gold);font-weight:500;margin-bottom:.7rem}
+.pub-desc{font-size:.83rem;color:var(--fg-2);flex:1;font-weight:300;margin-bottom:1.5rem;line-height:1.7}
+.pub-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--gold);font-size:.78rem;font-weight:600;text-decoration:none;transition:gap .2s}
+.pub-link:hover{gap:.65rem}
+.pub-link svg{width:.85rem;height:.85rem}
+
+/* ══════════════════════════════════
+   COMMUNITY / AWARDS — card grid
+══════════════════════════════════ */
+.citem{
+  padding:1.6rem;border-radius:var(--r);
+  border:1px solid var(--border);border-top:2px solid var(--gold);
+  background:var(--ink-2);
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+  display:flex;flex-direction:column;gap:.45rem;
+}
+.msec.shaded .citem{background:var(--ink-3)}
+.citem:hover{border-color:rgba(201,168,76,.5);transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.3)}
+.citem-icon{
+  width:2.25rem;height:2.25rem;border-radius:.5rem;
+  background:var(--gold-dim);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+}
+.citem-icon svg{width:1.1rem;height:1.1rem}
+.citem h3{font-family:'Playfair Display',serif;font-size:.975rem;font-weight:700;line-height:1.3}
+.citem-role{font-size:.72rem;font-weight:600;color:var(--gold);letter-spacing:.03em}
+.citem p{font-size:.82rem;color:var(--fg-2);font-weight:300;line-height:1.65;margin:0}
+
+/* ══════════════════════════════════
+   CONTACT
+══════════════════════════════════ */
+.contact-wrap{
+  max-width:40rem;margin:0 auto;text-align:center;
+  position:relative;z-index:2;
+}
+.contact-wrap h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;letter-spacing:-.02em;margin-bottom:1rem}
+.contact-wrap > p{font-size:.95rem;color:var(--fg-2);margin-bottom:2.5rem;font-weight:300}
+.cbtns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.cglow{
+  position:absolute;width:700px;height:350px;
+  background:radial-gradient(ellipse,rgba(201,168,76,.07) 0%,transparent 70%);
+  left:50%;transform:translateX(-50%);top:0;pointer-events:none;
+}
+
+/* ══════════════════════════════════
+   BUTTONS
+══════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.72rem 1.45rem;border-radius:.65rem;
+  font-size:.875rem;font-weight:600;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;
+}
+.btn svg{width:.95rem;height:.95rem;flex-shrink:0}
+.btn-gold{background:var(--gold);color:#0b0c14}
+.btn-gold:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
+.btn-outline{background:transparent;border:1px solid var(--border-2);color:var(--fg)}
+.btn-outline:hover{border-color:rgba(201,168,76,.4);background:var(--gold-dim);transform:translateY(-1px)}
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;position:relative;z-index:2;margin-top:3rem}
+footer p{font-size:.78rem;color:var(--fg-2)}
+footer p+p{margin-top:.35rem;font-size:.7rem;color:#606280}
+
+/* ══════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════ */
+.fu{opacity:1;transform:translateY(0);transition:opacity .55s ease,transform .55s ease}
+.fu.prep{opacity:0;transform:translateY(18px)}
+.fu.prep.vis{opacity:1;transform:translateY(0)}
+
+/* mt helper */
+.mt2{margin-top:2rem}
+</style>
 </head>
 <body>
-  <nav>
-    <div class="container">
-      <h1 class="font-poppins">Dr. Akhtar Jalbani</h1>
-      <div class="nav-links">
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <div class="nav-emblem">
+          <!-- shield + mortarboard combo mark -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="nav-name">Dr. Akhtar Jalbani<small>Cybersecurity · AI · Cloud Scholar</small></div>
+      </a>
+      <nav class="nav-links">
         <a href="#expertise">Expertise</a>
-        <a href="#certifications">Certifications</a>
+        <a href="#certifications">Credentials</a>
         <a href="#experience">Experience</a>
         <a href="#publications">Publications</a>
         <a href="#awards">Awards</a>
         <a href="#contact">Contact</a>
-      </div>
+      </nav>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-gradient"></div>
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div>
-            <p class="hero-label font-poppins">Cybersecurity, AI & Cloud Computing Expert</p>
-            <h2 class="hero-title font-poppins">Securing Digital Futures</h2>
-          </div>
-          <p class="hero-description">Over two decades of expertise in cybersecurity, cloud computing, and AI. Currently a Senior Lecturer at Holmesglen, AWS Community Builder, ACS Professional Member, and founding member of the Asia-Europe for Artificial Intelligence Network.</p>
-          <div class="hero-buttons">
-            <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" class="btn btn-primary font-poppins">View Profile</a>
-            <a href="#contact" class="btn btn-outline">Get in Touch</a>
-          </div>
-          <div class="social-links">
-            <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-            <a href="mailto:jalbani.vic@outlook.com" aria-label="Email"><i data-lucide="mail"></i></a>
-            <a href="https://medium.com/@akjalbani_15286" target="_blank" aria-label="Medium"><i data-lucide="pen-tool"></i></a>
-            <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" aria-label="Google Scholar"><i data-lucide="graduation-cap"></i></a>
-          </div>
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="container hero-inner">
+
+    <!-- identity tags -->
+    <div class="identity-strip fu">
+      <span class="id-tag scholar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Scholar
+      </span>
+      <span class="id-tag cyber">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Cybersecurity Expert
+      </span>
+      <span class="id-tag cloud">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        AWS Cloud Builder
+      </span>
+    </div>
+
+    <div class="hero-layout">
+      <!-- LEFT -->
+      <div class="fu" style="transition-delay:.05s">
+        <div class="hero-kicker">Academic · Practitioner · Author</div>
+        <h1 class="hero-h1">Advancing <em>Security</em><br>Through Research<br>&amp; Practice</h1>
+        <p class="hero-lead">Over two decades building expertise at the intersection of cybersecurity, cloud architecture, and AI — as a scholar, lecturer, researcher, and AWS Community Builder.</p>
+
+        <div class="hero-pills">
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            63+ Publications
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            20+ Years Experience
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            8+ AWS Certifications
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Ph.D. Computer Science
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Senior Lecturer · Holmesglen
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            41K+ Research Reads
+          </span>
         </div>
-        <div class="hero-image">
-          <div class="hero-image-glow"></div>
-          <div class="hero-image-box">
-            <div class="expertise-icons">
-              <div class="expertise-icon-item"><i data-lucide="shield-check"></i><span>Cybersecurity</span></div>
-              <div class="expertise-icon-item"><i data-lucide="cloud"></i><span>Cloud & AWS</span></div>
-              <div class="expertise-icon-item"><i data-lucide="brain"></i><span>AI & ML</span></div>
-              <div class="expertise-icon-item"><i data-lucide="blocks"></i><span>Blockchain</span></div>
+
+        <div class="hero-cta">
+          <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener" class="btn btn-gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn Profile
+          </a>
+          <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener" class="btn btn-outline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Google Scholar
+          </a>
+          <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        </div>
+        <div class="hero-social">
+          <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:jalbani.vic@outlook.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+          <a href="https://medium.com/@akjalbani_15286" target="_blank" rel="noopener" aria-label="Medium / Blog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </a>
+          <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: profile card -->
+      <div class="fu" style="transition-delay:.18s">
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <div class="avatar-orb"></div>
+            <div class="avatar-icon-ring">
+              <!-- Scholar/academic silhouette icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <!-- floating badges -->
+            <div class="float-badge fb-scholar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              PhD Scholar
+            </div>
+            <div class="float-badge fb-aws">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+              AWS Builder
+            </div>
+            <div class="float-badge fb-acs">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              ACS Member
+            </div>
+            <div class="float-badge fb-pub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              63+ Papers
+            </div>
+          </div>
+          <div class="profile-body">
+            <div class="profile-name">Dr. Akhtar Ali Jalbani</div>
+            <div class="profile-title">Senior Lecturer · Holmesglen Institute<br>AWS Community Builder · ACS Professional Member<br>Founding Member, AE4AI Network</div>
+            <div class="profile-stats">
+              <div class="ps-item"><div class="ps-num">20+</div><div class="ps-label">Yrs Experience</div></div>
+              <div class="ps-item"><div class="ps-num">63+</div><div class="ps-label">Publications</div></div>
+              <div class="ps-item"><div class="ps-num">66+</div><div class="ps-label">Citations</div></div>
+              <div class="ps-item"><div class="ps-num">41K+</div><div class="ps-label">Research Reads</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="stats">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item"><div class="stat-number font-poppins">20+</div><p class="stat-label">Years Experience</p></div>
-        <div class="stat-item"><div class="stat-number font-poppins">66+</div><p class="stat-label">Research Citations</p></div>
-        <div class="stat-item"><div class="stat-number font-poppins">63+</div><p class="stat-label">Publications</p></div>
-        <div class="stat-item"><div class="stat-number font-poppins">8+</div><p class="stat-label">AWS Certifications</p></div>
-        <div class="stat-item"><div class="stat-number font-poppins">41K+</div><p class="stat-label">Research Reads</p></div>
+<!-- ═══ ROLE STRIP ═══ -->
+<div class="role-strip">
+  <div class="container">
+    <div class="role-strip-inner">
+      <div class="role-item fu">
+        <div class="role-icon ri-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <div class="role-text"><strong>Academic Scholar</strong><span>Ph.D. · University of Göttingen</span></div>
+      </div>
+      <div class="role-item fu" style="transition-delay:.06s">
+        <div class="role-icon ri-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div class="role-text"><strong>Cybersecurity Researcher</strong><span>Threat Modelling · AI Security</span></div>
+      </div>
+      <div class="role-item fu" style="transition-delay:.12s">
+        <div class="role-icon ri-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
+        <div class="role-text"><strong>Cloud Architect</strong><span>AWS Certified · 8 Certifications</span></div>
+      </div>
+      <div class="role-item fu" style="transition-delay:.18s">
+        <div class="role-icon ri-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div class="role-text"><strong>Technical Author</strong><span>Medium · Dev.to · Springer</span></div>
+      </div>
+      <div class="role-item fu" style="transition-delay:.24s">
+        <div class="role-icon ri-aws"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="role-text"><strong>Educator &amp; Mentor</strong><span>WorldSkills · SummerTechLive</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section id="expertise">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-label font-poppins">Core Competencies</p>
-        <h2 class="section-title font-poppins">Areas of Expertise</h2>
+<!-- ═══ EXPERTISE ═══ -->
+<section id="expertise" class="msec">
+  <div class="container">
+    <div class="sec-eyebrow fu">Core Competencies</div>
+    <h2 class="sec-h2 fu">Areas of <em>Expertise</em></h2>
+    <div class="g3">
+      <div class="xcard fu">
+        <div class="xcard-icon xi-violet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Cybersecurity</h3>
+        <p>Network security, web application security, security modelling, and digital discipline practices across enterprise and academic environments.</p>
+        <ul>
+          <li>Layer 2 Network Security</li>
+          <li>Web Application Security</li>
+          <li>Security Frameworks &amp; Compliance</li>
+          <li>Threat Intelligence &amp; Modelling</li>
+        </ul>
       </div>
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-icon"><i data-lucide="shield"></i></div>
-            <h3 class="font-poppins">Cybersecurity</h3>
-            <p>Network security, web application security, security modeling, and digital discipline practices.</p>
-            <ul><li>Layer 2 Network Security</li><li>Web Application Security</li><li>Security Frameworks & Compliance</li><li>Threat Intelligence</li></ul>
+      <div class="xcard fu" style="transition-delay:.07s">
+        <div class="xcard-icon xi-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        </div>
+        <h3>Cloud &amp; AWS</h3>
+        <p>AWS Certified Professional and Community Builder with deep expertise in cloud architecture, security, and infrastructure design.</p>
+        <ul>
+          <li>AWS Solutions Architecture</li>
+          <li>Cloud Security &amp; IAM</li>
+          <li>DevOps &amp; Infrastructure as Code</li>
+          <li>VPC Design &amp; Networking</li>
+        </ul>
+      </div>
+      <div class="xcard fu" style="transition-delay:.14s">
+        <div class="xcard-icon xi-cyan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Research &amp; AI</h3>
+        <p>Active researcher with 63+ publications focusing on AI, blockchain, data provenance, and machine learning applications in security domains.</p>
+        <ul>
+          <li>AI &amp; Machine Learning</li>
+          <li>Blockchain &amp; Data Provenance</li>
+          <li>Software Quality Modelling</li>
+          <li>Pattern Recognition</li>
+        </ul>
+      </div>
+    </div>
+    <div class="vstrip">
+      <div class="vtile vt1 fu"><div class="vtile-emoji">🛡️</div><h4>Security Architecture</h4><p>Enterprise security design &amp; threat modelling</p></div>
+      <div class="vtile vt2 fu" style="transition-delay:.07s"><div class="vtile-emoji">☁️</div><h4>Cloud Infrastructure</h4><p>AWS, Azure &amp; multi-cloud secure solutions</p></div>
+      <div class="vtile vt3 fu" style="transition-delay:.14s"><div class="vtile-emoji">🤖</div><h4>AI &amp; Automation</h4><p>Intelligent systems, ML &amp; data provenance</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CREDENTIALS ═══ -->
+<section id="certifications" class="msec shaded">
+  <div class="container">
+    <div class="sec-eyebrow fu">Professional Credentials</div>
+    <h2 class="sec-h2 fu">Certifications, <em>Memberships</em> &amp; Education</h2>
+    <div class="g2">
+      <!-- LEFT: certs -->
+      <div class="fu">
+        <div class="subsect-hd" style="color:var(--aws)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          AWS Certifications
+        </div>
+        <div class="clist">
+          <div class="crow aws-c"><div class="cbadge b-aws">AWS</div><div><div class="cname">Solutions Architect – Associate</div><div class="cissue">Amazon Web Services</div></div></div>
+          <div class="crow aws-c"><div class="cbadge b-aws">AWS</div><div><div class="cname">Security – Specialty</div><div class="cissue">Amazon Web Services</div></div></div>
+          <div class="crow aws-c"><div class="cbadge b-aws">AWS</div><div><div class="cname">Cloud Practitioner</div><div class="cissue">Amazon Web Services</div></div></div>
+          <div class="crow aws-c"><div class="cbadge b-aws">AWS</div><div><div class="cname">Cloud Quest: Cloud Practitioner</div><div class="cissue">AWS Training</div></div></div>
+          <div class="crow aws-c"><div class="cbadge b-aws">AWS</div><div><div class="cname">Cloud Quest: Solutions Architect</div><div class="cissue">AWS Training</div></div></div>
+          <div class="crow aws-c"><div class="cbadge b-aws">CB</div><div><div class="cname">AWS Community Builder</div><div class="cissue">Security Category</div></div></div>
+        </div>
+        <div class="subsect-hd mt2" style="color:var(--cisco)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          Cisco &amp; Other
+        </div>
+        <div class="clist">
+          <div class="crow acs-c"><div class="cbadge b-acs">ACS</div><div><div class="cname">ACS Certified Professional (CP)</div><div class="cissue">Australian Computer Society</div></div></div>
+          <div class="crow ccna-c"><div class="cbadge b-ccna">CCNA</div><div><div class="cname">CCNA: Introduction to Networks</div><div class="cissue">Cisco Networking Academy</div></div></div>
+          <div class="crow ccna-c"><div class="cbadge b-ccna">CCNA</div><div><div class="cname">CCNA: Switching, Routing &amp; Wireless</div><div class="cissue">Cisco Networking Academy</div></div></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: memberships + education -->
+      <div class="fu" style="transition-delay:.1s">
+        <div class="subsect-hd" style="color:var(--acs)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Professional Memberships
+        </div>
+        <div class="clist">
+          <div class="crow acs-c"><div class="cbadge b-acs">ACS</div><div><div class="cname">ACS Professional Member</div><div class="cissue">Australian Computer Society</div></div></div>
+          <div class="crow acs-c"><div class="cbadge b-acs">SDL</div><div><div class="cname">SDL-Forum Member</div><div class="cissue">System Design Language Forum</div></div></div>
+          <div class="crow acs-c"><div class="cbadge b-acs">AE4AI</div><div><div class="cname">AE4AI Founding Member</div><div class="cissue">Asia-Europe for Artificial Intelligence</div></div></div>
+        </div>
+
+        <div class="subsect-hd mt2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          Education
+        </div>
+        <div class="edu-stack">
+          <div class="edu-row"><div class="edot"></div><div><div class="edeg">Associate Degree – Vocational Education &amp; Training</div><div class="eschool">Federation University</div><div class="edate">2021–2022 · Australia</div></div></div>
+          <div class="edu-row"><div class="edot"></div><div><div class="edeg">Diploma of VET &amp; Diploma of Training Design</div><div class="eschool">Plenty Training</div><div class="edate">2020–2021 · Australia</div></div></div>
+          <div class="edu-row"><div class="edot"></div><div><div class="edeg">Ph.D. in Computer Science</div><div class="eschool">Georg-August-Universität Göttingen</div><div class="edate">2007–2011 · Germany</div></div></div>
+          <div class="edu-row"><div class="edot"></div><div><div class="edeg">MS in Software Engineering</div><div class="eschool">National University of Sciences &amp; Technology</div><div class="edate">2000–2002 · Pakistan</div></div></div>
+          <div class="edu-row"><div class="edot"></div><div><div class="edeg">BE in Electrical Engineering</div><div class="eschool">NED University of Engineering &amp; Technology</div><div class="edate">1995–1999 · Pakistan</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="experience" class="msec">
+  <div class="container">
+    <div class="sec-eyebrow fu">Career Path</div>
+    <h2 class="sec-h2 fu">Professional <em>Experience</em></h2>
+    <div class="tl">
+
+      <!-- 1. HOLMESGLEN — CURRENT -->
+      <div class="tl-item fu">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Senior Lecturer – Holmesglen Institute</div>
+            <div class="tl-meta"><span class="tl-date current">April 2019 – Current</span></div>
           </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Melbourne, Victoria, Australia</div>
+          <div class="tl-desc">Delivering higher education and VET courses in cybersecurity, networking, cloud computing, and IT. Designing and validating assessment tools in accordance with AQF, ASQA, and training package standards. Subject coordination including timetabling, resource oversight, assessment management, and moderation. Supporting course coordination, industry alignment, academic quality assurance, and student success initiatives.</div>
         </div>
-        <div class="card">
-          <div class="card-content">
-            <div class="card-icon aws-icon"><i data-lucide="cloud"></i></div>
-            <h3 class="font-poppins">Cloud & AWS</h3>
-            <p>AWS Certified Professional and Community Builder with extensive cloud architecture expertise.</p>
-            <ul><li>AWS Solutions Architecture</li><li>Cloud Security & IAM</li><li>DevOps & Infrastructure</li><li>VPC & Networking</li></ul>
+      </div>
+
+      <!-- 2. RMIT -->
+      <div class="tl-item fu" style="transition-delay:.05s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Lecturer – RMIT University</div>
+            <div class="tl-meta"><span class="tl-date">July 2024 – March 2025</span></div>
           </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Melbourne, Victoria, Australia</div>
+          <div class="tl-desc">Delivered vocational and undergraduate teaching across cybersecurity, cloud computing, virtualisation, and digital infrastructure. Designed industry-aligned lectures and labs using AWS, Splunk, and secure cloud architecture principles. Mentored students preparing for WorldSkills 2025 competitions in Cyber Security and Cloud Computing.</div>
         </div>
-        <div class="card">
-          <div class="card-content">
-            <div class="card-icon"><i data-lucide="book-open"></i></div>
-            <h3 class="font-poppins">Research & AI</h3>
-            <p>Active researcher focusing on AI, blockchain, data provenance, and machine learning applications.</p>
-            <ul><li>AI & Machine Learning</li><li>Blockchain Technology</li><li>Data Provenance</li><li>Pattern Recognition</li></ul>
+      </div>
+
+      <!-- 3. LA TROBE -->
+      <div class="tl-item fu" style="transition-delay:.1s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Casual Lecturer – La Trobe University</div>
+            <div class="tl-meta"><span class="tl-date">March 2020 – June 2024</span></div>
           </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Melbourne, Victoria, Australia</div>
+          <div class="tl-desc">Delivered undergraduate and postgraduate teaching in cybersecurity principles, network security, and applied cyber defence. Facilitated tutorials, labs, and assessment support for diverse student cohorts.</div>
         </div>
       </div>
-      <div class="expertise-visual">
-        <div class="expertise-visual-card" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);"><div class="expertise-visual-content"><h4 class="font-poppins">🛡️ Security Architecture</h4><p>Enterprise security design & implementation</p></div></div>
-        <div class="expertise-visual-card" style="background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);"><div class="expertise-visual-content"><h4 class="font-poppins">☁️ Cloud Infrastructure</h4><p>AWS, Azure & multi-cloud solutions</p></div></div>
-        <div class="expertise-visual-card" style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%);"><div class="expertise-visual-content"><h4 class="font-poppins">🤖 AI & Automation</h4><p>Machine learning & intelligent systems</p></div></div>
-      </div>
-    </div>
-  </section>
 
-  <section id="certifications" class="section-alt">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-label font-poppins">Professional Credentials</p>
-        <h2 class="section-title font-poppins">Certifications & Memberships</h2>
-      </div>
-      <div class="grid-2">
-        <div class="edu-section">
-          <h3 class="font-poppins" style="color: var(--aws-orange);"><i data-lucide="award"></i> Certifications</h3>
-          <div class="cert-grid">
-            <div class="cert-item aws"><div class="cert-badge aws">AWS</div><div class="cert-info"><p class="font-poppins">AWS Certified Solutions Architect - Associate</p><p>Amazon Web Services</p></div></div>
-            <div class="cert-item aws"><div class="cert-badge aws">AWS</div><div class="cert-info"><p class="font-poppins">AWS Certified Security - Specialty</p><p>Amazon Web Services</p></div></div>
-            <div class="cert-item aws"><div class="cert-badge aws">AWS</div><div class="cert-info"><p class="font-poppins">AWS Certified Cloud Practitioner</p><p>Amazon Web Services</p></div></div>
-            <div class="cert-item aws"><div class="cert-badge aws">AWS</div><div class="cert-info"><p class="font-poppins">AWS Cloud Quest: Cloud Practitioner</p><p>AWS Training</p></div></div>
-            <div class="cert-item aws"><div class="cert-badge aws">AWS</div><div class="cert-info"><p class="font-poppins">AWS Cloud Quest: Solutions Architect</p><p>AWS Training</p></div></div>
-            <div class="cert-item aws"><div class="cert-badge aws">CB</div><div class="cert-info"><p class="font-poppins">AWS Community Builder</p><p>Security Category - Amazon Web Services</p></div></div>
-            <div class="cert-item acs"><div class="cert-badge acs">ACS</div><div class="cert-info"><p class="font-poppins">ACS Certified Professional (CP)</p><p>Australian Computer Society</p></div></div>
-            <div class="cert-item cisco"><div class="cert-badge cisco">CCNA</div><div class="cert-info"><p class="font-poppins">CCNA: Introduction to Networks</p><p>Cisco Networking Academy</p></div></div>
-            <div class="cert-item cisco"><div class="cert-badge cisco">CCNA</div><div class="cert-info"><p class="font-poppins">CCNA: Switching, Routing, Wireless</p><p>Cisco Networking Academy</p></div></div>
+      <!-- 4. ATMC -->
+      <div class="tl-item fu" style="transition-delay:.15s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Casual Lecturer – ATMC / Federation University</div>
+            <div class="tl-meta"><span class="tl-date">March 2018 – December 2019</span></div>
           </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Melbourne, Victoria, Australia</div>
+          <div class="tl-desc">Delivered undergraduate tutorials and lectures in IT and computing disciplines. Supported international student cohorts through lab facilitation and academic mentoring.</div>
         </div>
-        <div class="edu-section">
-          <h3 class="font-poppins" style="color: var(--acs-blue);"><i data-lucide="users"></i> Professional Memberships</h3>
-          <div class="cert-grid">
-            <div class="cert-item acs"><div class="cert-badge acs">ACS</div><div class="cert-info"><p class="font-poppins">ACS Professional Member</p><p>Australian Computer Society</p></div></div>
-            <div class="cert-item acs"><div class="cert-badge acs">SDL-forum</div><div class="cert-info"><p class="font-poppins">SDL-Forum Member</p><p>System Design Language Forum (SDL)</p></div></div>
-            <div class="cert-item acs"><div class="cert-badge acs">AE4AI</div><div class="cert-info"><p class="font-poppins">AE4AI Founding Member</p><p>Asia-Europe for Artificial Intelligence</p></div></div>
+      </div>
+
+      <!-- 5. SINDH ASST PROF -->
+      <div class="tl-item fu" style="transition-delay:.2s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Assistant Professor &amp; PG Coordinator – Sindh Agricultural University</div>
+            <div class="tl-meta"><span class="tl-date">April 2011 – April 2018</span></div>
           </div>
-          <h3 class="font-poppins" style="margin-top: 2rem;"><i data-lucide="graduation-cap"></i> Education</h3>
-          <div style="margin-top: 1rem;">
-             <div class="edu-item"><h4 class="font-poppins">Associate Degree in Vocational Education & Training</h4><p class="school">Federation University</p><p class="date">2021 - 2022 | Australia</p></div>
-             <div class="edu-item"><h4 class="font-poppins">Diploma of Vocational Education and Training & Diploma of Training Design and Development</h4><p class="school">Plenty Training</p><p class="date">2020 - 2021 | Australia</p></div>
-            <div class="edu-item"><h4 class="font-poppins">Ph.D. in Computer Science</h4><p class="school">Georg-August-Universität Göttingen</p><p class="date">2007 - 2011 | Germany</p></div>
-            <div class="edu-item"><h4 class="font-poppins">MS in Software Engineering</h4><p class="school">National University of Sciences & Technology</p><p class="date">2000 - 2002 | Pakistan</p></div>
-            <div class="edu-item"><h4 class="font-poppins">BE in Electrical Engineering</h4><p class="school">NED University of Engineering & Technology</p><p class="date">1995 - 1999 | Pakistan</p></div>
-           
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Tandojam, Pakistan</div>
+          <div class="tl-desc">Delivered teaching and research in software engineering with a focus on model-driven engineering. Coordinated postgraduate programs and supervised Master's and PhD research in software quality, modelling, and system design.</div>
+        </div>
+      </div>
+
+      <!-- 6. SINDH DIRECTOR IT -->
+      <div class="tl-item fu" style="transition-delay:.25s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Director of IT – Sindh Agricultural University</div>
+            <div class="tl-meta"><span class="tl-date">April 2013 – December 2014</span></div>
           </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Tandojam, Pakistan</div>
+          <div class="tl-desc">Provided strategic leadership for university IT systems and infrastructure. Oversaw enterprise systems, databases, and institutional IT governance. Led digital transformation initiatives supporting teaching, research, and administration.</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section id="experience" class="section-alt">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-label font-poppins">Career Path</p>
-        <h2 class="section-title font-poppins">Professional Experience</h2>
-      </div>
-      <div>
-        <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins">Senior Lecturer at Holmesglen Institute</h3><p class="date">April 2019 - July 2024</p><p class="location">Melbourne, Victoria, Australia</p><p class="description">
-          Deliver higher education and VET courses in cybersecurity, networking, cloud computing, and information technology.
-Design, develop, deliver, and validate assessment tools and learning materials in accordance with AQF, ASQA, and training package standards.
-Facilitate face-to-face, online, and blended teaching for domestic and international cohorts, promoting student engagement and academic success.
-Perform Trainer and Assessor responsibilities while ensuring compliance with regulatory, academic, and audit requirements.
-Undertake subject coordination for IT units, including unit planning, timetable coordination, resource oversight, assessment management, moderation support, and liaison with teaching staff and students.
-Support course coordination, industry alignment, academic quality assurance, and student success initiatives.
-        <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins">Lecturer at RMIT University</h3><p class="date">July 2024 - March 2025</p><p class="location">Melbourne, Victoria, Australia</p><p class="description"></p></div></div>
-
-          Delivered vocational and undergraduate teaching across cybersecurity, cloud computing, virtualization, and digital infrastructure within accredited programs.
-Designed, developed, and delivered industry-aligned lectures, laboratory sessions, and assessments using AWS, Splunk, virtualization technologies, and secure cloud architecture principles.
-Mentored students preparing for WorldSkills 2025 competitions in Cyber Security and Cloud Computing, supporting technical capability development, competition readiness, and practical problem-solving skills.
-Contributed to curriculum review, learning design enhancement, and continuous improvement initiatives aligned with institutional quality frameworks.
-Supported blended and technology-enhanced learning through effective use of LMS platforms, hands-on labs, and applied case studies.
-
-        <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins">Casual Lecturer at Latrobe University</h3><p class="date">March 2020 - June 2024</p><p class="location">Melbourne, Victoria, Australia</p><p class="description">Delivered undergraduate & postgraduate teaching in cybersecurity principles, network security, and applied cyber defence.
-
-Facilitated tutorials, laboratories, and assessment support sessions for diverse student cohorts.
-
-Marked assessments and provided constructive academic feedback aligned with subject learning outcomes.
-
-Supported course coordinators in maintaining academic quality and consistency across delivery modes. </p></div></div>
-        
-
-
-
-                <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins">Casual Lecturer at ATMC- Federation University</h3><p class="date">March 2018 - Dec 2019</p><p class="location">Melbourne, Victoria, Australia</p><p class="description">
-                  Delivered undergraduate tutorials and lectures in information technology and computing disciplines for Federation University programs.
-
-Supported international student cohorts through structured tutorials, lab facilitation, and academic mentoring.
-
-Assisted with assessment marking and moderation under university academic standards.
-
-Collaborated with academic teams to ensure alignment with Federation University curriculum requirements.
-                </p></div></div>
-<div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins"><h3 class="font-poppins">Assistant Professor & PG Coordinator at Sindh Agricultural University</h3><p class="date">April 2011 - April 2018</p><p class="location">Tandojam, Pakistan</p><p class="description">Delivered teaching and conducted research in software engineering with a focus on Model driven Software Engineering.
-Coordinated postgraduate academic programs, including curriculum planning, assessment oversight, and supervision.
-Supervised Master’s and PhD research projects in software quality, modeling, and system design.
-Published research and contributed to academic governance and quality assurance activities.</p></div></div>
-        
-        <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins">Director IT at Sindh Agricultural University</h3><p class="date">April 2013 - December 2014</p><p class="location">Tandojam, Pakistan</p><p class="description">Provided strategic leadership for university IT systems, infrastructure, and academic technology services.
-
-Oversaw enterprise systems, databases, and institutional IT governance.
-
-Taught advanced subjects including programming, big data technologies, and database administration.
-
-Supervised postgraduate research projects across computing, data analytics, and applied IT domains.
-
-Led digital transformation initiatives supporting teaching, research, and administrative operations.</p></div></div>
-        <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div><div class="timeline-content"><h3 class="font-poppins">Research Assistant at University of Goettingen</h3><p class="date">April 2007 - April 2011</p><p class="location">Goettingen, Germany</p><p class="description">Supported funded research projects in software engineering, Software quality.
-Assisted in teaching software engineering subjects.
-Conducted empirical research, data analysis, and technical documentation for peer-reviewed publications.
-Collaborated with interdisciplinary research teams and supervised student research activities.</p></div></div>
-                <div class="timeline-item"><div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line" style="background: transparent;"></div></div><div class="timeline-content"><h3 class="font-poppins">Lecturer & UG Coordinator at Sindh Agricultural University</h3><p class="date">April 2002 - April 2018</p><p class="location">Tandojam, Pakistan</p><p class="description">Taught core computing subjects including programming, databases, big data, and information systems.
-Coordinated undergraduate programs, managing curriculum delivery, assessments, and student progression.
-Supervised undergraduate research and final-year projects across multiple computing disciplines.
-Contributed to academic committees, curriculum review, and institutional teaching quality initiatives.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="publications" class="section-alt">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-label font-poppins">Research Output</p>
-        <h2 class="section-title font-poppins">Featured Publications</h2>
-      </div>
-      <div class="grid-2">
-        <div class="pub-card"><span class="pub-year">2025</span><h3 class="font-poppins">Enhancing Data Provenance in AI with Blockchain Technology</h3><p class="pub-journal">CSI Transactions on ICT - Springer</p><p class="pub-description">A comprehensive quality model for assessing data quality in AI systems using blockchain technology and ISO/IEC 9126 standards.</p><a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" class="pub-link">Read Publication <i data-lucide="external-link"></i></a></div>
-        <div class="pub-card"><span class="pub-year">2014</span><h3 class="font-poppins">Security Modeling for Service-Oriented Systems</h3><p class="pub-journal">Software & Systems Modeling - Springer</p><p class="pub-description">Using security pattern refinement approach for modeling secure service-oriented architectures. 16 citations.</p><a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" class="pub-link">Read Publication <i data-lucide="external-link"></i></a></div>
-              </div>
-      <div class="text-center mt-8"><a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" class="btn btn-outline">View All Publications on Google Scholar</a></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="section-header">
-        <p class="section-label font-poppins">Community Involvement</p>
-        <h2 class="section-title font-poppins">Speaking & Leadership</h2>
-      </div>
-      <div class="grid-2">
-        <div class="community-item"><h3 class="font-poppins">Founding Member - AE4AI Network</h3><p class="role">Asia-Europe for Artificial Intelligence</p><p>Established at ASEF InnoLab 4 in Shanghai (October 2023). Collaborating on AI initiatives between Asia and Europe.</p></div>
-        <div class="community-item"><h3 class="font-poppins">Committee Member - SAI Conference</h3><p class="role">Computing Conference 2026</p><p>Contributing expertise in AI, security, and software engineering to international conference programming.</p></div>
-        <div class="community-item"><h3 class="font-poppins">AWS Community Builder</h3><p class="role">Security Category - Amazon Web Services</p><p>Active contributor sharing cloud security best practices and conducting hands-on AWS workshops.</p></div>
-        <div class="community-item"><h3 class="font-poppins">Technical Writer</h3><p class="role">Medium & Dev.to</p><p>Publishing articles on cybersecurity, AWS, VPC peering, and cloud architecture to reach global technical audience.</p></div>
-        <div class="community-item"><h3 class="font-poppins">SummerTechLive Mentor</h3><p class="role">Multiple Grant Recipient</p><p>Awarded multiple mentor grants to facilitate mentorship programs for aspiring students in technology fields.</p></div>
-        <div class="community-item"><h3 class="font-poppins">ACS Professional Member</h3><p class="role">Australian Computer Society</p><p>Active member of Australia's leading ICT professional association, contributing to cybersecurity initiatives.</p></div>
-              <div class="community-item"><h3 class="font-poppins">WorldSkills Australia Mentor – Cloud Computing & Cyber Security</h3><p class="role">WorldSkills Australia</p><p>Mentored students who achieved 🥇 Gold and 🥈 Silver medals in Cloud Computing at the WorldSkills Australia National Competition 2025.
-Supported competition training and skill development in Cloud Computing and Cyber Security, contributing to Victoria’s top medal tally and student progression to the WorldSkills International Competition 2026.</p></div>
-      </div>
-    </div>
-  </section>
-
-
-  <section id="awards" class="section-alt">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-label font-poppins">Honors & Awards</p>
-        <h2 class="section-title font-poppins">Honors & Awards</h2>
-      </div>
-      <div class="grid-2">
-        <div class="community-item"><h3 class="font-poppins">CoVE High Achiever-2025</h3><p class="role">RMIT University</p><p>Awarded in recognition of exceptional teaching performance, based on consistently high Course Experience Survey (CES) results.
-Acknowledges strong student satisfaction, effective learning design, and a demonstrated commitment to high-quality teaching and student engagement.</p></div>
-        <div class="community-item"><h3 class="font-poppins">Finalist- Trainner of the Year 2023</h3><p class="role">Holmesglen</p><p>Recognised for exemplary teaching performance and professional practice across higher education and VET contexts.
-Highlights sustained commitment to innovative teaching, assessment quality, and learner-centred delivery.</p></div>
-        <div class="community-item"><h3 class="font-poppins">PhD Scholarship (2007-2011)</h3><p class="role">DAAD Germany</p><p>Awarded a competitive, fully funded doctoral scholarship by DAAD to undertake PhD research in Germany.
-
-Covered full tuition, living stipend, research funding, and international academic collaboration support.
-
-Recognised academic excellence and research potential at an international level.</p></div>
-      
-      </div>
-    </div>
-  </section>
-
-
-  
-
-  <section id="contact" class="section-alt contact">
-    <div class="container">
-      <div class="contact-content">
-        <h2 class="font-poppins">Let's Connect</h2>
-        <p class="contact-description">Interested in collaboration, speaking opportunities, or discussing cybersecurity and cloud computing? Feel free to reach out.</p>
-        <div class="contact-buttons">
-          <a href="mailto:jalbani.vic@outlook.com" class="btn btn-primary font-poppins"><i data-lucide="mail"></i> Send Email</a>
-          <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" class="btn btn-outline font-poppins"><i data-lucide="linkedin"></i> LinkedIn Profile</a>
-        </div>
-        <div class="footer">
-          <p>© 2026 Dr. Akhtar Ali Jalbani. All rights reserved.</p>
-          <p style="margin-top: 0.5rem; font-size: 0.75rem;">Cybersecurity, AI & Cloud Computing Professional || AWS Certified || AWS Community Builder || Founding Member, AE4AI Network || Tech Mentor || Empowering the Next Generation of Tech Leaders ||| University Lecturer || Trainner & Assessor</p>
+      <!-- 7. GOTTINGEN -->
+      <div class="tl-item fu" style="transition-delay:.3s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Research Assistant – University of Göttingen</div>
+            <div class="tl-meta"><span class="tl-date">April 2007 – April 2011</span></div>
+          </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Göttingen, Germany</div>
+          <div class="tl-desc">Supported funded research in software engineering and software quality. Assisted in teaching, conducted empirical research, and collaborated with interdisciplinary teams on peer-reviewed publications.</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <script>lucide.createIcons();</script>
+      <!-- 8. SINDH LECTURER -->
+      <div class="tl-item tl-last fu" style="transition-delay:.35s">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <div class="tl-role">Lecturer &amp; UG Coordinator – Sindh Agricultural University</div>
+            <div class="tl-meta"><span class="tl-date">April 2002 – April 2007</span></div>
+          </div>
+          <div class="tl-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Tandojam, Pakistan</div>
+          <div class="tl-desc">Taught core computing subjects including programming, databases, big data, and information systems. Coordinated undergraduate programs and supervised final-year research projects.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PUBLICATIONS ═══ -->
+<section id="publications" class="msec shaded">
+  <div class="container">
+    <div class="sec-eyebrow fu">Research Output</div>
+    <h2 class="sec-h2 fu">Featured <em>Publications</em></h2>
+    <div class="pub-grid">
+      <div class="pubcard fu">
+        <div class="pub-yr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          2025
+        </div>
+        <h3>Enhancing Data Provenance in AI with Blockchain Technology</h3>
+        <div class="pub-journal">CSI Transactions on ICT – Springer</div>
+        <p class="pub-desc">A comprehensive quality model for assessing data quality in AI systems using blockchain technology and ISO/IEC 9126 standards.</p>
+        <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener" class="pub-link">
+          Read Publication
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+      <div class="pubcard fu" style="transition-delay:.1s">
+        <div class="pub-yr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          2014
+        </div>
+        <h3>Security Modeling for Service-Oriented Systems</h3>
+        <div class="pub-journal">Software &amp; Systems Modeling – Springer</div>
+        <p class="pub-desc">Using security pattern refinement approach for modelling secure service-oriented architectures. 16 citations.</p>
+        <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener" class="pub-link">
+          Read Publication
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        View All 63+ Publications on Google Scholar
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMMUNITY ═══ -->
+<section class="msec">
+  <div class="container">
+    <div class="sec-eyebrow fu">Community &amp; Leadership</div>
+    <h2 class="sec-h2 fu">Speaking, <em>Mentoring</em> &amp; Service</h2>
+    <div class="g2">
+      <div class="citem fu">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Founding Member – AE4AI Network</h3>
+        <div class="citem-role">Asia-Europe for Artificial Intelligence</div>
+        <p>Established at ASEF InnoLab 4 in Shanghai (October 2023). Collaborating on AI initiatives between Asia and Europe.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.07s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Committee Member – SAI Conference</h3>
+        <div class="citem-role">Computing Conference 2026</div>
+        <p>Contributing expertise in AI, security, and software engineering to international conference programming.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.14s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div>
+        <h3>AWS Community Builder</h3>
+        <div class="citem-role">Security Category – Amazon Web Services</div>
+        <p>Active contributor sharing cloud security best practices and conducting hands-on AWS workshops globally.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.21s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>Technical Author &amp; Writer</h3>
+        <div class="citem-role">Medium &amp; Dev.to</div>
+        <p>Publishing articles on cybersecurity, AWS, VPC peering, and cloud architecture for a global technical audience.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.28s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>SummerTechLive Mentor</h3>
+        <div class="citem-role">Multiple Grant Recipient</div>
+        <p>Awarded multiple mentor grants to facilitate mentorship programs for aspiring students in technology fields.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.35s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <h3>WorldSkills Australia Mentor</h3>
+        <div class="citem-role">Cloud Computing &amp; Cyber Security</div>
+        <p>Mentored students who achieved 🥇 Gold and 🥈 Silver medals at WorldSkills Australia 2025. Contributed to Victoria's top medal tally and student progression to WorldSkills International 2026.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AWARDS ═══ -->
+<section id="awards" class="msec shaded">
+  <div class="container">
+    <div class="sec-eyebrow fu">Honors &amp; Recognition</div>
+    <h2 class="sec-h2 fu">Awards &amp; <em>Honours</em></h2>
+    <div class="g2" style="gap:1.25rem">
+      <div class="citem fu">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <h3>CoVE High Achiever – 2025</h3>
+        <div class="citem-role">RMIT University</div>
+        <p>Awarded for exceptional teaching performance based on consistently high Course Experience Survey results. Acknowledges strong student satisfaction, effective learning design, and commitment to quality teaching.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.1s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <h3>Finalist – Trainer of the Year 2023</h3>
+        <div class="citem-role">Holmesglen Institute</div>
+        <p>Recognised for exemplary teaching performance across higher education and VET contexts, highlighting sustained commitment to innovative, learner-centred delivery.</p>
+      </div>
+      <div class="citem fu" style="transition-delay:.2s">
+        <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <h3>PhD Scholarship (2007–2011)</h3>
+        <div class="citem-role">DAAD Germany</div>
+        <p>Fully funded doctoral scholarship to undertake PhD research in Germany, covering tuition, living stipend, research funding, and international academic collaboration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="msec" style="position:relative;overflow:hidden">
+  <div class="cglow"></div>
+  <div class="container">
+    <div class="contact-wrap fu">
+      <div class="sec-eyebrow" style="justify-content:center;margin-bottom:.55rem">Let's Connect</div>
+      <h2>Ready to <em style="font-style:italic;color:var(--gold)">Collaborate?</em></h2>
+      <p>Interested in collaboration, speaking opportunities, research partnerships, or discussing cybersecurity and cloud computing? Feel free to reach out.</p>
+      <div class="cbtns">
+        <a href="mailto:jalbani.vic@outlook.com" class="btn btn-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Send Email
+        </a>
+        <a href="https://www.linkedin.com/in/akhtar-jalbani" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          Google Scholar
+        </a>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="container">
+      <p>© 2026 Dr. Akhtar Ali Jalbani · All rights reserved.</p>
+      <p>Cybersecurity · AI · Cloud Computing · AWS Certified · AWS Community Builder · ACS Professional Member · AE4AI Founding Member · WorldSkills Mentor</p>
+    </div>
+  </footer>
+</section>
+
+<script>
+  // safe animation: mark elements only after DOM ready
+  document.querySelectorAll('.fu').forEach(el => el.classList.add('prep'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); }});
+  }, { threshold: 0.07, rootMargin: '0px 0px -25px 0px' });
+  document.querySelectorAll('.fu.prep').forEach(el => io.observe(el));
+</script>
 </body>
 </html>

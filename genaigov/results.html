@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results · GAIA-HE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..600;1,300..600&family=Inter+Tight:wght@300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="index.html">
+      <span>GAIA<span style="color:var(--gold);">·</span>HE</span>
+      <span class="logo-mark">Governance Index</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="results.html" class="active">Results</a>
+      <a href="about.html">Methodology</a>
+    </nav>
+  </div>
+</header>
+
+<div class="results-shell">
+  <div class="container">
+    <div id="results-root"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-meta">All responses are stored locally in your browser. No data leaves your device.</div>
+    <div class="footer-nav">
+      <a href="index.html">Overview</a>
+      <a href="assessment.html">Assessment</a>
+      <a href="about.html">Methodology</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/results.js"></script>
+<script src="js/pdf-export.js"></script>
+
+</body>
+</html>

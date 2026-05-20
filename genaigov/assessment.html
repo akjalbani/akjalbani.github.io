@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment · GAIA-HE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..600;1,300..600&family=Inter+Tight:wght@300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="index.html">
+      <span>GAIA<span style="color:var(--gold);">·</span>HE</span>
+      <span class="logo-mark">Governance Index</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="assessment.html" class="active">Assessment</a>
+      <a href="results.html">Results</a>
+      <a href="about.html">Methodology</a>
+    </nav>
+  </div>
+</header>
+
+<div class="assessment-shell">
+  <div class="container">
+
+    <div class="assessment-header">
+      <span class="eyebrow">Self-assessment instrument</span>
+      <h1 id="assessment-title">Loading assessment…</h1>
+      <p id="assessment-subtitle">Answer each item against the maturity level that best describes your institution today. Your progress is saved automatically.</p>
+    </div>
+
+    <!-- Institution name (optional) -->
+    <div class="progress-strip" style="background: var(--paper-warm); border-style: dashed;">
+      <label for="institution-name" style="font-size: 13px; color: var(--ink-soft); font-weight: 500;">Institution name (optional, used only on your report):</label>
+      <input type="text" id="institution-name" placeholder="e.g. Sample University"
+        style="flex: 1; min-width: 200px; padding: 8px 14px; border: 1px solid var(--border-strong); border-radius: 4px; font-family: var(--font-body); font-size: 14px; background: white; color: var(--ink);">
+    </div>
+
+    <!-- Progress strip -->
+    <div class="progress-strip">
+      <span class="progress-label" id="progress-label">0 of 51 items answered</span>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+      </div>
+      <span class="progress-step-indicator" id="step-indicator">Step 1 of 7</span>
+      <span class="save-status" id="save-status">Saved</span>
+    </div>
+
+    <!-- Domain tabs -->
+    <div class="domain-tabs" id="domain-tabs"></div>
+
+    <!-- Domain content (rendered) -->
+    <div id="domain-content"></div>
+
+    <!-- Wizard navigation -->
+    <div class="wizard-nav">
+      <button class="btn btn-ghost" id="prev-btn">← Previous domain</button>
+      <button class="btn btn-arrow" id="next-btn">Next domain</button>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-meta">All responses are stored locally in your browser. No data leaves your device.</div>
+    <div class="footer-nav">
+      <a href="index.html">Overview</a>
+      <a href="about.html">Methodology</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/assessment.js"></script>
+
+</body>
+</html>

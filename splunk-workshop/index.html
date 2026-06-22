@@ -268,7 +268,7 @@ set -euo pipefail
 SPLUNK_VERSION=<span class="cs">"9.2.1"</span>
 SPLUNK_BUILD=<span class="cs">"78803f08aabb"</span>
 SPLUNK_HOME=<span class="cs">"/opt/splunk"</span>
-ADMIN_PASS=<span class="cs">"Workshop2024!"</span>
+ADMIN_PASS=<span class="cs">"Workshop2026!"</span>
 PKG=<span class="cs">"splunk-${SPLUNK_VERSION}-${SPLUNK_BUILD}-linux-2.6-amd64.deb"</span>
 URL=<span class="cs">"https://download.splunk.com/products/splunk/releases/${SPLUNK_VERSION}/linux/${PKG}"</span>
 
@@ -323,7 +323,7 @@ echo <span class="cs">"============================================="</span></pr
         </div>
         <div class="callout callout-ok">
           <span class="callout-icon">✓</span>
-          <div class="callout-body"><strong>Expected result</strong>Open a browser and go to <code>http://&lt;YOUR-EC2-IP&gt;:8000</code>. You should see the Splunk login page. Log in with <code>admin</code> / <code>Workshop2024!</code>.</div>
+          <div class="callout-body"><strong>Expected result</strong>Open a browser and go to <code>http://&lt;YOUR-EC2-IP&gt;:8000</code>. You should see the Splunk login page. Log in with <code>admin</code> / <code>Workshop2026!</code>.</div>
         </div>
       </div>
     </section>
@@ -398,7 +398,7 @@ UF_VERSION=<span class="cs">"9.2.1"</span>
 UF_BUILD=<span class="cs">"78803f08aabb"</span>
 UF_PKG=<span class="cs">"splunkforwarder-${UF_VERSION}-${UF_BUILD}-linux-2.6-amd64.deb"</span>
 UF_URL=<span class="cs">"https://download.splunk.com/products/universalforwarder/releases/${UF_VERSION}/linux/${UF_PKG}"</span>
-UF_PASS=<span class="cs">"Forwarder2024!"</span>
+UF_PASS=<span class="cs">"Forwarder2026!"</span>
 
 echo <span class="cs">"[1/4] Downloading Universal Forwarder..."</span>
 wget -q --show-progress <span class="cs">"${UF_URL}"</span> -O /tmp/<span class="cs">"${UF_PKG}"</span>

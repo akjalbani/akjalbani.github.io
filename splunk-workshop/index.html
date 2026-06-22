@@ -256,52 +256,85 @@ tr:last-child td { border-bottom: none; }
     <section class="lab-section" id="vpc">
       <div class="section-header">
         <span class="section-num">01</span>
-        <h2>Create a VPC and Subnets</h2>
+        <h2>Start Learner Lab and Create a VPC</h2>
       </div>
-      <p class="section-intro">Before launching any EC2 instances, you need a Virtual Private Cloud (VPC) — an isolated network inside AWS where all your lab resources will live. Both the Splunk server and the web server will be placed in the same public subnet so they can communicate with each other over private IP addresses and be accessible from your browser via their public IPs.</p>
-
-      <div class="callout callout-note">
-        <span class="callout-icon">ℹ</span>
-        <div class="callout-body">
-          <strong>What is a VPC?</strong>
-          <p>A VPC (Virtual Private Cloud) is your own private section of the AWS network. Think of it as renting a floor in a data centre — you control what goes in, what comes out, and how the machines on that floor talk to each other. Without a VPC, you cannot launch EC2 instances.</p>
-          <p>Every AWS account comes with a <em>default VPC</em> pre-created in each region. AWS Academy Learner Lab provides this default VPC automatically. You do not need to build one from scratch — the steps below confirm it exists and note the values you will need later.</p>
-        </div>
-      </div>
+      <p class="section-intro">The first thing you do in every lab session is start the AWS Academy Learner Lab, then create a dedicated VPC for this workshop. A VPC (Virtual Private Cloud) is your own private network inside AWS — all EC2 instances you create will live inside it. We will use the AWS VPC Wizard to create it in one step: it automatically provisions a public subnet and a private subnet for you.</p>
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Step 1</span><h3>Start your AWS Academy Learner Lab session</h3></div>
-        <p>Log in to your AWS Academy course, open the Learner Lab module, and click <strong>Start Lab</strong>. Wait until the circle indicator in the top-left turns <strong>green</strong>, then click <strong>AWS</strong> to open the AWS Management Console in a new tab.</p>
+        <p>Log in to your AWS Academy course and open the <strong>Learner Lab</strong> module. Click <strong>Start Lab</strong>. Wait until the circle indicator in the top-left corner turns <strong>green</strong> — this means AWS resources are ready. Then click the <strong>AWS</strong> link to open the AWS Management Console in a new browser tab.</p>
         <div class="callout callout-warn">
           <span class="callout-icon">⚠</span>
           <div class="callout-body">
-            <strong>Do not close the Learner Lab tab</strong>
-            <p>The session timer runs in that tab. If you close it, your session may terminate and all EC2 instances and data will be lost. Sessions last approximately 4 hours.</p>
+            <strong>Keep the Learner Lab tab open for the entire session</strong>
+            <p>The session countdown timer runs inside that tab. If you close it, your session ends and all EC2 instances, VPCs, and data are deleted. Sessions last approximately 4 hours. If you need more time, click <strong>Start Lab</strong> again — note that this restarts the timer but also terminates your existing resources.</p>
           </div>
         </div>
       </div>
 
       <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Locate the default VPC</h3></div>
-        <p>In the AWS Console, use the search bar at the top to search for <strong>VPC</strong> and open the VPC service. In the left menu, click <strong>Your VPCs</strong>.</p>
-        <p>You will see a VPC listed with the name <strong>default</strong>. This is the pre-built VPC provided by AWS Academy. Note the following values — you will not need to enter them anywhere manually, but understanding them helps:</p>
-        <table>
-          <tr><th>Field</th><th>Typical Value</th><th>What it means</th></tr>
-          <tr><td>VPC ID</td><td>vpc-xxxxxxxxx</td><td>The unique identifier for this network — AWS assigns it automatically</td></tr>
-          <tr><td>IPv4 CIDR</td><td>172.31.0.0/16</td><td>The IP address range for your entire VPC — supports up to 65,536 addresses</td></tr>
-          <tr><td>State</td><td>Available</td><td>Confirms the VPC is active and ready to use</td></tr>
-        </table>
+        <div class="step-header"><span class="step-badge">Step 2</span><h3>Open the VPC service</h3></div>
+        <p>In the AWS Management Console, type <strong>VPC</strong> in the search bar at the top and select <strong>VPC</strong> from the results. This opens the VPC Dashboard. You will create a new VPC from here — do not use or modify any existing default VPC that may be listed.</p>
       </div>
 
       <div class="step">
-        <div class="step-header"><span class="step-badge">Step 3</span><h3>Confirm a public subnet exists</h3></div>
-        <p>In the left menu, click <strong>Subnets</strong>. You will see one or more subnets already listed — these belong to the default VPC. Identify any subnet in the <strong>us-east-1a</strong> availability zone (or the first zone listed in your region). Note its <strong>Subnet ID</strong> and confirm <strong>Auto-assign public IPv4</strong> is set to <strong>Yes</strong>.</p>
-        <p>If Auto-assign public IPv4 is set to No, click the subnet, then <strong>Actions → Edit subnet settings</strong> and enable it. This ensures any EC2 instance launched into this subnet automatically receives a public IP address — which is required to access Splunk Web from your browser.</p>
+        <div class="step-header"><span class="step-badge">Step 3</span><h3>Create a new VPC using the VPC and more wizard</h3></div>
+        <p>On the VPC Dashboard, click <strong>Create VPC</strong>. At the top of the creation page, select the option labelled <strong>VPC and more</strong> — this is the wizard that creates the VPC, subnets, route tables, and internet gateway all in one step.</p>
+        <p>Configure the wizard with the following settings:</p>
+        <table>
+          <tr><th>Setting</th><th>Value to use</th></tr>
+          <tr><td>Name tag auto-generation</td><td>Type <code>splunk-workshop</code> — AWS will use this as a prefix for all created resources (e.g. splunk-workshop-vpc, splunk-workshop-subnet-public)</td></tr>
+          <tr><td>IPv4 CIDR block</td><td><code>10.0.0.0/16</code> — this gives your VPC 65,536 available IP addresses</td></tr>
+          <tr><td>IPv6 CIDR block</td><td>No IPv6 CIDR block</td></tr>
+          <tr><td>Tenancy</td><td>Default</td></tr>
+          <tr><td>Number of Availability Zones</td><td>1</td></tr>
+          <tr><td>Number of public subnets</td><td>1</td></tr>
+          <tr><td>Number of private subnets</td><td>1</td></tr>
+          <tr><td>NAT gateways</td><td>None (not required for this lab)</td></tr>
+          <tr><td>VPC endpoints</td><td>None</td></tr>
+          <tr><td>DNS hostnames</td><td>Enable</td></tr>
+          <tr><td>DNS resolution</td><td>Enable</td></tr>
+        </table>
+        <p>Click <strong>Create VPC</strong>. AWS will provision all resources automatically. When complete, you will see a success screen listing everything created.</p>
+
+        <div class="callout callout-note">
+          <span class="callout-icon">ℹ</span>
+          <div class="callout-body">
+            <strong>What the wizard creates for you</strong>
+            <p>With the settings above, AWS automatically creates the following — you do not need to configure any of these manually:</p>
+            <ul>
+              <li><strong>VPC</strong> named <code>splunk-workshop-vpc</code> with CIDR <code>10.0.0.0/16</code></li>
+              <li><strong>Public subnet</strong> named <code>splunk-workshop-subnet-public1</code> with CIDR <code>10.0.0.0/24</code> — instances here get a public IP and can reach the internet</li>
+              <li><strong>Private subnet</strong> named <code>splunk-workshop-subnet-private1</code> with CIDR <code>10.0.128.0/24</code> — instances here have no public IP but can communicate with instances in the public subnet over private IPs</li>
+              <li><strong>Internet Gateway</strong> — attached to the VPC, allows the public subnet to reach the internet</li>
+              <li><strong>Route tables</strong> — one for the public subnet (routes internet traffic through the gateway), one for the private subnet (local traffic only)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header"><span class="step-badge">Step 4</span><h3>Enable auto-assign public IP on the public subnet</h3></div>
+        <p>In the left menu, click <strong>Subnets</strong>. Find the subnet named <code>splunk-workshop-subnet-public1</code>. Click on it to open its details, then click <strong>Actions → Edit subnet settings</strong>. Tick the checkbox for <strong>Enable auto-assign public IPv4 address</strong> and click <strong>Save</strong>.</p>
+        <p>This ensures that any EC2 instance launched into the public subnet automatically receives a public IP address — which is required so you can open Splunk Web in your browser and SSH into your instances from your laptop.</p>
+
+        <div class="callout callout-note">
+          <span class="callout-icon">ℹ</span>
+          <div class="callout-body">
+            <strong>How the two subnets are used in this workshop</strong>
+            <ul>
+              <li><strong>Public subnet</strong> (<code>10.0.0.0/24</code>) — the <strong>Splunk server</strong> (Instance 1) is placed here. It needs a public IP so you can open Splunk Web at <code>http://&lt;public-ip&gt;:8000</code> from your laptop browser.</li>
+              <li><strong>Private subnet</strong> (<code>10.0.128.0/24</code>) — the <strong>web server</strong> (Instance 2) is placed here. It has no public IP. The Universal Forwarder on this instance sends logs to the Splunk server using the Splunk server's <em>private</em> IP address over the internal VPC network. This reflects a realistic SOC architecture where log sources sit in a protected network segment.</li>
+            </ul>
+            <p>You will SSH into the web server through the Splunk server acting as a jump host — this is covered in Section 3.</p>
+          </div>
+        </div>
+
         <div class="callout callout-ok">
           <span class="callout-icon">✓</span>
           <div class="callout-body">
-            <strong>You are ready to proceed</strong>
-            <p>You now have a VPC and a public subnet. Both EC2 instances you create in the next sections will be launched into this same subnet, giving them private IPs to communicate with each other and public IPs so you can access them from your laptop.</p>
+            <strong>VPC setup complete</strong>
+            <p>You now have a VPC named <code>splunk-workshop-vpc</code> with one public subnet and one private subnet. All resources in this lab will be launched into this VPC. Proceed to Section 2 to launch the Splunk server.</p>
           </div>
         </div>
       </div>
@@ -344,8 +377,8 @@ tr:last-child td { border-bottom: none; }
           <tr><td>AMI</td><td>Ubuntu Server 22.04 LTS (HVM), SSD Volume Type</td></tr>
           <tr><td>Instance type</td><td><code>t2.large</code> — 2 vCPU, 8 GiB RAM (minimum required for Splunk)</td></tr>
           <tr><td>Key pair</td><td><code>vockey</code> — this is provided automatically by Learner Lab</td></tr>
-          <tr><td>Network</td><td>Select the default VPC confirmed in Section 1</td></tr>
-          <tr><td>Subnet</td><td>Select the public subnet confirmed in Section 1</td></tr>
+          <tr><td>Network</td><td><code>splunk-workshop-vpc</code> — the VPC created in Section 1</td></tr>
+          <tr><td>Subnet</td><td><code>splunk-workshop-subnet-public1</code> — the public subnet from Section 1</td></tr>
           <tr><td>Auto-assign public IP</td><td>Enable</td></tr>
           <tr><td>Storage</td><td>30 GiB, gp3</td></tr>
         </table>
@@ -518,11 +551,19 @@ echo <span class="cs">"=========================================================
           <tr><td>AMI</td><td>Ubuntu Server 22.04 LTS (HVM), SSD Volume Type</td></tr>
           <tr><td>Instance type</td><td><code>t2.micro</code> — 1 vCPU, 1 GiB RAM (sufficient for a web server)</td></tr>
           <tr><td>Key pair</td><td><code>vockey</code> — same key pair as Instance 1</td></tr>
-          <tr><td>Network</td><td>Same default VPC as Instance 1</td></tr>
-          <tr><td>Subnet</td><td>Same public subnet as Instance 1</td></tr>
-          <tr><td>Auto-assign public IP</td><td>Enable</td></tr>
+          <tr><td>Network</td><td><code>splunk-workshop-vpc</code> — same VPC as Instance 1</td></tr>
+          <tr><td>Subnet</td><td><code>splunk-workshop-subnet-private1</code> — the <strong>private</strong> subnet from Section 1</td></tr>
+          <tr><td>Auto-assign public IP</td><td><strong>Disable</strong> — this instance is in the private subnet and does not need a public IP</td></tr>
           <tr><td>Storage</td><td>8 GiB, gp3 (default is fine)</td></tr>
         </table>
+        <div class="callout callout-note">
+          <span class="callout-icon">ℹ</span>
+          <div class="callout-body">
+            <strong>Private subnet — no public IP</strong>
+            <p>The web server sits in the private subnet (<code>10.0.128.0/24</code>). It has no public IP address, so it cannot be reached directly from the internet. The Universal Forwarder on this machine will send logs to the Splunk server using the Splunk server's <strong>private IP</strong> address — both machines are in the same VPC so they can communicate freely over private IPs regardless of which subnet they are in.</p>
+            <p>To SSH into this instance you will connect through the Splunk server as a jump host — instructions are in Step 2 below.</p>
+          </div>
+        </div>
         <p>Under <strong>Firewall (Security Groups)</strong>, create a new security group named <code>webserver-sg</code> with these inbound rules:</p>
         <table>
           <tr><th>Type</th><th>Port</th><th>Source</th><th>Purpose</th></tr>
@@ -534,12 +575,39 @@ echo <span class="cs">"=========================================================
       </div>
 
       <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Connect to the web server via SSH</h3></div>
-        <p>Open a <strong>new terminal window</strong> on your laptop (keep the Splunk server SSH session open in the other window). Connect to the web server:</p>
+        <div class="step-header"><span class="step-badge">Step 2</span><h3>Connect to the web server via SSH (using the Splunk server as a jump host)</h3></div>
+        <p>Because the web server is in the <strong>private subnet</strong> it has no public IP — you cannot SSH to it directly from your laptop. Instead, you connect through the Splunk server, which acts as a jump host. This requires two things: copying your key file to the Splunk server, and using SSH agent forwarding.</p>
+        <p><strong>Option A — SSH agent forwarding (recommended).</strong> Run these commands from your laptop. You only need to do this once per session.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — your laptop (new terminal window)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
-ssh -i ~/Downloads/labsuser.pem ubuntu@<span class="ck">&lt;WEBSERVER-PUBLIC-IP&gt;</span></pre>
+          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Add the key to your SSH agent so it is forwarded through the jump host</span>
+ssh-add ~/Downloads/labsuser.pem
+
+<span class="cm"># Connect to the web server via the Splunk server as a jump host</span>
+<span class="cm"># Replace &lt;SPLUNK-PUBLIC-IP&gt;  with the public IP of Instance 1 (Splunk server)</span>
+<span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (web server)</span>
+ssh -A -J ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;</span> ubuntu@<span class="ck">&lt;WEBSERVER-PRIVATE-IP&gt;</span></pre>
+        </div>
+        <p><strong>Option B — copy the key to the Splunk server and SSH in two hops.</strong> Use this if agent forwarding does not work on your system.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Step 1: Copy the key file to the Splunk server</span>
+<span class="cm"># Replace &lt;SPLUNK-PUBLIC-IP&gt; with the public IP of Instance 1</span>
+scp -i ~/Downloads/labsuser.pem ~/Downloads/labsuser.pem   ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;</span>:~/.ssh/labsuser.pem
+
+<span class="cm"># Step 2: SSH into the Splunk server first</span>
+ssh -i ~/Downloads/labsuser.pem ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;</span>
+
+<span class="cm"># Step 3: From inside the Splunk server, SSH into the web server</span>
+<span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2</span>
+ssh -i ~/.ssh/labsuser.pem ubuntu@<span class="ck">&lt;WEBSERVER-PRIVATE-IP&gt;</span></pre>
+        </div>
+        <div class="callout callout-note">
+          <span class="callout-icon">ℹ</span>
+          <div class="callout-body">
+            <strong>Where to find the private IP of the web server</strong>
+            <p>In the EC2 console, click on Instance 2 (webserver). On the detail page, look for <strong>Private IPv4 address</strong> — it will be an address in the range <code>10.0.128.x</code> (the private subnet CIDR). This is the address you use for the jump host command above and for the forwarder configuration in Step 4.</p>
+          </div>
         </div>
       </div>
 
@@ -596,7 +664,7 @@ echo <span class="cs">"=========================================================
           <span class="callout-icon">✓</span>
           <div class="callout-body">
             <strong>Verify Apache is working</strong>
-            <p>Open your browser and go to <code>http://&lt;WEBSERVER-PUBLIC-IP&gt;/login.php?user=test&amp;pass=test</code>. You should see a page showing <em>Attempted username: test</em>. This confirms Apache is running and generating log entries.</p>
+            <p>From your <strong>Splunk server SSH session</strong>, run: <code>curl http://&lt;WEBSERVER-PRIVATE-IP&gt;/login.php?user=test&amp;pass=test</code> — replacing <code>&lt;WEBSERVER-PRIVATE-IP&gt;</code> with the private IP of Instance 2. You should see an HTML response containing <em>Attempted username: test</em>. This confirms Apache is running and the forwarder will capture log entries.</p>
           </div>
         </div>
       </div>
@@ -721,9 +789,9 @@ echo <span class="cs">"=========================================================
         <div class="arch-row arrow">↓ &nbsp; Tailed continuously by the agent on the same machine</div>
         <div class="arch-row highlight">
           <span class="arch-tag">Universal Forwarder</span>
-          <div><div class="arch-val">Lightweight agent — EC2 Instance 2 (webserver)</div><div class="arch-sub">Compresses and transmits log data over TCP port 9997 to the Splunk server</div></div>
+          <div><div class="arch-val">Lightweight agent — EC2 Instance 2 (webserver)</div><div class="arch-sub">Sends logs over TCP port 9997 to the Splunk server&#39;s private IP (10.0.0.x) within the VPC</div></div>
         </div>
-        <div class="arch-row arrow">↓ &nbsp; Encrypted stream over the private VPC network (172.31.0.0/16)</div>
+        <div class="arch-row arrow">↓ &nbsp; Encrypted stream over the private VPC network — private subnet 10.0.128.0/24 → public subnet 10.0.0.0/24</div>
         <div class="arch-row highlight">
           <span class="arch-tag">Indexer</span>
           <div><div class="arch-val">Splunk Enterprise — EC2 Instance 1 (splunk-server)</div><div class="arch-sub">Receives, parses, timestamps, and stores events in the webserver_logs and security_logs indexes</div></div>
@@ -830,7 +898,7 @@ echo <span class="cs">"=========================================================
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 1</span><h3>SSH Brute Force</h3></div>
         <p>A brute force attack systematically tries many passwords against an authentication service. The tool <code>hydra</code> automates this. Every failed attempt writes a <em>Failed password</em> entry to <code>/var/log/auth.log</code> on the web server, which the forwarder ships to Splunk's <code>security_logs</code> index.</p>
-        <p>Run the attack from your <strong>Splunk server SSH session</strong> (Instance 1) — not your laptop and not the web server itself.</p>
+        <p>Run the attack from your <strong>Splunk server SSH session</strong> (Instance 1). The web server is in the private subnet so we target its <strong>private IP</strong> — both instances share the same VPC and can reach each other over private IPs freely.</p>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="cm"># Install hydra on the Splunk server</span>
@@ -849,9 +917,9 @@ ubuntu
 EOF
 
 <span class="cm"># Run the brute force against the web server SSH port</span>
-<span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
+<span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (e.g. 10.0.128.x)</span>
 hydra -l ubuntu -P /tmp/wordlist.txt \
-  ssh://<span class="ck">&lt;WEBSERVER-PUBLIC-IP&gt;</span> \
+  ssh://<span class="ck">&lt;WEBSERVER-PRIVATE-IP&gt;</span> \
   -t 4 -vV 2&gt;&amp;1 | tail -30</pre>
         </div>
         <p>Wait for hydra to finish, then switch to Splunk Web and run this detection query:</p>
@@ -880,11 +948,11 @@ hydra -l ubuntu -P /tmp/wordlist.txt \
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 2</span><h3>SQL Injection</h3></div>
-        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/apache2/access.log</code>. Run this from your <strong>laptop terminal</strong>.</p>
+        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/apache2/access.log</code>. The web server is in the private subnet so run this from your <strong>Splunk server SSH session</strong> (Instance 1), which can reach the web server over the private VPC network.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
-TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
+          <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (e.g. 10.0.128.x)</span>
+TARGET=<span class="ck">"http://&lt;WEBSERVER-PRIVATE-IP&gt;"</span>
 
 payloads=(
   <span class="cs">"' OR '1'='1"</span>
@@ -921,11 +989,11 @@ done</pre>
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 3</span><h3>Directory Traversal</h3></div>
-        <p>A directory traversal attack uses <code>../</code> sequences — sometimes URL-encoded — to try to access files outside the web root such as <code>/etc/passwd</code>. These appear in Apache access logs as unusual URI patterns. Run this from your <strong>laptop terminal</strong>.</p>
+        <p>A directory traversal attack uses <code>../</code> sequences — sometimes URL-encoded — to try to access files outside the web root such as <code>/etc/passwd</code>. These appear in Apache access logs as unusual URI patterns. Run this from your <strong>Splunk server SSH session</strong> (Instance 1), using the web server's private IP.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
-TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
+          <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (e.g. 10.0.128.x)</span>
+TARGET=<span class="ck">"http://&lt;WEBSERVER-PRIVATE-IP&gt;"</span>
 
 traversal_paths=(
   <span class="cs">"../../../../etc/passwd"</span>

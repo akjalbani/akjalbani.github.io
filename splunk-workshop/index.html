@@ -619,26 +619,32 @@ echo <span class="cs">"=========================================================
           <div class="code-header"><span class="code-lang">bash — paste into EC2 User Data field (Advanced details)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="cm">#!/bin/bash
 # ================================================================
-#  Web Server + Splunk Universal Forwarder â EC2 User Data
+#  Web Server + Splunk Universal Forwarder — EC2 User Data
 #  AMI: Amazon Linux 2023
 #
-#  BEFORE PASTING â replace these two lines:
+#  BEFORE PASTING — replace these two lines:
 #
-#  1.  SPLUNK_IP   â private IP of your Splunk server (Instance 1)
-#                   EC2 console â Instance 1 â Private IPv4 address
+#  1.  SPLUNK_IP   — private IP of your Splunk server (Instance 1)
+#                   EC2 console → Instance 1 → Private IPv4 address
 #                   e.g.  10.0.0.45
 #
-#  2.  UF_RPM_URL  â your Universal Forwarder download URL
-#                   splunk.com â Downloads â Universal Forwarder
-#                   â Linux â RPM â copy the URL from the wget command
+#  2.  UF_RPM_URL  — your Universal Forwarder download URL
+#                   splunk.com → Downloads → Universal Forwarder
+#                   → Linux → RPM → copy the URL from the wget command
 # ================================================================
 
 SPLUNK_IP=<span class="ck">"&lt;SPLUNK-SERVER-PRIVATE-IP&gt;"</span>
 UF_RPM_URL=<span class="ck">"https://download.splunk.com/products/universalforwarder/releases/10.4.0/linux/splunkforwarder-10.4.0-f798d4d49089.x86_64.rpm"</span>
 
-<span class="cm"># ── Step 1: Install Apache and PHP ───────────────────────────────</span>
+<span class="cm"># ── Step 1: Install Apache, PHP, and rsyslog ─────────────────────</span>
+<span class="cm"># rsyslog is required on Amazon Linux 2023 — it does not ship with</span>
+<span class="cm"># rsyslog by default. Without it /var/log/secure does not exist</span>
+<span class="cm"># and index=security_logs will show zero events in Splunk.</span>
 yum update -y
-yum install -y httpd php
+yum install -y httpd php rsyslog
+
+systemctl enable rsyslog
+systemctl start rsyslog
 
 <span class="cm"># ── Step 2: Create the demo login page ───────────────────────────</span>
 cat &gt; /var/www/html/login.php &lt;&lt; 'PHPEOF'
@@ -649,22 +655,44 @@ cat &gt; /var/www/html/login.php &lt;&lt; 'PHPEOF'
   echo "&lt;p&gt;Username: " . htmlspecialchars($user, ENT_QUOTES) . "&lt;/p&gt;";
 PHPEOF
 
-<span class="cm"># Create folders used in the directory traversal demonstration</span>
 mkdir -p /var/www/html/admin /var/www/html/backup
 echo "Restricted" &gt; /var/www/html/admin/config.txt
 
-<span class="cm"># ── Step 3: Start Apache ─────────────────────────────────────────</span>
+<span class="cm"># ── Step 3: Enable SSH password authentication ────────────────────</span>
+<span class="cm"># Amazon Linux 2023 disables password auth by default.</span>
+<span class="cm"># Enabling it allows the brute force demonstration in Section 6</span>
+<span class="cm"># to generate real failed login entries in /var/log/secure.</span>
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config.d/*.conf 2&gt;/dev/null || true
+systemctl restart sshd
+
+<span class="cm"># ── Step 4: Start Apache ─────────────────────────────────────────</span>
 systemctl enable httpd
 systemctl start httpd
 
-<span class="cm"># ── Step 4: Download and install the Universal Forwarder ─────────</span>
+<span class="cm"># ── Step 5: Fix log file permissions ─────────────────────────────</span>
+<span class="cm"># Pre-create Apache log files so the forwarder can monitor them</span>
+<span class="cm"># immediately. Apache only creates them on the first HTTP request.</span>
+touch /var/log/httpd/access_log /var/log/httpd/error_log
+chmod 644 /var/log/httpd/access_log /var/log/httpd/error_log
+
+<span class="cm"># Give rsyslog 3 seconds to create /var/log/secure after starting,</span>
+<span class="cm"># then set group-read so the splunkfwd user can tail it.</span>
+sleep 3
+touch /var/log/secure
+chmod 640 /var/log/secure
+chown root:adm /var/log/secure
+
+<span class="cm"># ── Step 6: Download and install the Universal Forwarder ─────────</span>
 UF_PKG=$(basename "${UF_RPM_URL}")
 wget -q "${UF_RPM_URL}" -O /tmp/"${UF_PKG}"
 rpm -i --nosignature /tmp/"${UF_PKG}"
 
-<span class="cm"># ── Step 5: Write outputs.conf — tells the forwarder where to send logs</span>
-<span class="cm"># No CLI commands needed. Writing config files directly is simpler</span>
-<span class="cm"># and avoids user permission issues entirely.</span>
+<span class="cm"># Add splunkfwd (created by the RPM) to adm group so it can</span>
+<span class="cm"># read /var/log/secure — must run after rpm -i creates the user</span>
+usermod -aG adm splunkfwd
+
+<span class="cm"># ── Step 7: Write outputs.conf — where to send logs ──────────────</span>
 mkdir -p /opt/splunkforwarder/etc/system/local
 
 cat &gt; /opt/splunkforwarder/etc/system/local/outputs.conf &lt;&lt; EOF
@@ -675,10 +703,7 @@ defaultGroup = splunk_indexer
 server = ${SPLUNK_IP}:9997
 EOF
 
-<span class="cm"># ── Step 6: Write inputs.conf — tells the forwarder which files to monitor</span>
-<span class="cm"># Apache log files are pre-created so the forwarder can read them immediately.</span>
-touch /var/log/httpd/access_log /var/log/httpd/error_log
-
+<span class="cm"># ── Step 8: Write inputs.conf — which files to monitor ───────────</span>
 cat &gt; /opt/splunkforwarder/etc/system/local/inputs.conf &lt;&lt; 'EOF'
 [monitor:///var/log/httpd/access_log]
 index = webserver_logs
@@ -693,8 +718,8 @@ index = security_logs
 sourcetype = linux_secure
 EOF
 
-<span class="cm"># ── Step 7: Start the forwarder ──────────────────────────────────</span>
-<span class="cm"># One command. The forwarder reads outputs.conf and inputs.conf on startup.</span>
+<span class="cm"># ── Step 9: Start the forwarder ──────────────────────────────────</span>
+<span class="cm"># Reads outputs.conf and inputs.conf automatically on startup.</span>
 /opt/splunkforwarder/bin/splunk start \
   --accept-license --answer-yes --no-prompt \
   --seed-passwd "Forwarder2026!"
@@ -764,7 +789,8 @@ sudo /opt/splunk/bin/splunk list forward-server --run-as-root</pre>
           <span class="callout-icon">✓</span>
           <div class="callout-body">
             <strong>Expected result</strong>
-            <p>The SPL query returns the 5 most recent Apache log entries from the web server. Each event represents one HTTP request — the visit to <code>login.php</code> you made above will appear here. You are now ready to proceed to the attack demonstrations in Section 6.</p>
+            <p>The SPL query returns the 5 most recent Apache log entries from the web server. Each event represents one HTTP request — the visit to <code>login.php</code> you made above will appear here.</p>
+            <p>Also run <code>index=security_logs | head 5</code> to confirm the auth log is being forwarded. Results may be sparse until the brute force demonstration in Section 6 generates SSH login attempts — a few existing SSH session entries from your own login will appear if the forwarder is working correctly.</p>
           </div>
         </div>
 
@@ -774,9 +800,10 @@ sudo /opt/splunk/bin/splunk list forward-server --run-as-root</pre>
             <strong>If the query returns no results after 5 minutes</strong>
           <p>Run <code>sudo tail -30 /var/log/cloud-init-output.log</code> on the web server. Common issues:</p>
             <ul>
-              <li><strong>Forwarder not appearing in Splunk</strong> — confirm <code>SPLUNK_IP</code> is the correct private IP of Instance 1 and that port 9997 is open in the Splunk server security group.</li>
-              <li><strong>No web server response</strong> — confirm the security group for the web server allows HTTP on port 80 and that the instance has a public IP.</li>
-              <li><strong>Script did not complete</strong> — check the log for the last line that printed. If the RPM download failed, confirm <code>UF_RPM_URL</code> is a valid RPM URL (not .deb).</li>
+              <li><strong>index=security_logs returns zero events</strong> — confirm <code>rsyslog</code> is running on the web server (<code>sudo systemctl status rsyslog</code>) and that <code>/var/log/secure</code> exists. The User Data script installs and starts rsyslog automatically.</li>
+              <li><strong>Forwarder not connecting to Splunk</strong> — confirm <code>SPLUNK_IP</code> is the correct private IP of Instance 1 and that port 9997 is open in the Splunk server security group.</li>
+              <li><strong>No web server response on port 80</strong> — confirm the security group allows HTTP and that the instance has a public IP assigned.</li>
+              <li><strong>Script did not complete</strong> — if the RPM download failed, confirm <code>UF_RPM_URL</code> is a valid RPM URL (ends in <code>.x86_64.rpm</code>, not <code>.deb</code>).</li>
             </ul>
           </div>
         </div>
@@ -909,9 +936,9 @@ sudo /opt/splunk/bin/splunk list forward-server --run-as-root</pre>
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 1</span><h3>SSH Brute Force</h3></div>
         <p>A brute force attack systematically tries many passwords against an authentication service. The tool <code>hydra</code> automates this. Every failed attempt writes a <em>Failed password</em> entry to <code>/var/log/auth.log</code> on the web server, which the forwarder ships to Splunk's <code>security_logs</code> index.</p>
-        <p>Run the attack from your <strong>Splunk server SSH session</strong> (Instance 1). The web server is in the private subnet so we target its <strong>private IP</strong> — both instances share the same VPC and can reach each other over private IPs freely.</p>
+        <p>Run the attack from your <strong>Splunk server SSH session</strong> (Instance 1). Target the web server's <strong>public IP</strong> on port 22. Password authentication is enabled on the web server via User Data — each failed attempt writes a <em>Failed password</em> entry to <code>/var/log/secure</code> and flows into Splunk in real time.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-header"><span class="code-lang">bash — Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="cm"># Install hydra on the Splunk server</span>
 sudo apt-get install -y hydra
 
@@ -922,13 +949,14 @@ password
 admin
 letmein
 workshop
-qwerty
 splunk
-ubuntu
+amazon
+ec2user
+Password1
+Welcome1
 EOF
 
-<span class="cm"># Run the brute force against the web server SSH port</span>
-<span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2 (from EC2 console)</span>
+<span class="cm"># Run the brute force — replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
 hydra -l ec2-user -P /tmp/wordlist.txt \
   ssh://<span class="ck">&lt;WEBSERVER-PUBLIC-IP&gt;</span> \
   -t 4 -vV 2&gt;&amp;1 | tail -30</pre>
@@ -959,10 +987,10 @@ hydra -l ec2-user -P /tmp/wordlist.txt \
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 2</span><h3>SQL Injection</h3></div>
-        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/httpd/access_log</code>. The web server is now in the public subnet, so run this directly from your <strong>laptop terminal</strong> using the web server's public IP.</p>
+        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/httpd/access_log</code>. Run from your <strong>Splunk server SSH session</strong> or <strong>laptop terminal</strong>.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2 (from EC2 console)</span>
+          <div class="code-header"><span class="code-lang">bash — Splunk server SSH session or laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
 TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
 
 payloads=(
@@ -977,28 +1005,48 @@ payloads=(
 
 for payload in <span class="cs">"${payloads[@]}"</span>; do
   encoded=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" <span class="cs">"${payload}"</span>)
-  http_code=$(curl -s -o /dev/null -w "%{http_code}" \
-    <span class="cs">"${TARGET}/login.php?user=${encoded}&pass=test"</span>)
+  http_code=$(curl -s -o /dev/null -w "%{http_code}"     <span class="cs">"${TARGET}/login.php?user=${encoded}&amp;pass=test"</span>)
   echo <span class="cs">"HTTP ${http_code}  →  ${payload}"</span>
   sleep 0.5
 done</pre>
         </div>
+
+        <p style="font-size:0.88rem;color:var(--ink-light);margin:1rem 0;">You should see <code>HTTP 200</code> for every payload — this confirms the requests reached Apache and were logged. Now switch to Splunk Web to find them.</p>
+
+        <div class="callout callout-note">
+          <span class="callout-icon">ℹ</span>
+          <div class="callout-body">
+            <strong>Run the diagnostic query first</strong>
+            <p>Splunk auto-extracts a <code>uri_query</code> field from Apache logs, but on Amazon Linux 2023 with <code>sourcetype=apache_access</code> this field is often empty. The detection query below reads directly from <code>_raw</code> using <code>rex</code> — it always works regardless of which fields Splunk has parsed. First run the diagnostic below to confirm your events are present, then run the detection query.</p>
+          </div>
+        </div>
+
         <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Detect SQL Injection Attempts</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+          <div class="spl-header"><span class="spl-label">SPL — Step 1: confirm events exist (run first)</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
           <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">decoded_uri</span> = <span class="sp-fn">urldecode</span>(<span class="sp-field">uri_query</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">match</span>(<span class="sp-field">decoded_uri</span>,
-    <span class="sp-str">"(?i)(union\s+select|or\s+1=1|drop\s+table|sleep\(|'--)"</span>)
+<span class="sp-pipe">|</span> <span class="sp-cmd">head</span> <span class="sp-num">5</span>
+<span class="sp-pipe">|</span> <span class="sp-cmd">table</span> _time, _raw</pre>
+        </div>
+
+        <p style="font-size:0.85rem;color:var(--ink-light);margin:0.5rem 0 1rem;">You should see raw Apache log lines containing <code>login.php?user=</code> followed by the URL-encoded payloads. If you see these events, the detection query below will find them.</p>
+
+        <div class="spl-block">
+          <div class="spl-header"><span class="spl-label">SPL — Step 2: detect SQL injection from raw logs</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+          <pre>index=webserver_logs sourcetype=apache_access
+<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">""[A-Z]+ (?P&lt;full_uri&gt;\S+)"</span>
+<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">decoded</span> = <span class="sp-fn">urldecode</span>(<span class="sp-field">full_uri</span>)
+<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">match</span>(<span class="sp-field">decoded</span>,
+    <span class="sp-str">"(?i)(union\s+select|or\s+1=1|drop\s+table|sleep\(|or\s+'[^']+'\s*=\s*'[^']+'|admin')"</span>)
+<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">src_ip</span> = <span class="sp-fn">coalesce</span>(<span class="sp-field">clientip</span>, <span class="sp-fn">mvindex</span>(<span class="sp-fn">split</span>(_raw,<span class="sp-str">" "</span>),<span class="sp-num">0</span>))
 <span class="sp-pipe">|</span> <span class="sp-cmd">stats</span>
-    <span class="sp-fn">count</span>             <span class="sp-cmd">as</span> <span class="sp-field">injection_attempts</span>
-    <span class="sp-fn">values</span>(<span class="sp-field">decoded_uri</span>) <span class="sp-cmd">as</span> <span class="sp-field">payloads_used</span>
-    <span class="sp-fn">dc</span>(<span class="sp-field">uri_path</span>)       <span class="sp-cmd">as</span> <span class="sp-field">endpoints_probed</span>
-    <span class="sp-cmd">by</span> <span class="sp-field">clientip</span>
+    <span class="sp-fn">count</span>            <span class="sp-cmd">as</span> <span class="sp-field">injection_attempts</span>
+    <span class="sp-fn">values</span>(<span class="sp-field">decoded</span>) <span class="sp-cmd">as</span> <span class="sp-field">payloads_seen</span>
+    <span class="sp-cmd">by</span> <span class="sp-field">src_ip</span>
 <span class="sp-pipe">|</span> <span class="sp-cmd">sort</span> -<span class="sp-field">injection_attempts</span></pre>
         </div>
       </div>
 
-      <div class="step">
+            <div class="step">
         <div class="step-header"><span class="step-badge">Attack 3</span><h3>Directory Traversal</h3></div>
         <p>A directory traversal attack uses <code>../</code> sequences — sometimes URL-encoded — to try to access files outside the web root such as <code>/etc/passwd</code>. These appear in Apache access logs as unusual URI patterns. Run this from your <strong>laptop terminal</strong> using the web server's public IP.</p>
         <div class="code-block">

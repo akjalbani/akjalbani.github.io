@@ -1033,10 +1033,9 @@ done</pre>
         <div class="spl-block">
           <div class="spl-header"><span class="spl-label">SPL — Step 2: detect SQL injection from raw logs</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
           <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">""[A-Z]+ (?P&lt;full_uri&gt;\S+)"</span>
+<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"GET (?P&lt;full_uri&gt;[^ ]+)"</span>
 <span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">decoded</span> = <span class="sp-fn">urldecode</span>(<span class="sp-field">full_uri</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">match</span>(<span class="sp-field">decoded</span>,
-    <span class="sp-str">"(?i)(union\s+select|or\s+1=1|drop\s+table|sleep\(|or\s+'[^']+'\s*=\s*'[^']+'|admin')"</span>)
+<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">match</span>(<span class="sp-field">decoded</span>, <span class="sp-str">"(?i)(union|select|drop|sleep|or 1=1|admin)"</span>)
 <span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">src_ip</span> = <span class="sp-fn">coalesce</span>(<span class="sp-field">clientip</span>, <span class="sp-fn">mvindex</span>(<span class="sp-fn">split</span>(_raw,<span class="sp-str">" "</span>),<span class="sp-num">0</span>))
 <span class="sp-pipe">|</span> <span class="sp-cmd">stats</span>
     <span class="sp-fn">count</span>            <span class="sp-cmd">as</span> <span class="sp-field">injection_attempts</span>

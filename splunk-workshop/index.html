@@ -355,16 +355,13 @@ tr:last-child td { border-bottom: none; }
       <div class="callout callout-note">
         <span class="callout-icon">ℹ</span>
         <div class="callout-body">
-          <strong>Before you run the script — get the Splunk download URL</strong>
-          <p>Splunk requires a free account before it shows you the download link. Do this once before the workshop session:</p>
+          <strong>Each participant needs their own Splunk download URL</strong>
+          <p>Splunk requires a free account to access the download page. Do this once before the session:</p>
           <ul>
-            <li>Go to <strong>splunk.com</strong> and create a free account (email only, no credit card).</li>
-            <li>Navigate to <strong>splunk.com/en_us/download/splunk-enterprise.html</strong>.</li>
-            <li>Select <strong>Linux</strong> → <strong>.deb</strong> package. Splunk will display a ready-made <code>wget</code> command.</li>
-            <li>From that command, copy the <strong>version number</strong> (e.g. <code>9.2.1</code>) and the <strong>build hash</strong> (e.g. <code>78803f08aabb</code>) — these are the two values highlighted in amber in the script below.</li>
-            <li>Update those two variables in the script before running it.</li>
+            <li>Sign in at <strong>splunk.com</strong> (or create a free account — email only).</li>
+            <li>Go to <strong>splunk.com/en_us/download/splunk-enterprise.html</strong>, select <strong>Linux → .deb</strong>, and copy the full URL from the wget command shown.</li>
+            <li>In the script below, replace the <code>SPLUNK_DEB_URL</code> value with your URL. That is the only line you need to change.</li>
           </ul>
-          <p>The download URL does not require a logged-in session — once you have it, <code>wget</code> downloads the file directly to EC2 with no browser needed.</p>
         </div>
       </div>
 
@@ -414,72 +411,100 @@ ssh -i ~/Downloads/labsuser.pem ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Step 3</span><h3>Run the Splunk installation script</h3></div>
-        <p>The script below downloads, installs, and fully configures Splunk Enterprise. Before running it, update the two values highlighted in amber to match the version and build hash from the splunk.com download page (see the note above).</p>
-        <p>Copy the entire script, paste it into your SSH session, and press Enter. It takes approximately 3–5 minutes to complete.</p>
+        <p>The script below downloads, installs, and fully configures Splunk Enterprise. The only line you need to change is <code>SPLUNK_DEB_URL</code> — replace the example URL with the one from your splunk.com account (see the callout above).</p>
+        <p>Follow these steps to create and run the script. The only line you need to edit is <code>SPLUNK_DEB_URL</code> — replace it with the URL from your splunk.com account before running.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-header"><span class="code-lang">bash — create the script file first</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Create the script file (this opens a text editor)</span>
+nano splunk-install.sh
+
+<span class="cm"># Paste the entire script below into the editor.</span>
+<span class="cm"># Update the SPLUNK_DEB_URL line with your own URL.</span>
+<span class="cm"># Save and exit:  Ctrl+O  then  Enter  then  Ctrl+X</span>
+
+<span class="cm"># Make it executable and run it — as the ubuntu user, no sudo</span>
+chmod +x splunk-install.sh
+./splunk-install.sh</pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">bash — run as ubuntu user, no sudo</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="cm">#!/bin/bash
 # ================================================================
-#  Splunk Enterprise — Automated Installation Script
-#  Run on: EC2 Instance 1 (splunk-server) — Ubuntu 22.04
+#  Splunk Enterprise â Automated Installation Script
+#  Run on: EC2 Instance 1 (splunk-server) â Ubuntu 22.04
 #
 #  BEFORE RUNNING:
-#  Update SPLUNK_VERSION and SPLUNK_BUILD to match the values
-#  shown on splunk.com/en_us/download/splunk-enterprise.html
-#  (Linux > .deb package > copy the wget command shown there)
-# ================================================================</span>
+#  Replace SPLUNK_DEB_URL with the URL from your splunk.com account.
+#  How to get it:
+#    1. Log in at splunk.com
+#    2. Go to splunk.com/en_us/download/splunk-enterprise.html
+#    3. Select Linux â .deb package
+#    4. Copy the full URL from the wget command shown
+#    5. Paste it into SPLUNK_DEB_URL below
+#
+#  Run as: ubuntu user with sudo available (default on EC2)
+#    chmod +x splunk-install.sh
+#    ./splunk-install.sh
+# ================================================================
 set -euo pipefail
 
-<span class="cm"># ── UPDATE THESE TWO VALUES from splunk.com before running ──────</span>
-SPLUNK_VERSION=<span class="ck">"9.2.1"</span>             <span class="cm"># e.g. "9.2.1" — from the download page</span>
-SPLUNK_BUILD=<span class="ck">"78803f08aabb"</span>       <span class="cm"># e.g. "78803f08aabb" — from the download URL</span>
-<span class="cm"># ────────────────────────────────────────────────────────────────</span>
+<span class="cm"># ── PASTE YOUR DOWNLOAD URL HERE ────────────────────────────────────</span>
+<span class="cm"># Replace the URL below with the one from your splunk.com account</span>
+SPLUNK_DEB_URL=<span class="ck">"https://download.splunk.com/products/splunk/releases/10.4.0/linux/splunk-10.4.0-f798d4d49089-linux-amd64.deb"</span>
+<span class="cm"># ────────────────────────────────────────────────────────────────────────</span>
 
-<span class="cm"># Admin password for Splunk Web login (change after first login)</span>
-ADMIN_PASS=<span class="cs">"Workshop2026!"</span>
-
+<span class="cm"># Filename is extracted automatically from the URL — do not edit this line</span>
+SPLUNK_PKG=$(basename <span class="cs">"${SPLUNK_DEB_URL}"</span>)
 SPLUNK_HOME=<span class="cs">"/opt/splunk"</span>
-PKG=<span class="cs">"splunk-${SPLUNK_VERSION}-${SPLUNK_BUILD}-linux-2.6-amd64.deb"</span>
-URL=<span class="cs">"https://download.splunk.com/products/splunk/releases/${SPLUNK_VERSION}/linux/${PKG}"</span>
+ADMIN_PASS=<span class="cs">"Workshop2026!"</span>
 
 echo <span class="cs">"[1/6] Updating system packages..."</span>
 sudo apt-get update -qq
 sudo apt-get install -y wget curl ufw net-tools
 
-echo <span class="cs">"[2/6] Downloading Splunk Enterprise ${SPLUNK_VERSION}..."</span>
-wget -q --show-progress <span class="cs">"${URL}"</span> -O /tmp/<span class="cs">"${PKG}"</span>
+echo <span class="cs">"[2/6] Downloading Splunk Enterprise..."</span>
+echo <span class="cs">"      URL: ${SPLUNK_DEB_URL}"</span>
+wget -q --show-progress <span class="cs">"${SPLUNK_DEB_URL}"</span> -O /tmp/<span class="cs">"${SPLUNK_PKG}"</span>
 
 echo <span class="cs">"[3/6] Installing Splunk..."</span>
-sudo dpkg -i /tmp/<span class="cs">"${PKG}"</span>
+sudo dpkg -i /tmp/<span class="cs">"${SPLUNK_PKG}"</span>
 
 echo <span class="cs">"[4/6] Starting Splunk and accepting the licence..."</span>
+<span class="cm"># Splunk 10.x requires --run-as-root when dpkg installed the package as root.</span>
+<span class="cm"># This is expected and safe in a lab environment. Splunk still starts correctly.</span>
 sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk start \
   --accept-license --answer-yes --no-prompt \
+  --run-as-root \
   --seed-passwd <span class="cs">"${ADMIN_PASS}"</span>
 
-<span class="cm"># Enable Splunk to start automatically if the instance is rebooted</span>
-sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk enable boot-start -user splunk
+<span class="cm"># Register Splunk as a systemd service so it survives reboots</span>
+sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk enable boot-start \
+  --accept-license --answer-yes --no-prompt \
+  --run-as-root
 
-echo <span class="cs">"[5/6] Enabling forwarder receiver port and creating log indexes..."</span>
-<span class="cm"># Open port 9997 so the Universal Forwarder can send logs to this machine</span>
-sudo -u splunk <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk enable listen 9997 \
+echo <span class="cs">"[5/6] Opening forwarder receiver port and creating indexes..."</span>
+<span class="cm"># Port 9997 receives log data from the Universal Forwarder on the web server</span>
+sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk enable listen 9997 \
+  --run-as-root \
   -auth admin:<span class="cs">"${ADMIN_PASS}"</span>
 
-<span class="cm"># Create separate indexes to store web server logs and security logs</span>
-sudo -u splunk <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk add index webserver_logs \
+<span class="cm"># Separate indexes keep web server logs and security logs organised</span>
+sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk add index webserver_logs \
+  --run-as-root \
   -auth admin:<span class="cs">"${ADMIN_PASS}"</span>
 
-sudo -u splunk <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk add index security_logs \
+sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk add index security_logs \
+  --run-as-root \
   -auth admin:<span class="cs">"${ADMIN_PASS}"</span>
 
 echo <span class="cs">"[6/6] Configuring firewall..."</span>
 sudo ufw allow 22/tcp     <span class="cm"># SSH</span>
-sudo ufw allow 8000/tcp   <span class="cm"># Splunk Web</span>
+sudo ufw allow 8000/tcp   <span class="cm"># Splunk Web UI</span>
 sudo ufw allow 9997/tcp   <span class="cm"># Forwarder receiver</span>
-sudo ufw allow 8089/tcp   <span class="cm"># Management API</span>
+sudo ufw allow 8089/tcp   <span class="cm"># Splunk management API</span>
 sudo ufw --force enable
 
-<span class="cm"># Retrieve this instance's public IP from AWS instance metadata</span>
+<span class="cm"># Get this instance's public IP from AWS instance metadata</span>
 PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
 
 echo <span class="cs">""</span>
@@ -504,7 +529,7 @@ echo <span class="cs">"=========================================================
           <span class="callout-icon">⚠</span>
           <div class="callout-body">
             <strong>Change the admin password after first login</strong>
-            <p>The script sets a shared workshop password for convenience. Once logged in, go to <strong>Settings → Access Controls → Users → admin → Edit</strong> and change it before conducting any real monitoring work.</p>
+            <p>The script sets a shared workshop password for convenience. Once logged in, go to <strong>Settings → Access Controls → Users → admin → Edit</strong> and set a personal password before conducting any real monitoring work.</p>
           </div>
         </div>
 
@@ -512,7 +537,8 @@ echo <span class="cs">"=========================================================
           <span class="callout-icon">✓</span>
           <div class="callout-body">
             <strong>Expected result</strong>
-            <p>Open your browser and go to <code>http://&lt;SPLUNK-PUBLIC-IP&gt;:8000</code>. You should see the Splunk login page. Log in with username <code>admin</code> and password <code>Workshop2026!</code>. The Splunk home screen confirms installation is complete.</p>
+            <p>The script prints a summary at the end showing your Splunk Web URL. Open that URL in your browser — you should see the Splunk login page. Log in with username <code>admin</code> and password <code>Workshop2026!</code>.</p>
+            <p>If Splunk was previously installed and the script failed, clean up first: <code>sudo /opt/splunk/bin/splunk stop</code>, then <code>sudo apt-get remove splunk -y &amp;&amp; sudo rm -rf /opt/splunk</code>, then re-run the script.</p>
           </div>
         </div>
       </div>
@@ -526,253 +552,238 @@ echo <span class="cs">"=========================================================
     <section class="lab-section" id="forwarder">
       <div class="section-header">
         <span class="section-num">03</span>
-        <h2>Deploying the Universal Forwarder and Web Server</h2>
+        <h2>Deploying the Web Server and Universal Forwarder</h2>
       </div>
-      <p class="section-intro">The Universal Forwarder (UF) is a lightweight Splunk agent installed on a source machine. It monitors log files and ships them over the network to the Splunk indexer on port 9997. In this section you will launch a second EC2 instance, install an Apache web server on it to generate realistic HTTP logs, and then install and configure the forwarder to send those logs — plus the system authentication log — to the Splunk server from Section 2.</p>
+      <p class="section-intro">In this section you will launch a second EC2 instance using <strong>Amazon Linux 2023</strong> into the <strong>public subnet</strong>. Rather than SSH-ing in and running scripts manually, everything is automated using <strong>EC2 User Data</strong> — a startup script that AWS runs automatically the first time the instance boots. By the time the instance reaches Running state, Apache, PHP, the demo web application, and the Splunk Universal Forwarder will all be installed and configured.</p>
 
       <div class="callout callout-note">
         <span class="callout-icon">ℹ</span>
         <div class="callout-body">
-          <strong>Two IP addresses to keep track of</strong>
-          <p>This section involves two EC2 instances. Keep a notepad open with the following values — you will need to substitute them into the forwarder script:</p>
+          <strong>Before you start — two values you need</strong>
+          <p>Open a notepad and record these two values now. You will paste them into the User Data script in Step 2:</p>
           <ul>
-            <li><strong>Splunk Server Private IP</strong> — the private IPv4 address of Instance 1 (splunk-server). Find it in the EC2 console under Instance 1's detail page. It looks like <code>172.31.x.x</code>. The forwarder uses this address to reach the Splunk indexer within the VPC.</li>
-            <li><strong>Web Server Public IP</strong> — the public IPv4 address of Instance 2 (webserver). You will use this to SSH in and to send attack traffic in Section 6.</li>
+            <li><strong>Splunk Server Private IP</strong> — go to EC2 console, click on Instance 1 (splunk-server), and copy the <strong>Private IPv4 address</strong>. It looks like <code>10.0.0.x</code>. The forwarder uses this to send logs to Splunk over the VPC internal network.</li>
+            <li><strong>Universal Forwarder download URL</strong> — log in to splunk.com, go to <strong>splunk.com/en_us/download/universal-forwarder</strong>, select <strong>Linux → RPM</strong> package (Amazon Linux 2023 uses RPM, not .deb), and copy the full URL from the wget command shown.</li>
           </ul>
         </div>
       </div>
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Step 1</span><h3>Launch EC2 Instance 2 — Web Server</h3></div>
-        <p>Return to the EC2 console and click <strong>Launch Instance</strong> again. This is a separate, second instance — do not modify Instance 1. Configure it as follows:</p>
+        <p>In the EC2 console, click <strong>Launch Instance</strong>. Configure it exactly as follows:</p>
         <table>
           <tr><th>Setting</th><th>Value to use</th></tr>
           <tr><td>Name</td><td><code>webserver</code></td></tr>
-          <tr><td>AMI</td><td>Ubuntu Server 22.04 LTS (HVM), SSD Volume Type</td></tr>
-          <tr><td>Instance type</td><td><code>t2.micro</code> — 1 vCPU, 1 GiB RAM (sufficient for a web server)</td></tr>
+          <tr><td>AMI</td><td><strong>Amazon Linux 2023 AMI</strong> (HVM), SSD Volume Type — select the 64-bit (x86) version</td></tr>
+          <tr><td>Instance type</td><td><code>t2.micro</code> — 1 vCPU, 1 GiB RAM</td></tr>
           <tr><td>Key pair</td><td><code>vockey</code> — same key pair as Instance 1</td></tr>
-          <tr><td>Network</td><td><code>splunk-workshop-vpc</code> — same VPC as Instance 1</td></tr>
-          <tr><td>Subnet</td><td><code>splunk-workshop-subnet-private1</code> — the <strong>private</strong> subnet from Section 1</td></tr>
-          <tr><td>Auto-assign public IP</td><td><strong>Disable</strong> — this instance is in the private subnet and does not need a public IP</td></tr>
-          <tr><td>Storage</td><td>8 GiB, gp3 (default is fine)</td></tr>
+          <tr><td>Network</td><td><code>splunk-workshop-vpc</code> — the VPC created in Section 1</td></tr>
+          <tr><td>Subnet</td><td><code>splunk-workshop-subnet-public1</code> — the <strong>public</strong> subnet</td></tr>
+          <tr><td>Auto-assign public IP</td><td><strong>Enable</strong> — required so you can send attack traffic to this instance from your laptop</td></tr>
+          <tr><td>Storage</td><td>8 GiB, gp3 (default)</td></tr>
         </table>
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>Private subnet — no public IP</strong>
-            <p>The web server sits in the private subnet (<code>10.0.128.0/24</code>). It has no public IP address, so it cannot be reached directly from the internet. The Universal Forwarder on this machine will send logs to the Splunk server using the Splunk server's <strong>private IP</strong> address — both machines are in the same VPC so they can communicate freely over private IPs regardless of which subnet they are in.</p>
-            <p>To SSH into this instance you will connect through the Splunk server as a jump host — instructions are in Step 2 below.</p>
-          </div>
-        </div>
         <p>Under <strong>Firewall (Security Groups)</strong>, create a new security group named <code>webserver-sg</code> with these inbound rules:</p>
         <table>
           <tr><th>Type</th><th>Port</th><th>Source</th><th>Purpose</th></tr>
-          <tr><td>SSH</td><td>22</td><td>My IP</td><td>Your SSH access to the web server</td></tr>
-          <tr><td>HTTP</td><td>80</td><td>0.0.0.0/0</td><td>Web traffic — used during attack demonstrations</td></tr>
-          <tr><td>HTTPS</td><td>443</td><td>0.0.0.0/0</td><td>Secure web traffic</td></tr>
+          <tr><td>SSH</td><td>22</td><td>My IP</td><td>SSH access if you need to troubleshoot</td></tr>
+          <tr><td>HTTP</td><td>80</td><td>0.0.0.0/0</td><td>Web traffic — required for SQL injection and traversal attack demos</td></tr>
         </table>
-        <p>Click <strong>Launch Instance</strong>. Once the state shows <strong>Running</strong>, note the <strong>Public IPv4 address</strong> of this instance.</p>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Connect to the web server via SSH (using the Splunk server as a jump host)</h3></div>
-        <p>Because the web server is in the <strong>private subnet</strong> it has no public IP — you cannot SSH to it directly from your laptop. Instead, you connect through the Splunk server, which acts as a jump host. This requires two things: copying your key file to the Splunk server, and using SSH agent forwarding.</p>
-        <p><strong>Option A — SSH agent forwarding (recommended).</strong> Run these commands from your laptop. You only need to do this once per session.</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Add the key to your SSH agent so it is forwarded through the jump host</span>
-ssh-add ~/Downloads/labsuser.pem
-
-<span class="cm"># Connect to the web server via the Splunk server as a jump host</span>
-<span class="cm"># Replace &lt;SPLUNK-PUBLIC-IP&gt;  with the public IP of Instance 1 (Splunk server)</span>
-<span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (web server)</span>
-ssh -A -J ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;</span> ubuntu@<span class="ck">&lt;WEBSERVER-PRIVATE-IP&gt;</span></pre>
-        </div>
-        <p><strong>Option B — copy the key to the Splunk server and SSH in two hops.</strong> Use this if agent forwarding does not work on your system.</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Step 1: Copy the key file to the Splunk server</span>
-<span class="cm"># Replace &lt;SPLUNK-PUBLIC-IP&gt; with the public IP of Instance 1</span>
-scp -i ~/Downloads/labsuser.pem ~/Downloads/labsuser.pem   ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;</span>:~/.ssh/labsuser.pem
-
-<span class="cm"># Step 2: SSH into the Splunk server first</span>
-ssh -i ~/Downloads/labsuser.pem ubuntu@<span class="ck">&lt;SPLUNK-PUBLIC-IP&gt;</span>
-
-<span class="cm"># Step 3: From inside the Splunk server, SSH into the web server</span>
-<span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2</span>
-ssh -i ~/.ssh/labsuser.pem ubuntu@<span class="ck">&lt;WEBSERVER-PRIVATE-IP&gt;</span></pre>
-        </div>
         <div class="callout callout-note">
           <span class="callout-icon">ℹ</span>
           <div class="callout-body">
-            <strong>Where to find the private IP of the web server</strong>
-            <p>In the EC2 console, click on Instance 2 (webserver). On the detail page, look for <strong>Private IPv4 address</strong> — it will be an address in the range <code>10.0.128.x</code> (the private subnet CIDR). This is the address you use for the jump host command above and for the forwarder configuration in Step 4.</p>
+            <strong>Why public subnet for the web server?</strong>
+            <p>We place the web server in the public subnet so that attack traffic from your laptop can reach it directly over HTTP on port 80 — this is what makes the brute force, SQL injection, and directory traversal demonstrations visible and realistic. The Splunk server is also in the public subnet, and both instances communicate with each other using their <strong>private IP addresses</strong> within the VPC — the forwarder never uses the public IP to send logs.</p>
           </div>
         </div>
+        <p><strong>Do not click Launch Instance yet.</strong> Continue to Step 2 to add the User Data script before launching.</p>
       </div>
 
       <div class="step">
-        <div class="step-header"><span class="step-badge">Step 3</span><h3>Install Apache and deploy the demo web application</h3></div>
-        <p>While connected to the web server (Instance 2), run the script below. No values need to be changed in this script — copy and paste it as-is.</p>
+        <div class="step-header"><span class="step-badge">Step 2</span><h3>Add the User Data script</h3></div>
+        <p>Scroll down on the Launch Instance page to the <strong>Advanced details</strong> section and expand it. At the very bottom you will find a field labelled <strong>User data</strong>. Paste the entire script below into that field.</p>
+        <p><strong>Before pasting</strong> — replace the two values marked in amber:</p>
+        <ul class="step-list">
+          <li>Replace <code>&lt;SPLUNK-SERVER-PRIVATE-IP&gt;</code> with the private IP of Instance 1 (e.g. <code>10.0.0.45</code>)</li>
+          <li>Replace the <code>UF_RPM_URL</code> value with your personal Universal Forwarder RPM download URL from splunk.com</li>
+        </ul>
+
+        <div class="callout callout-warn">
+          <span class="callout-icon">⚠</span>
+          <div class="callout-body">
+            <strong>Select the RPM package, not .deb</strong>
+            <p>On the Universal Forwarder download page at splunk.com, select <strong>Linux → RPM</strong>. Amazon Linux uses RPM packages. The .deb package is for Ubuntu and will not install.</p>
+          </div>
+        </div>
+
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into the webserver SSH session</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-header"><span class="code-lang">bash — paste into EC2 User Data field (Advanced details)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="cm">#!/bin/bash
 # ================================================================
-#  Web Server Setup Script
-#  Run on: EC2 Instance 2 (webserver) — Ubuntu 22.04
-#  No values need to be changed in this script.
-# ================================================================</span>
-set -euo pipefail
+#  Web Server + Splunk Universal Forwarder â EC2 User Data
+#  AMI: Amazon Linux 2023
+#
+#  BEFORE PASTING â replace these two lines:
+#
+#  1.  SPLUNK_IP   â private IP of your Splunk server (Instance 1)
+#                   EC2 console â Instance 1 â Private IPv4 address
+#                   e.g.  10.0.0.45
+#
+#  2.  UF_RPM_URL  â your Universal Forwarder download URL
+#                   splunk.com â Downloads â Universal Forwarder
+#                   â Linux â RPM â copy the URL from the wget command
+# ================================================================
 
-echo <span class="cs">"[1/3] Installing Apache web server and PHP..."</span>
-sudo apt-get update -qq
-sudo apt-get install -y apache2 php libapache2-mod-php
+SPLUNK_IP=<span class="ck">"&lt;SPLUNK-SERVER-PRIVATE-IP&gt;"</span>
+UF_RPM_URL=<span class="ck">"https://download.splunk.com/products/universalforwarder/releases/10.4.0/linux/splunkforwarder-10.4.0-f798d4d49089.x86_64.rpm"</span>
 
-echo <span class="cs">"[2/3] Deploying demo login page..."</span>
-<span class="cm"># This simple PHP page logs all login attempts to Apache's access log.</span>
-<span class="cm"># It is intentionally basic — its purpose is to generate HTTP log entries</span>
-<span class="cm"># for the attack demonstrations in Section 6.</span>
-sudo tee /var/www/html/login.php &lt;&lt; 'EOF'
+<span class="cm"># ── Step 1: Install Apache and PHP ───────────────────────────────</span>
+yum update -y
+yum install -y httpd php
+
+<span class="cm"># ── Step 2: Create the demo login page ───────────────────────────</span>
+cat &gt; /var/www/html/login.php &lt;&lt; 'PHPEOF'
 &lt;?php
-$user = $_GET['user'] ?? '';
-$pass = $_GET['pass'] ?? '';
-if ($user !== '' && $pass !== '') {
-    error_log("Login attempt received for user: $user");
-}
-echo "&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;body&gt;";
-echo "&lt;h2&gt;Workshop Demo Login&lt;/h2&gt;";
-echo "&lt;p&gt;Attempted username: " . htmlspecialchars($user, ENT_QUOTES) . "&lt;/p&gt;";
-echo "&lt;/body&gt;&lt;/html&gt;";
+  $user = $_GET['user'] ?? '';
+  $pass = $_GET['pass'] ?? '';
+  echo "&lt;h2&gt;Workshop Demo Login&lt;/h2&gt;";
+  echo "&lt;p&gt;Username: " . htmlspecialchars($user, ENT_QUOTES) . "&lt;/p&gt;";
+PHPEOF
+
+<span class="cm"># Create folders used in the directory traversal demonstration</span>
+mkdir -p /var/www/html/admin /var/www/html/backup
+echo "Restricted" &gt; /var/www/html/admin/config.txt
+
+<span class="cm"># ── Step 3: Start Apache ─────────────────────────────────────────</span>
+systemctl enable httpd
+systemctl start httpd
+
+<span class="cm"># ── Step 4: Download and install the Universal Forwarder ─────────</span>
+UF_PKG=$(basename "${UF_RPM_URL}")
+wget -q "${UF_RPM_URL}" -O /tmp/"${UF_PKG}"
+rpm -i --nosignature /tmp/"${UF_PKG}"
+
+<span class="cm"># ── Step 5: Write outputs.conf — tells the forwarder where to send logs</span>
+<span class="cm"># No CLI commands needed. Writing config files directly is simpler</span>
+<span class="cm"># and avoids user permission issues entirely.</span>
+mkdir -p /opt/splunkforwarder/etc/system/local
+
+cat &gt; /opt/splunkforwarder/etc/system/local/outputs.conf &lt;&lt; EOF
+[tcpout]
+defaultGroup = splunk_indexer
+
+[tcpout:splunk_indexer]
+server = ${SPLUNK_IP}:9997
 EOF
 
-echo <span class="cs">"[3/3] Creating demo directories and starting Apache..."</span>
-<span class="cm"># Create directories that will be targeted during the traversal demonstration</span>
-sudo mkdir -p /var/www/html/admin /var/www/html/backup
-echo "Restricted — do not access" | sudo tee /var/www/html/admin/config.txt
+<span class="cm"># ── Step 6: Write inputs.conf — tells the forwarder which files to monitor</span>
+<span class="cm"># Apache log files are pre-created so the forwarder can read them immediately.</span>
+touch /var/log/httpd/access_log /var/log/httpd/error_log
 
-sudo systemctl enable apache2
-sudo systemctl restart apache2
+cat &gt; /opt/splunkforwarder/etc/system/local/inputs.conf &lt;&lt; 'EOF'
+[monitor:///var/log/httpd/access_log]
+index = webserver_logs
+sourcetype = apache_access
 
-WEB_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
-echo <span class="cs">""</span>
-echo <span class="cs">"================================================================"</span>
-echo <span class="cs">"  Apache is running."</span>
-echo <span class="cs">"  Test page  →  http://${WEB_IP}/login.php?user=test&pass=test"</span>
-echo <span class="cs">"================================================================"</span></pre>
+[monitor:///var/log/httpd/error_log]
+index = webserver_logs
+sourcetype = apache_error
+
+[monitor:///var/log/secure]
+index = security_logs
+sourcetype = linux_secure
+EOF
+
+<span class="cm"># ── Step 7: Start the forwarder ──────────────────────────────────</span>
+<span class="cm"># One command. The forwarder reads outputs.conf and inputs.conf on startup.</span>
+/opt/splunkforwarder/bin/splunk start \
+  --accept-license --answer-yes --no-prompt \
+  --seed-passwd "Forwarder2026!"
+
+<span class="cm"># Enable auto-start on reboot</span>
+/opt/splunkforwarder/bin/splunk enable boot-start \
+  --accept-license --answer-yes --no-prompt</pre>
         </div>
-        <div class="callout callout-ok">
-          <span class="callout-icon">✓</span>
+
+        <div class="callout callout-note">
+          <span class="callout-icon">ℹ</span>
           <div class="callout-body">
-            <strong>Verify Apache is working</strong>
-            <p>From your <strong>Splunk server SSH session</strong>, run: <code>curl http://&lt;WEBSERVER-PRIVATE-IP&gt;/login.php?user=test&amp;pass=test</code> — replacing <code>&lt;WEBSERVER-PRIVATE-IP&gt;</code> with the private IP of Instance 2. You should see an HTML response containing <em>Attempted username: test</em>. This confirms Apache is running and the forwarder will capture log entries.</p>
+            <strong>How User Data works</strong>
+            <p>AWS runs the User Data script automatically as root the first time the instance boots. You do not SSH in or run anything manually — Apache, the demo app, and the Splunk Forwarder are all installed and configured within 2–3 minutes of the instance reaching Running state.</p>
+            <p>To confirm it completed: SSH into the web server and run <code>sudo tail -20 /var/log/cloud-init-output.log</code>. The last line should read <em>Cloud-init finished</em>.</p>
           </div>
         </div>
+
+        <p>After pasting the script into the User Data field, click <strong>Launch Instance</strong>.</p>
       </div>
 
       <div class="step">
-        <div class="step-header"><span class="step-badge">Step 4</span><h3>Install and configure the Universal Forwarder</h3></div>
-        <p>Still connected to the web server (Instance 2), run the forwarder script below.</p>
-        <p><strong>You must replace one value before running:</strong> find the line starting with <code>SPLUNK_PRIVATE_IP</code> and replace <code>&lt;SPLUNK-SERVER-PRIVATE-IP&gt;</code> with the <strong>private IPv4 address</strong> of Instance 1 (splunk-server). Find this in the EC2 console on Instance 1's detail page — it begins with <code>172.31.</code></p>
-        <p>Also update <code>UF_VERSION</code> and <code>UF_BUILD</code> to match the Universal Forwarder version available on splunk.com (same process as Section 2 — go to splunk.com/en_us/download/universal-forwarder, select Linux .deb, and copy the version and build hash from the displayed wget command).</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into the webserver SSH session</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm">#!/bin/bash
-# ================================================================
-#  Universal Forwarder Installation Script
-#  Run on: EC2 Instance 2 (webserver) — Ubuntu 22.04
-#
-#  BEFORE RUNNING — replace the values marked below:
-#    1. SPLUNK_PRIVATE_IP  — private IP of your splunk-server (Instance 1)
-#    2. UF_VERSION         — from splunk.com/en_us/download/universal-forwarder
-#    3. UF_BUILD           — from the same download page (build hash in the URL)
-# ================================================================</span>
-set -euo pipefail
+        <div class="step-header"><span class="step-badge">Step 3</span><h3>Verify the web server and forwarder are running</h3></div>
+        <p>Wait approximately 3 minutes after the instance reaches <strong>Running</strong> state for the User Data script to complete. Then verify each component:</p>
 
-<span class="cm"># ── REPLACE THIS: Private IP of Instance 1 (splunk-server) ─────</span>
-SPLUNK_PRIVATE_IP=<span class="ck">"&lt;SPLUNK-SERVER-PRIVATE-IP&gt;"</span>
-<span class="cm"># Example: SPLUNK_PRIVATE_IP="172.31.24.105"</span>
-<span class="cm"># Find this in EC2 console > Instance 1 > Private IPv4 address</span>
+        <p><strong>Verify Apache:</strong> Open your browser and go to <code>http://&lt;WEBSERVER-PUBLIC-IP&gt;/login.php?user=test&amp;pass=test</code> — replacing <code>&lt;WEBSERVER-PUBLIC-IP&gt;</code> with the public IP of Instance 2 shown in the EC2 console. You should see a page displaying <em>Username attempted: test</em>.</p>
 
-<span class="cm"># ── REPLACE THESE: Match the Universal Forwarder download page ──</span>
-UF_VERSION=<span class="ck">"9.2.1"</span>              <span class="cm"># e.g. "9.2.1"</span>
-UF_BUILD=<span class="ck">"78803f08aabb"</span>        <span class="cm"># e.g. "78803f08aabb" — from the download URL</span>
-<span class="cm"># ────────────────────────────────────────────────────────────────</span>
+        <p><strong>Verify the forwarder in Splunk</strong> using the two methods below. Note that <strong>Settings → Forwarder Management</strong> will not appear in a fresh Splunk install — it requires the Deployment Server feature which is not needed for this workshop. Use Method 1 and Method 2 instead.</p>
 
-<span class="cm"># Local admin password for the forwarder agent itself (not Splunk Web)</span>
-UF_PASS=<span class="cs">"Forwarder2026!"</span>
-
-UF_PKG=<span class="cs">"splunkforwarder-${UF_VERSION}-${UF_BUILD}-linux-2.6-amd64.deb"</span>
-UF_URL=<span class="cs">"https://download.splunk.com/products/universalforwarder/releases/${UF_VERSION}/linux/${UF_PKG}"</span>
-
-echo <span class="cs">"[1/4] Downloading Universal Forwarder ${UF_VERSION}..."</span>
-wget -q --show-progress <span class="cs">"${UF_URL}"</span> -O /tmp/<span class="cs">"${UF_PKG}"</span>
-sudo dpkg -i /tmp/<span class="cs">"${UF_PKG}"</span>
-
-echo <span class="cs">"[2/4] Starting the forwarder agent..."</span>
-sudo /opt/splunkforwarder/bin/splunk start \
-  --accept-license --answer-yes --no-prompt \
-  --seed-passwd <span class="cs">"${UF_PASS}"</span>
-
-echo <span class="cs">"[3/4] Pointing the forwarder to the Splunk indexer..."</span>
-<span class="cm"># This tells the forwarder where to send logs (Splunk server private IP, port 9997)</span>
-sudo /opt/splunkforwarder/bin/splunk add forward-server \
-  <span class="cs">"${SPLUNK_PRIVATE_IP}:9997"</span> \
-  -auth admin:<span class="cs">"${UF_PASS}"</span>
-
-echo <span class="cs">"[4/4] Adding log monitors..."</span>
-
-<span class="cm"># Monitor Apache access log → stored in the webserver_logs index</span>
-sudo /opt/splunkforwarder/bin/splunk add monitor \
-  /var/log/apache2/access.log \
-  -index webserver_logs \
-  -sourcetype apache_access \
-  -auth admin:<span class="cs">"${UF_PASS}"</span>
-
-<span class="cm"># Monitor Apache error log → stored in the webserver_logs index</span>
-sudo /opt/splunkforwarder/bin/splunk add monitor \
-  /var/log/apache2/error.log \
-  -index webserver_logs \
-  -sourcetype apache_error \
-  -auth admin:<span class="cs">"${UF_PASS}"</span>
-
-<span class="cm"># Monitor Linux authentication log → stored in the security_logs index</span>
-<span class="cm"># This is where SSH brute force attempts will appear</span>
-sudo /opt/splunkforwarder/bin/splunk add monitor \
-  /var/log/auth.log \
-  -index security_logs \
-  -sourcetype linux_secure \
-  -auth admin:<span class="cs">"${UF_PASS}"</span>
-
-<span class="cm"># Enable the forwarder to start automatically on reboot</span>
-sudo /opt/splunkforwarder/bin/splunk enable boot-start
-
-echo <span class="cs">""</span>
-echo <span class="cs">"================================================================"</span>
-echo <span class="cs">"  Forwarder is active."</span>
-echo <span class="cs">"  Sending logs  →  ${SPLUNK_PRIVATE_IP}:9997"</span>
-echo <span class="cs">"  Monitoring:"</span>
-echo <span class="cs">"    /var/log/apache2/access.log  →  index: webserver_logs"</span>
-echo <span class="cs">"    /var/log/apache2/error.log   →  index: webserver_logs"</span>
-echo <span class="cs">"    /var/log/auth.log            →  index: security_logs"</span>
-echo <span class="cs">"================================================================"</span></pre>
+        <div class="step" style="margin-bottom:1.5rem;">
+          <div class="step-header"><span class="step-badge">Method 1</span><h3>Run a search in Splunk Web — fastest check</h3></div>
+          <p>In Splunk Web, click <strong>Search &amp; Reporting</strong>. Set the time range to <strong>Last 60 minutes</strong> and run the query below. If log events appear, the forwarder is connected and sending data successfully.</p>
+          <div class="spl-block">
+            <div class="spl-header"><span class="spl-label">SPL — Method 1: confirm logs are arriving</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+            <pre>index=webserver_logs <span class="sp-pipe">|</span> <span class="sp-cmd">head</span> <span class="sp-num">5</span></pre>
+          </div>
+          <p>Each result is one Apache HTTP request logged by the web server and forwarded to Splunk. If you see results, proceed to Section 5. If no results appear after 5 minutes, continue to Method 2 to diagnose the connection.</p>
         </div>
+
+        <div class="step" style="margin-bottom:1.5rem;">
+          <div class="step-header"><span class="step-badge">Method 2</span><h3>Check the active connection on the Splunk server</h3></div>
+          <p>SSH into <strong>Instance 1 (splunk-server)</strong> and run the two commands below. They check whether the Splunk forwarder receiver port is open and whether the web server has established a connection to it.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">bash — Instance 1 (splunk-server) SSH session</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm"># Check that Splunk is listening on port 9997 (the forwarder receiver port)</span>
+sudo ss -tnp | grep 9997
+
+<span class="cm"># Expected output when the web server is connected:</span>
+<span class="cm"># LISTEN  0  128  0.0.0.0:9997  ...  (Splunk is ready to receive)</span>
+<span class="cm"># ESTAB   0  0    10.0.0.x:9997  10.0.0.y:xxxxx  (active connection from web server)</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">bash — confirm the forwarder receiver is enabled in Splunk</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm"># Lists all enabled receiving ports — should show port 9997</span>
+sudo /opt/splunk/bin/splunk list forward-server --run-as-root</pre>
+          </div>
+          <div class="callout callout-note">
+            <span class="callout-icon">ℹ</span>
+            <div class="callout-body">
+              <strong>Reading the ss output</strong>
+              <p>Look for two lines referencing port 9997. A line with state <code>LISTEN</code> means Splunk is waiting for connections. A line with state <code>ESTAB</code> (established) means the web server forwarder has connected. The web server's private IP (<code>10.0.0.x</code>) will appear in the ESTAB line. If you only see LISTEN but no ESTAB, the forwarder on the web server has not connected yet — wait another minute and re-run, or check the User Data log on the web server with <code>sudo tail -30 /var/log/cloud-init-output.log</code>.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="callout callout-ok">
           <span class="callout-icon">✓</span>
           <div class="callout-body">
-            <strong>Verify the forwarder is connected</strong>
-            <p>In Splunk Web (on Instance 1), go to <strong>Settings → Forwarder Management</strong>. The web server should appear as a connected client within 60 seconds of the script completing. You can also run the query below in Search &amp; Reporting to confirm logs are arriving:</p>
+            <strong>Expected result</strong>
+            <p>The SPL query returns the 5 most recent Apache log entries from the web server. Each event represents one HTTP request — the visit to <code>login.php</code> you made above will appear here. You are now ready to proceed to the attack demonstrations in Section 6.</p>
           </div>
         </div>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — verify logs are arriving</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs <span class="sp-pipe">|</span> <span class="sp-cmd">head</span> <span class="sp-num">5</span></pre>
+
+        <div class="callout callout-warn">
+          <span class="callout-icon">⚠</span>
+          <div class="callout-body">
+            <strong>If the query returns no results after 5 minutes</strong>
+          <p>Run <code>sudo tail -30 /var/log/cloud-init-output.log</code> on the web server. Common issues:</p>
+            <ul>
+              <li><strong>Forwarder not appearing in Splunk</strong> — confirm <code>SPLUNK_IP</code> is the correct private IP of Instance 1 and that port 9997 is open in the Splunk server security group.</li>
+              <li><strong>No web server response</strong> — confirm the security group for the web server allows HTTP on port 80 and that the instance has a public IP.</li>
+              <li><strong>Script did not complete</strong> — check the log for the last line that printed. If the RPM download failed, confirm <code>UF_RPM_URL</code> is a valid RPM URL (not .deb).</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- ══════════════════════════════════════
+        <!-- ══════════════════════════════════════
          SECTION 4 — ARCHITECTURE
     ══════════════════════════════════════ -->
     <section class="lab-section" id="architecture">
@@ -784,14 +795,14 @@ echo <span class="cs">"=========================================================
       <div class="arch-diagram">
         <div class="arch-row">
           <span class="arch-tag">Data Sources</span>
-          <div><div class="arch-val">Apache access logs &nbsp;·&nbsp; Apache error logs &nbsp;·&nbsp; auth.log</div><div class="arch-sub">Generated on EC2 Instance 2 (webserver) at /var/log/apache2/ and /var/log/auth.log</div></div>
+          <div><div class="arch-val">Apache access log &nbsp;·&nbsp; Apache error log &nbsp;·&nbsp; /var/log/secure</div><div class="arch-sub">Generated on EC2 Instance 2 (webserver — Amazon Linux 2023) at /var/log/httpd/ and /var/log/secure</div></div>
         </div>
         <div class="arch-row arrow">↓ &nbsp; Tailed continuously by the agent on the same machine</div>
         <div class="arch-row highlight">
           <span class="arch-tag">Universal Forwarder</span>
-          <div><div class="arch-val">Lightweight agent — EC2 Instance 2 (webserver)</div><div class="arch-sub">Sends logs over TCP port 9997 to the Splunk server&#39;s private IP (10.0.0.x) within the VPC</div></div>
+          <div><div class="arch-val">Lightweight agent — EC2 Instance 2 (webserver, Amazon Linux 2023, public subnet)</div><div class="arch-sub">Sends logs over TCP port 9997 to the Splunk server's private IP (10.0.0.x) within the VPC — installed automatically via User Data on first boot</div></div>
         </div>
-        <div class="arch-row arrow">↓ &nbsp; Encrypted stream over the private VPC network — private subnet 10.0.128.0/24 → public subnet 10.0.0.0/24</div>
+        <div class="arch-row arrow">↓ &nbsp; Encrypted stream over the VPC internal network — both instances in public subnet 10.0.0.0/24, communicating via private IPs</div>
         <div class="arch-row highlight">
           <span class="arch-tag">Indexer</span>
           <div><div class="arch-val">Splunk Enterprise — EC2 Instance 1 (splunk-server)</div><div class="arch-sub">Receives, parses, timestamps, and stores events in the webserver_logs and security_logs indexes</div></div>
@@ -900,7 +911,7 @@ echo <span class="cs">"=========================================================
         <p>A brute force attack systematically tries many passwords against an authentication service. The tool <code>hydra</code> automates this. Every failed attempt writes a <em>Failed password</em> entry to <code>/var/log/auth.log</code> on the web server, which the forwarder ships to Splunk's <code>security_logs</code> index.</p>
         <p>Run the attack from your <strong>Splunk server SSH session</strong> (Instance 1). The web server is in the private subnet so we target its <strong>private IP</strong> — both instances share the same VPC and can reach each other over private IPs freely.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="cm"># Install hydra on the Splunk server</span>
 sudo apt-get install -y hydra
 
@@ -917,9 +928,9 @@ ubuntu
 EOF
 
 <span class="cm"># Run the brute force against the web server SSH port</span>
-<span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (e.g. 10.0.128.x)</span>
-hydra -l ubuntu -P /tmp/wordlist.txt \
-  ssh://<span class="ck">&lt;WEBSERVER-PRIVATE-IP&gt;</span> \
+<span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2 (from EC2 console)</span>
+hydra -l ec2-user -P /tmp/wordlist.txt \
+  ssh://<span class="ck">&lt;WEBSERVER-PUBLIC-IP&gt;</span> \
   -t 4 -vV 2&gt;&amp;1 | tail -30</pre>
         </div>
         <p>Wait for hydra to finish, then switch to Splunk Web and run this detection query:</p>
@@ -948,11 +959,11 @@ hydra -l ubuntu -P /tmp/wordlist.txt \
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 2</span><h3>SQL Injection</h3></div>
-        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/apache2/access.log</code>. The web server is in the private subnet so run this from your <strong>Splunk server SSH session</strong> (Instance 1), which can reach the web server over the private VPC network.</p>
+        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/httpd/access_log</code>. The web server is now in the public subnet, so run this directly from your <strong>laptop terminal</strong> using the web server's public IP.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (e.g. 10.0.128.x)</span>
-TARGET=<span class="ck">"http://&lt;WEBSERVER-PRIVATE-IP&gt;"</span>
+          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2 (from EC2 console)</span>
+TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
 
 payloads=(
   <span class="cs">"' OR '1'='1"</span>
@@ -989,11 +1000,11 @@ done</pre>
 
       <div class="step">
         <div class="step-header"><span class="step-badge">Attack 3</span><h3>Directory Traversal</h3></div>
-        <p>A directory traversal attack uses <code>../</code> sequences — sometimes URL-encoded — to try to access files outside the web root such as <code>/etc/passwd</code>. These appear in Apache access logs as unusual URI patterns. Run this from your <strong>Splunk server SSH session</strong> (Instance 1), using the web server's private IP.</p>
+        <p>A directory traversal attack uses <code>../</code> sequences — sometimes URL-encoded — to try to access files outside the web root such as <code>/etc/passwd</code>. These appear in Apache access logs as unusual URI patterns. Run this from your <strong>laptop terminal</strong> using the web server's public IP.</p>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into the Splunk server SSH session (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PRIVATE-IP&gt; with the private IP of Instance 2 (e.g. 10.0.128.x)</span>
-TARGET=<span class="ck">"http://&lt;WEBSERVER-PRIVATE-IP&gt;"</span>
+          <div class="code-header"><span class="code-lang">bash — your laptop terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2 (from EC2 console)</span>
+TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
 
 traversal_paths=(
   <span class="cs">"../../../../etc/passwd"</span>

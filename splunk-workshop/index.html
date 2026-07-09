@@ -1,696 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teaching Splunk: A Train-the-Trainer Workshop — Lab Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teaching Splunk: A Train-the-Trainer Workshop — Beginner Lab Guide</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ink: #1a1a1a; --ink-light: #4a4a4a; --ink-faint: #888;
-  --rule: #e0e0e0; --rule-light: #f0f0f0;
-  --page: #ffffff; --paper: #f7f6f3;
-  --accent: #1d4ed8; --accent-bg: #eff4ff;
-  --warn-bg: #fffbeb; --warn-border: #d97706;
-  --ok-bg: #f0fdf4; --ok-border: #16a34a;
-  --danger-bg: #fff1f2; --danger-border: #dc2626;
-  --code-bg: #f4f4f5;
-  --serif: 'Source Serif 4', Georgia, serif;
-  --sans: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
+  --bg: #f5f7fb;
+  --paper: #ffffff;
+  --ink: #172033;
+  --muted: #5b6475;
+  --soft: #eef2f7;
+  --rule: #d8dee9;
+  --primary: #185adb;
+  --primary-dark: #103f9f;
+  --green: #0f766e;
+  --green-soft: #ecfdf5;
+  --amber: #b45309;
+  --amber-soft: #fffbeb;
+  --blue-soft: #eff6ff;
+  --code-bg: #0f172a;
+  --code-text: #e5e7eb;
+  --radius: 14px;
 }
+* { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.65; }
-
-/* HEADER */
-.site-header { background: var(--page); border-bottom: 1px solid var(--rule); padding: 0 2rem; position: sticky; top: 0; z-index: 50; }
-.header-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-.header-title { font-family: var(--sans); font-size: 0.82rem; font-weight: 600; color: var(--ink); text-decoration: none; }
-.header-title span { color: var(--ink-faint); font-weight: 400; }
-.header-nav { display: flex; gap: 0.25rem; list-style: none; }
-.header-nav a { font-size: 0.78rem; color: var(--ink-light); text-decoration: none; padding: 0.3rem 0.75rem; border-radius: 4px; transition: background 0.15s; }
-.header-nav a:hover { background: var(--rule-light); color: var(--ink); }
-
-/* HERO */
-.hero { background: var(--page); border-bottom: 1px solid var(--rule); padding: 4rem 2rem 3.5rem; }
-.hero-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 4rem; align-items: start; }
-.hero-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
-.hero h1 { font-family: var(--serif); font-size: 2.5rem; font-weight: 600; line-height: 1.18; color: var(--ink); margin-bottom: 0.5rem; }
-.hero-byline { font-size: 0.84rem; color: var(--ink-faint); margin-bottom: 1.75rem; }
-.hero-byline strong { color: var(--ink-light); }
-.hero-desc { font-size: 0.97rem; color: var(--ink-light); line-height: 1.7; max-width: 560px; margin-bottom: 2rem; }
-.hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; }
-.meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
-.meta-label { font-size: 0.67rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); }
-.meta-value { font-size: 0.88rem; color: var(--ink); font-weight: 500; }
-.hero-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 1.5rem; }
-.hero-card h3 { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); }
-.toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.05rem; }
-.toc-list a { display: flex; align-items: baseline; gap: 0.75rem; text-decoration: none; color: var(--ink-light); font-size: 0.82rem; padding: 0.4rem 0.5rem; border-radius: 4px; transition: background 0.12s; }
-.toc-list a:hover { background: var(--rule-light); color: var(--ink); }
-.toc-num { font-family: var(--mono); font-size: 0.67rem; color: var(--ink-faint); flex-shrink: 0; width: 1.4rem; }
-
-/* LAYOUT */
-.content-wrap { max-width: 1120px; margin: 0 auto; padding: 3rem 2rem 5rem; display: grid; grid-template-columns: 180px 1fr; gap: 4rem; align-items: start; }
-.left-nav { position: sticky; top: 72px; align-self: start; }
-.left-nav-heading { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); margin-bottom: 0.5rem; padding-left: 0.75rem; }
-.left-nav ul { list-style: none; border-left: 2px solid var(--rule); }
-.left-nav ul li a { display: block; font-size: 0.78rem; color: var(--ink-light); text-decoration: none; padding: 0.3rem 0.75rem; border-left: 2px solid transparent; margin-left: -2px; transition: color 0.12s, border-color 0.12s; line-height: 1.4; }
-.left-nav ul li a:hover, .left-nav ul li a.active { color: var(--accent); border-left-color: var(--accent); }
-.article { max-width: 740px; }
-
-/* SECTIONS */
-.lab-section { margin-bottom: 4rem; }
-.section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); }
-.section-num { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); flex-shrink: 0; }
-.section-header h2 { font-family: var(--serif); font-size: 1.55rem; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1.25; }
-.section-intro { font-size: 0.92rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1.75rem; }
-
-/* STEPS */
-.step { margin-bottom: 2.25rem; }
-.step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
-.step-badge { background: var(--ink); color: white; font-family: var(--mono); font-size: 0.65rem; font-weight: 500; padding: 0.15rem 0.5rem; border-radius: 3px; flex-shrink: 0; }
-.step h3 { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; color: var(--ink); }
-.step p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 0.85rem; }
-.step p:last-child { margin-bottom: 0; }
-.step ul { font-size: 0.88rem; color: var(--ink-light); line-height: 1.7; margin: 0.5rem 0 0.85rem 1.25rem; }
-.step ul li { margin-bottom: 0.25rem; }
-
-/* CODE BLOCKS */
-.code-block { background: var(--code-bg); border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; margin: 0.85rem 0; }
-.code-header { display: flex; align-items: center; justify-content: space-between; padding: 0.45rem 1rem; background: #ececec; border-bottom: 1px solid var(--rule); }
-.code-lang { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; }
-.copy-btn { font-family: var(--sans); font-size: 0.68rem; font-weight: 500; color: var(--ink-light); background: white; border: 1px solid var(--rule); padding: 0.2rem 0.65rem; border-radius: 3px; cursor: pointer; transition: all 0.15s; }
-.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
-.copy-btn.copied { color: #16a34a; border-color: #16a34a; }
-pre { padding: 1.1rem 1.25rem; overflow-x: auto; font-family: var(--mono); font-size: 0.79rem; line-height: 1.8; color: var(--ink); }
-.cm { color: #888; font-style: italic; }
-.ck { color: #b45309; font-weight: 600; }  /* replaceable placeholder — amber */
-.cs { color: #1a7f37; }                      /* string value */
-pre code { background: none; border: none; padding: 0; font-size: inherit; }
-
-/* SPL BLOCKS */
-.spl-block { background: #0f172a; border-radius: 5px; overflow: hidden; margin: 0.85rem 0; }
-.spl-header { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 1rem; background: #1e293b; }
-.spl-label { font-family: var(--mono); font-size: 0.65rem; color: #64748b; letter-spacing: 0.06em; text-transform: uppercase; }
-.spl-copy { font-size: 0.65rem; color: #64748b; background: none; border: 1px solid #334155; padding: 0.18rem 0.55rem; border-radius: 3px; cursor: pointer; font-family: var(--sans); transition: all 0.15s; }
-.spl-copy:hover { color: #94a3b8; border-color: #475569; }
-.spl-copy.copied { color: #4ade80; border-color: #4ade80; }
-.spl-block pre { background: #0f172a; color: #e2e8f0; font-size: 0.79rem; }
-.sp-pipe { color: #64748b; }
-.sp-cmd { color: #7dd3fc; }
-.sp-field { color: #fbbf24; }
-.sp-str { color: #86efac; }
-.sp-fn { color: #c084fc; }
-.sp-num { color: #fb923c; }
-.sp-cmt { color: #475569; font-style: italic; }
-
-/* CALLOUTS */
-.callout { border-radius: 5px; padding: 0.9rem 1.1rem; margin: 1rem 0; font-size: 0.84rem; line-height: 1.6; display: flex; gap: 0.75rem; align-items: flex-start; }
-.callout-icon { flex-shrink: 0; font-size: 1rem; margin-top: 0.05rem; }
-.callout-body { flex: 1; }
-.callout-body strong { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; }
-.callout-body p { font-size: 0.84rem; margin-bottom: 0.4rem; }
-.callout-body p:last-child { margin-bottom: 0; }
-.callout-body ul { margin: 0.3rem 0 0 1.1rem; }
-.callout-body ul li { font-size: 0.84rem; margin-bottom: 0.2rem; }
-.callout-note   { background: var(--accent-bg);   border-left: 3px solid var(--accent); }
-.callout-note   .callout-body, .callout-note   .callout-body strong { color: #1e3a8a; }
-.callout-warn   { background: var(--warn-bg);    border-left: 3px solid var(--warn-border); }
-.callout-warn   .callout-body, .callout-warn   .callout-body strong { color: #92400e; }
-.callout-ok     { background: var(--ok-bg);      border-left: 3px solid var(--ok-border); }
-.callout-ok     .callout-body, .callout-ok     .callout-body strong { color: #14532d; }
-.callout-danger { background: var(--danger-bg);  border-left: 3px solid var(--danger-border); }
-.callout-danger .callout-body, .callout-danger .callout-body strong { color: #7f1d1d; }
-
-/* INLINE CODE */
-code { font-family: var(--mono); font-size: 0.82em; background: var(--code-bg); border: 1px solid var(--rule); padding: 0.1em 0.35em; border-radius: 3px; }
-
-/* TABLES */
-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1rem 0; }
-th { text-align: left; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); padding: 0.6rem 1rem; border-bottom: 2px solid var(--rule); }
-td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--rule-light); color: var(--ink-light); vertical-align: top; }
-td:first-child { color: var(--ink); font-weight: 500; }
-tr:last-child td { border-bottom: none; }
-
-/* ARCHITECTURE DIAGRAM */
-.arch-diagram { border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; font-family: var(--mono); font-size: 0.78rem; margin: 1rem 0; }
-.arch-row { display: flex; align-items: center; padding: 0.85rem 1.25rem; gap: 1rem; border-bottom: 1px solid var(--rule-light); }
-.arch-row:last-child { border-bottom: none; }
-.arch-row.highlight { background: var(--accent-bg); }
-.arch-row.arrow { background: var(--rule-light); justify-content: center; padding: 0.35rem; color: var(--ink-faint); font-size: 0.8rem; }
-.arch-tag { font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); width: 120px; flex-shrink: 0; }
-.arch-val { color: var(--ink); }
-.arch-sub { color: var(--ink-faint); font-size: 0.72rem; }
-
-/* CERT CARDS */
-.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; margin: 1rem 0; }
-.cert-card { border: 1px solid var(--rule); border-radius: 5px; padding: 1.25rem; background: var(--page); }
-.cert-level { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.4rem; }
-.cert-card h4 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.35; }
-.cert-card p { font-size: 0.78rem; color: var(--ink-light); line-height: 1.55; }
-
-/* DIVIDER */
-.divider { height: 1px; background: var(--rule); margin: 3rem 0; }
-
-/* FOOTER */
-.site-footer { background: var(--page); border-top: 1px solid var(--rule); padding: 2.5rem 2rem; }
-.footer-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
-.footer-info h4 { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; }
-.footer-info p { font-size: 0.75rem; color: var(--ink-faint); line-height: 1.6; }
-.footer-links { list-style: none; }
-.footer-links li { margin-bottom: 0.3rem; }
-.footer-links a { font-size: 0.78rem; color: var(--ink-light); text-decoration: none; }
-.footer-links a:hover { color: var(--accent); text-decoration: underline; }
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .content-wrap { grid-template-columns: 1fr; gap: 2rem; }
-  .left-nav { display: none; }
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-card { display: none; }
-}
-@media (max-width: 600px) {
-  .hero h1 { font-size: 1.9rem; }
-  .header-nav { display: none; }
-}
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.65; }
+a { color: var(--primary); }
+.site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); }
+.header-inner { max-width: 1180px; margin: 0 auto; padding: 0.7rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.brand { font-weight: 700; color: var(--ink); text-decoration: none; font-size: 0.95rem; }
+.brand span { color: var(--muted); font-weight: 400; }
+.nav { display: flex; flex-wrap: wrap; gap: 0.25rem; justify-content: flex-end; }
+.nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0.6rem; border-radius: 999px; }
+.nav a:hover { background: var(--soft); color: var(--ink); }
+.hero { background: linear-gradient(135deg, #0f172a, #174ea6 60%, #0f766e); color: white; padding: 4.5rem 1.25rem 3.5rem; }
+.hero-inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 2.5rem; align-items: start; }
+.label { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.78rem; opacity: 0.85; font-weight: 700; margin-bottom: 1rem; }
+h1 { font-size: clamp(2.1rem, 5vw, 4rem); line-height: 1.08; margin: 0 0 1rem; letter-spacing: -0.04em; }
+.hero p { max-width: 720px; color: rgba(255,255,255,0.9); font-size: 1.05rem; margin: 0 0 1.3rem; }
+.byline { font-size: 0.92rem !important; color: rgba(255,255,255,0.78) !important; }
+.hero-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); border-radius: var(--radius); padding: 1.2rem; }
+.hero-card h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 0.8rem; color: rgba(255,255,255,0.78); }
+.hero-card ul { list-style: none; margin: 0; padding: 0; }
+.hero-card li { padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.16); font-size: 0.92rem; }
+.hero-card li:last-child { border-bottom: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 245px minmax(0, 1fr); gap: 2.5rem; padding: 2.5rem 1.25rem 5rem; }
+.side { position: sticky; top: 70px; align-self: start; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1rem; }
+.side h2 { margin: 0 0 0.75rem; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.side a { display: block; text-decoration: none; color: var(--muted); font-size: 0.88rem; padding: 0.38rem 0.5rem; border-radius: 8px; }
+.side a:hover { background: var(--soft); color: var(--ink); }
+main { min-width: 0; }
+section { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04); }
+.section-title { display: flex; align-items: baseline; gap: 0.8rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.8rem; margin-bottom: 1.25rem; }
+.num { color: var(--primary); font-weight: 800; font-size: 0.85rem; }
+h2 { font-size: 1.7rem; line-height: 1.25; margin: 0; letter-spacing: -0.02em; }
+h3 { margin: 1.4rem 0 0.55rem; font-size: 1.1rem; }
+p { margin: 0 0 1rem; }
+ul, ol { margin: 0 0 1rem 1.35rem; padding: 0; }
+li { margin: 0.25rem 0; }
+.step { border-left: 4px solid var(--primary); padding-left: 1rem; margin: 1.4rem 0; }
+.step-title { font-weight: 800; color: var(--ink); margin-bottom: 0.35rem; }
+.note, .success, .warning { border-radius: 12px; padding: 1rem 1.1rem; margin: 1rem 0; border-left: 5px solid; }
+.note { background: var(--blue-soft); border-color: var(--primary); }
+.success { background: var(--green-soft); border-color: var(--green); }
+.warning { background: var(--amber-soft); border-color: var(--amber); }
+.note strong, .success strong, .warning strong { display: block; margin-bottom: 0.3rem; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { background: #f8fafc; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+code { font-family: Consolas, Monaco, 'Courier New', monospace; background: #eef2f7; border: 1px solid #dbe3ef; padding: 0.12rem 0.35rem; border-radius: 6px; font-size: 0.9em; }
+.code-block, .spl-block { margin: 1rem 0; border-radius: 12px; overflow: hidden; border: 1px solid #1e293b; background: var(--code-bg); }
+.code-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: #1e293b; color: #cbd5e1; padding: 0.6rem 0.9rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.code-header button { border: 1px solid #475569; background: transparent; color: #cbd5e1; border-radius: 8px; padding: 0.25rem 0.55rem; cursor: pointer; text-transform: none; letter-spacing: 0; }
+.code-header button:hover { background: #334155; }
+pre { margin: 0; padding: 1rem; overflow-x: auto; }
+pre code { background: transparent; border: 0; color: var(--code-text); padding: 0; font-size: 0.88rem; line-height: 1.65; }
+.arch { display: grid; gap: 0.65rem; margin: 1rem 0; }
+.arch div { background: #f8fafc; border: 1px solid var(--rule); border-radius: 12px; padding: 0.9rem 1rem; }
+.arch strong { display: block; color: var(--primary-dark); }
+.panel-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+.panel-card { border: 1px solid var(--rule); border-radius: 12px; padding: 1rem; background: #fbfdff; }
+.panel-card h3 { margin-top: 0; }
+.footer { background: #0f172a; color: #cbd5e1; padding: 2rem 1.25rem; }
+.footer-inner { max-width: 1180px; margin: 0 auto; }
+.footer strong { color: white; }
+@media (max-width: 920px) { .hero-inner, .wrap { grid-template-columns: 1fr; } .side { position: static; } }
+@media (max-width: 700px) { section { padding: 1.25rem; } .nav { display: none; } .panel-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-
-<!-- ═══ HEADER ═══ -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="#" class="header-title">Teaching Splunk <span>— Train-the-Trainer Lab Guide</span></a>
-    <nav><ul class="header-nav">
-      <li><a href="#vpc">VPC Setup</a></li>
-      <li><a href="#setup">Splunk Install</a></li>
-      <li><a href="#forwarder">Forwarder</a></li>
-      <li><a href="#spl">SPL</a></li>
-      <li><a href="#attacks">Attack Lab</a></li>
-      <li><a href="#dashboard">Dashboard</a></li>
-      <li><a href="#academy">Academy</a></li>
-    </ul></nav>
+    <a class="brand" href="#top">Teaching Splunk <span>— Train-the-Trainer Lab Guide</span></a>
+    <nav class="nav" aria-label="Page navigation">
+      <a href="#goals">Goals</a>
+      <a href="#learner-lab">Learner Lab</a>
+      <a href="#vpc">VPC</a>
+      <a href="#splunk-server">Splunk</a>
+      <a href="#forwarder">Forwarder</a>
+      <a href="#searches">SPL</a>
+      <a href="#splunk-login-monitoring">Login Monitoring</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#academy">Academy</a>
+    </nav>
   </div>
 </header>
 
-<!-- ═══ HERO ═══ -->
-<div class="hero">
+<div class="hero" id="top">
   <div class="hero-inner">
     <div>
-      <div class="hero-label">Professional Development Workshop · Cyber Team</div>
+      <div class="label">Professional Development Workshop · Cyber Team</div>
       <h1>Teaching Splunk: A Train-the-Trainer Workshop</h1>
-      <p class="hero-byline">By <strong>Akhtar Jalbani</strong> &ensp;&middot;&ensp; 13 July 2026 &ensp;&middot;&ensp; Holmesglen</p>
-      <p class="hero-desc">A step-by-step lab guide covering VPC and EC2 provisioning on AWS, Splunk Enterprise installation, Universal Forwarder configuration, threat detection using SPL, and SOC dashboard creation. Follow each section in order — all hands-on activities run inside <strong>AWS Academy Learner Lab</strong>.</p>
-      <div class="hero-meta">
-        <div class="meta-item"><span class="meta-label">Platform</span><span class="meta-value">AWS Academy Learner Lab</span></div>
-        <div class="meta-item"><span class="meta-label">Estimated Time</span><span class="meta-value">1.5 – 2 hours</span></div>
-        <div class="meta-item"><span class="meta-label">Level</span><span class="meta-value">Intermediate</span></div>
-        <div class="meta-item"><span class="meta-label">Prerequisites</span><span class="meta-value">Linux basics, AWS console access</span></div>
-      </div>
+      <p class="byline">By <strong>Akhtar Jalbani</strong> &nbsp;·&nbsp; 13 July 2026 &nbsp;·&nbsp; Holmesglen</p>
+      <p>This hands-on tutorial helps teachers build a small Splunk learning environment in <strong>AWS Academy Learner Lab</strong>. Learners will install Splunk Enterprise, install a Universal Forwarder on a second EC2 instance, collect simple web and login practice logs, run easy SPL searches, and build a clear beginner dashboard.</p>
+      <p>The focus is learning, understanding, and safe log analysis. The examples use normal Apache page visits, a simple practice login page, and basic Linux system logs.</p>
     </div>
-    <div>
-      <div class="hero-card">
-        <h3>Contents</h3>
-        <ul class="toc-list">
-          <li><a href="#vpc"><span class="toc-num">1.</span>Create a VPC and Subnets</a></li>
-          <li><a href="#setup"><span class="toc-num">2.</span>Splunk Enterprise on EC2</a></li>
-          <li><a href="#forwarder"><span class="toc-num">3.</span>Forwarder &amp; Web Server</a></li>
-          <li><a href="#architecture"><span class="toc-num">4.</span>Architecture Overview</a></li>
-          <li><a href="#spl"><span class="toc-num">5.</span>SPL Fundamentals</a></li>
-          <li><a href="#attacks"><span class="toc-num">6.</span>Attack Demonstrations</a></li>
-          <li><a href="#dashboard"><span class="toc-num">7.</span>SOC Threat Dashboard</a></li>
-          <li><a href="#incident"><span class="toc-num">8.</span>Incident Response Workflow</a></li>
-          <li><a href="#academy"><span class="toc-num">9.</span>Splunk Academy &amp; Certifications</a></li>
-        </ul>
-      </div>
-    </div>
+    <aside class="hero-card" aria-label="Workshop summary">
+      <h2>Workshop Summary</h2>
+      <ul>
+        <li><strong>Platform:</strong> AWS Academy Learner Lab</li>
+        <li><strong>Tools:</strong> Splunk Enterprise and Universal Forwarder</li>
+        <li><strong>Level:</strong> Beginner to early intermediate</li>
+        <li><strong>Audience:</strong> Teachers with basic IT knowledge</li>
+        <li><strong>Output:</strong> Searchable logs and a five-panel dashboard</li>
+      </ul>
+    </aside>
   </div>
 </div>
 
-<!-- ═══ CONTENT ═══ -->
-<div class="content-wrap">
-
-  <aside class="left-nav">
-    <div class="left-nav-heading">Lab Sections</div>
-    <ul>
-      <li><a href="#vpc">1. VPC Setup</a></li>
-      <li><a href="#setup">2. Splunk on EC2</a></li>
-      <li><a href="#forwarder">3. Forwarder &amp; Web Server</a></li>
-      <li><a href="#architecture">4. Architecture</a></li>
-      <li><a href="#spl">5. SPL Fundamentals</a></li>
-      <li><a href="#attacks">6. Attack Lab</a></li>
-      <li><a href="#dashboard">7. SOC Dashboard</a></li>
-      <li><a href="#incident">8. Incident Response</a></li>
-      <li><a href="#academy">9. Splunk Academy</a></li>
-    </ul>
+<div class="wrap">
+  <aside class="side" aria-label="Section navigation">
+    <h2>Sections</h2>
+    <a href="#intro">1. Introduction</a>
+    <a href="#goals">2. Learning goals</a>
+    <a href="#prerequisites">3. Prerequisites</a>
+    <a href="#learner-lab">4. Learner Lab setup</a>
+    <a href="#vpc">5. Create VPC</a>
+    <a href="#splunk-server">6. Launch Splunk server</a>
+    <a href="#forwarder">7. Launch web server and forwarder</a>
+    <a href="#verify">8. Verify log collection</a>
+    <a href="#searches">9. Simple SPL examples</a>
+    <a href="#splunk-login-monitoring">10. Monitor Splunk VM login activity</a>
+    <a href="#dashboard">11. Build the dashboard</a>
+    <a href="#practice">12. Practice exercises</a>
+    <a href="#academy">13. Splunk Academy and certification</a>
+    <a href="#summary">14. Summary and next steps</a>
   </aside>
 
-  <article class="article">
-
-    <!-- ══════════════════════════════════════
-         SECTION 1 — VPC
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="vpc">
-      <div class="section-header">
-        <span class="section-num">01</span>
-        <h2>Start Learner Lab and Create a VPC</h2>
-      </div>
-      <p class="section-intro">The first thing you do in every lab session is start the AWS Academy Learner Lab, then create a dedicated VPC for this workshop. A VPC (Virtual Private Cloud) is your own private network inside AWS — all EC2 instances you create will live inside it. We will use the AWS VPC Wizard to create it in one step: it automatically provisions a public subnet and a private subnet for you.</p>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 1</span><h3>Start your AWS Academy Learner Lab session</h3></div>
-        <p>Log in to your AWS Academy course and open the <strong>Learner Lab</strong> module. Click <strong>Start Lab</strong>. Wait until the circle indicator in the top-left corner turns <strong>green</strong> — this means AWS resources are ready. Then click the <strong>AWS</strong> link to open the AWS Management Console in a new browser tab.</p>
-        <div class="callout callout-warn">
-          <span class="callout-icon">⚠</span>
-          <div class="callout-body">
-            <strong>Keep the Learner Lab tab open for the entire session</strong>
-            <p>The session countdown timer runs inside that tab. If you close it, your session ends and all EC2 instances, VPCs, and data are deleted. Sessions last approximately 4 hours. If you need more time, click <strong>Start Lab</strong> again — note that this restarts the timer but also terminates your existing resources.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Open the VPC service</h3></div>
-        <p>In the AWS Management Console, type <strong>VPC</strong> in the search bar at the top and select <strong>VPC</strong> from the results. This opens the VPC Dashboard. You will create a new VPC from here — do not use or modify any existing default VPC that may be listed.</p>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 3</span><h3>Create a new VPC using the VPC and more wizard</h3></div>
-        <p>On the VPC Dashboard, click <strong>Create VPC</strong>. At the top of the creation page, select the option labelled <strong>VPC and more</strong> — this is the wizard that creates the VPC, subnets, route tables, and internet gateway all in one step.</p>
-        <p>Configure the wizard with the following settings:</p>
-        <table>
-          <tr><th>Setting</th><th>Value to use</th></tr>
-          <tr><td>Name tag auto-generation</td><td>Type <code>splunk-workshop</code> — AWS will use this as a prefix for all created resources (e.g. splunk-workshop-vpc, splunk-workshop-subnet-public)</td></tr>
-          <tr><td>IPv4 CIDR block</td><td><code>10.0.0.0/16</code> — this gives your VPC 65,536 available IP addresses</td></tr>
-          <tr><td>IPv6 CIDR block</td><td>No IPv6 CIDR block</td></tr>
-          <tr><td>Tenancy</td><td>Default</td></tr>
-          <tr><td>Number of Availability Zones</td><td>1</td></tr>
-          <tr><td>Number of public subnets</td><td>1</td></tr>
-          <tr><td>Number of private subnets</td><td>1</td></tr>
-          <tr><td>NAT gateways</td><td>None (not required for this lab)</td></tr>
-          <tr><td>VPC endpoints</td><td>None</td></tr>
-          <tr><td>DNS hostnames</td><td>Enable</td></tr>
-          <tr><td>DNS resolution</td><td>Enable</td></tr>
-        </table>
-        <p>Click <strong>Create VPC</strong>. AWS will provision all resources automatically. When complete, you will see a success screen listing everything created.</p>
-
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>What the wizard creates for you</strong>
-            <p>With the settings above, AWS automatically creates the following — you do not need to configure any of these manually:</p>
-            <ul>
-              <li><strong>VPC</strong> named <code>splunk-workshop-vpc</code> with CIDR <code>10.0.0.0/16</code></li>
-              <li><strong>Public subnet</strong> named <code>splunk-workshop-subnet-public1</code> with CIDR <code>10.0.0.0/24</code> — instances here get a public IP and can reach the internet</li>
-              <li><strong>Private subnet</strong> named <code>splunk-workshop-subnet-private1</code> with CIDR <code>10.0.128.0/24</code> — instances here have no public IP but can communicate with instances in the public subnet over private IPs</li>
-              <li><strong>Internet Gateway</strong> — attached to the VPC, allows the public subnet to reach the internet</li>
-              <li><strong>Route tables</strong> — one for the public subnet (routes internet traffic through the gateway), one for the private subnet (local traffic only)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 4</span><h3>Enable auto-assign public IP on the public subnet</h3></div>
-        <p>In the left menu, click <strong>Subnets</strong>. Find the subnet named <code>splunk-workshop-subnet-public1</code>. Click on it to open its details, then click <strong>Actions → Edit subnet settings</strong>. Tick the checkbox for <strong>Enable auto-assign public IPv4 address</strong> and click <strong>Save</strong>.</p>
-        <p>This ensures that any EC2 instance launched into the public subnet automatically receives a public IP address — which is required so you can open Splunk Web in your browser and connect to your instances using EC2 Instance Connect — directly from the AWS console, no SSH client needed.</p>
-
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>How the two subnets are used in this workshop</strong>
-            <ul>
-              <li><strong>Public subnet</strong> (<code>10.0.0.0/24</code>) — the <strong>Splunk server</strong> (Instance 1) is placed here. It needs a public IP so you can open Splunk Web at <code>http://&lt;public-ip&gt;:8000</code> from your browser.</li>
-              <li><strong>Private subnet</strong> (<code>10.0.128.0/24</code>) — the <strong>web server</strong> (Instance 2) is placed here. It has no public IP. The Universal Forwarder on this instance sends logs to the Splunk server using the Splunk server's <em>private</em> IP address over the internal VPC network. This reflects a realistic SOC architecture where log sources sit in a protected network segment.</li>
-            </ul>
-            <p>You will connect to the web server using EC2 Instance Connect from the AWS console — covered in Section 3.</p>
-          </div>
-        </div>
-
-        <div class="callout callout-ok">
-          <span class="callout-icon">✓</span>
-          <div class="callout-body">
-            <strong>VPC setup complete</strong>
-            <p>You now have a VPC named <code>splunk-workshop-vpc</code> with one public subnet and one private subnet. All resources in this lab will be launched into this VPC. Proceed to Section 2 to launch the Splunk server.</p>
-          </div>
-        </div>
+  <main>
+    <section id="intro">
+      <div class="section-title"><span class="num">01</span><h2>Introduction</h2></div>
+      <p>Welcome to the <strong>Teaching Splunk: A Train-the-Trainer Workshop</strong>.</p>
+      <p>Splunk is a platform that collects machine data, stores it, and lets you search it. In this workshop, machine data means simple log files from a web server, a practice login page, and basic Linux login records.</p>
+      <div class="note"><strong>What learners will build</strong><p>Learners will create two EC2 instances. One instance runs Splunk Enterprise. The second instance runs Apache and the Splunk Universal Forwarder. The forwarder sends log files to Splunk so learners can search and visualise them.</p></div>
+      <div class="arch" aria-label="Workshop data flow">
+        <div><strong>1. Web server</strong> Learners visit simple pages such as <code>/</code>, <code>/about.html</code>, <code>/resources.html</code>, and <code>/login.php?user=teacher</code>.</div>
+        <div><strong>2. Log files</strong> Apache writes page visits to <code>/var/log/apache2/access.log</code>. The practice login page writes safe user activity to <code>/var/log/simple-login.log</code>. The Splunk Enterprise VM also monitors its own <code>/var/log/auth.log</code>.</div>
+        <div><strong>3. Universal Forwarder</strong> The forwarder reads web server files and sends events to the Splunk server on port <code>9997</code>.</div>
+        <div><strong>4. Splunk Enterprise</strong> Splunk receives, indexes, searches, and displays the log data, including its own local Linux login activity.</div>
       </div>
     </section>
 
-    <div class="divider"></div>
+    <section id="goals">
+      <div class="section-title"><span class="num">02</span><h2>Learning goals</h2></div>
+      <p>By the end of the workshop, learners should be able to:</p>
+      <ul>
+        <li>Start and use the AWS Academy Learner Lab safely.</li>
+        <li>Create a small VPC for a practical lab environment.</li>
+        <li>Launch an EC2 instance for Splunk Enterprise.</li>
+        <li>Launch a second EC2 instance for Apache and the Universal Forwarder.</li>
+        <li>Generate simple web and login practice logs.</li>
+        <li>Monitor basic login success and password failure events on the Splunk Enterprise VM.</li>
+        <li>Confirm that logs are forwarded into Splunk.</li>
+        <li>Run basic SPL searches and explain what each part means.</li>
+        <li>Create a beginner-friendly dashboard with five panels.</li>
+      </ul>
+    </section>
 
-    <!-- ══════════════════════════════════════
-         SECTION 2 — SPLUNK ON EC2
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="setup">
-      <div class="section-header">
-        <span class="section-num">02</span>
-        <h2>Installing Splunk Enterprise on EC2</h2>
-      </div>
-      <p class="section-intro">This section launches the Splunk server — the machine that receives logs, indexes them, and serves the web interface. You will launch one EC2 instance, download Splunk directly from splunk.com, and run an installation script that configures everything automatically.</p>
+    <section id="prerequisites">
+      <div class="section-title"><span class="num">03</span><h2>Prerequisites</h2></div>
+      <table>
+        <tr><th>Requirement</th><th>Details</th></tr>
+        <tr><td>AWS Academy access</td><td>Access to an AWS Academy Learner Lab course.</td></tr>
+        <tr><td>Splunk account</td><td>A free Splunk account to copy download links for Splunk Enterprise and the Universal Forwarder.</td></tr>
+        <tr><td>Basic Linux skills</td><td>Ability to copy commands, use a browser terminal, and read simple file paths.</td></tr>
+        <tr><td>Browser</td><td>A modern browser such as Chrome, Edge, Firefox, or Safari.</td></tr>
+      </table>
+      <div class="warning"><strong>Classroom password note</strong><p>This lab uses simple shared passwords to reduce setup difficulty. Do not use these passwords in real systems. At the end of the workshop, stop the Learner Lab session to avoid unnecessary resource use.</p></div>
+    </section>
 
-      <div class="callout callout-note">
-        <span class="callout-icon">ℹ</span>
-        <div class="callout-body">
-          <strong>Each participant needs their own Splunk download URL</strong>
-          <p>Splunk requires a free account to access the download page. Do this once before the session:</p>
-          <ul>
-            <li>Sign in at <strong>splunk.com</strong> (or create a free account — email only).</li>
-            <li>Go to <strong>splunk.com/en_us/download/splunk-enterprise.html</strong>, select <strong>Linux → .deb</strong>, and copy the full URL from the wget command shown.</li>
-            <li>In the script below, replace the <code>SPLUNK_DEB_URL</code> value with your URL. That is the only line you need to change.</li>
-          </ul>
-        </div>
-      </div>
+    <section id="learner-lab">
+      <div class="section-title"><span class="num">04</span><h2>AWS Academy Learner Lab setup</h2></div>
+      <div class="step"><p class="step-title">Step 1 — Start the lab</p><ol><li>Open your AWS Academy course.</li><li>Open <strong>Learner Lab</strong>.</li><li>Click <strong>Start Lab</strong>.</li><li>Wait until the lab indicator turns green.</li><li>Click <strong>AWS</strong> to open the AWS Console.</li></ol></div>
+      <div class="step"><p class="step-title">Step 2 — Keep the Learner Lab tab open</p><p>The Learner Lab controls the session timer. Keep this tab open while learners work. When the session ends, lab resources may stop or be removed.</p></div>
+      <div class="success"><strong>Expected result</strong><p>You can see the AWS Management Console and can search for services such as VPC and EC2.</p></div>
+    </section>
 
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 1</span><h3>Launch EC2 Instance 1 — Splunk Server</h3></div>
-        <p>In the AWS Console, search for <strong>EC2</strong> and open the service. Click <strong>Launch Instance</strong> and configure it exactly as follows:</p>
-        <table>
-          <tr><th>Setting</th><th>Value to use</th></tr>
-          <tr><td>Name</td><td><code>splunk-server</code></td></tr>
-          <tr><td>AMI</td><td>Ubuntu Server 22.04 LTS (HVM), SSD Volume Type</td></tr>
-          <tr><td>Instance type</td><td><code>t2.large</code> — 2 vCPU, 8 GiB RAM (minimum required for Splunk)</td></tr>
-          <tr><td>Key pair</td><td><code>vockey</code> — this is provided automatically by Learner Lab</td></tr>
-          <tr><td>Network</td><td><code>splunk-workshop-vpc</code> — the VPC created in Section 1</td></tr>
-          <tr><td>Subnet</td><td><code>splunk-workshop-subnet-public1</code> — the public subnet from Section 1</td></tr>
-          <tr><td>Auto-assign public IP</td><td>Enable</td></tr>
-          <tr><td>Storage</td><td>30 GiB, gp3</td></tr>
-        </table>
-        <p>Under <strong>Firewall (Security Groups)</strong>, create a new security group named <code>splunk-sg</code> and add the following inbound rules:</p>
-        <table>
-          <tr><th>Type</th><th>Port</th><th>Source</th><th>Purpose</th></tr>
-          <tr><td>SSH</td><td>22</td><td>My IP</td><td>Your SSH access to administer the instance</td></tr>
-          <tr><td>Custom TCP</td><td>8000</td><td>0.0.0.0/0</td><td>Splunk Web — accessed from your browser</td></tr>
-          <tr><td>Custom TCP</td><td>9997</td><td>0.0.0.0/0</td><td>Forwarder receiver — the web server sends logs here</td></tr>
-          <tr><td>Custom TCP</td><td>8089</td><td>0.0.0.0/0</td><td>Splunk management REST API</td></tr>
-        </table>
-        <p>Click <strong>Launch Instance</strong>. Wait until the instance state shows <strong>Running</strong> (approximately 60 seconds). Then go to the instance detail page and record:</p>
-        <ul>
-          <li><strong>Public IPv4 address</strong> — you will open Splunk Web at this address</li>
-          <li><strong>Private IPv4 address</strong> — the forwarder will send logs to this address in Section 3</li>
-        </ul>
-      </div>
+    <section id="vpc">
+      <div class="section-title"><span class="num">05</span><h2>Create VPC</h2></div>
+      <p>A VPC is a private network inside AWS. We will create one small VPC for the workshop.</p>
+      <div class="step"><p class="step-title">Step 1 — Open the VPC service</p><ol><li>In the AWS Console search bar, type <strong>VPC</strong>.</li><li>Open the VPC service.</li><li>Click <strong>Create VPC</strong>.</li></ol></div>
+      <div class="step"><p class="step-title">Step 2 — Use the VPC and more option</p><p>Select <strong>VPC and more</strong>. This option creates the VPC, subnet, route table, and internet gateway for you.</p></div>
+      <table>
+        <tr><th>Setting</th><th>Value</th><th>Plain meaning</th></tr>
+        <tr><td>Name tag</td><td><code>splunk-workshop</code></td><td>A clear name for lab resources.</td></tr>
+        <tr><td>IPv4 CIDR</td><td><code>10.0.0.0/16</code></td><td>The private address range for the lab network.</td></tr>
+        <tr><td>Availability Zones</td><td><code>1</code></td><td>One zone is enough for a classroom lab.</td></tr>
+        <tr><td>Public subnets</td><td><code>1</code></td><td>Used for Splunk and the web server.</td></tr>
+        <tr><td>Private subnets</td><td><code>0</code></td><td>Not needed for this beginner version.</td></tr>
+        <tr><td>NAT gateways</td><td><code>None</code></td><td>Keeps the lab simple and reduces resource use.</td></tr>
+        <tr><td>DNS hostnames</td><td><code>Enable</code></td><td>Helps AWS assign useful network names.</td></tr>
+        <tr><td>DNS resolution</td><td><code>Enable</code></td><td>Allows normal name resolution inside the VPC.</td></tr>
+      </table>
+      <div class="step"><p class="step-title">Step 3 — Enable auto-assign public IPv4</p><ol><li>Open <strong>Subnets</strong>.</li><li>Select the public subnet created by the wizard.</li><li>Choose <strong>Actions → Edit subnet settings</strong>.</li><li>Enable <strong>Auto-assign public IPv4 address</strong>.</li><li>Click <strong>Save</strong>.</li></ol></div>
+      <div class="success"><strong>Expected result</strong><p>You have a VPC named <code>splunk-workshop</code> with one public subnet. Both EC2 instances will use this subnet.</p></div>
+    </section>
 
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Connect to the instance using EC2 Instance Connect</h3></div>
-        <p>AWS Academy Learner Lab provides browser-based terminal access to EC2 instances — no SSH client, no key file, and no laptop terminal needed.</p>
-        <p>In the EC2 console, click on <strong>Instance 1 (splunk-server)</strong> to open its detail page. Click the <strong>Connect</strong> button at the top. Select the <strong>EC2 Instance Connect</strong> tab and click <strong>Connect</strong>. A browser-based terminal opens in a new tab — you are now inside the Splunk server.</p>
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>EC2 Instance Connect requirements</strong>
-            <p>EC2 Instance Connect works automatically on Amazon Linux 2023 and Ubuntu 22.04 instances launched in a public subnet with a public IP address — both of which apply to this workshop. No key file download or SSH client is required. The connection opens directly in your browser.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 3</span><h3>Run the Splunk installation script</h3></div>
-        <p>The script below downloads, installs, and fully configures Splunk Enterprise. The only line you need to change is <code>SPLUNK_DEB_URL</code> — replace the example URL with the one from your splunk.com account (see the callout above).</p>
-        <p>In the <strong>Splunk server browser terminal</strong> (EC2 Instance Connect), create and run the script. The only line to edit is <code>SPLUNK_DEB_URL</code> — replace it with the URL from your splunk.com account.</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — Splunk server browser terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Create the script file (this opens a text editor)</span>
-nano splunk-install.sh
-
-<span class="cm"># Paste the entire script below into the editor.</span>
-<span class="cm"># Update the SPLUNK_DEB_URL line with your own URL.</span>
-<span class="cm"># Save and exit:  Ctrl+O  then  Enter  then  Ctrl+X</span>
-
-<span class="cm"># Make it executable and run it — as the ubuntu user, no sudo</span>
+    <section id="splunk-server">
+      <div class="section-title"><span class="num">06</span><h2>Launch Splunk server</h2></div>
+      <p>The Splunk server receives, stores, searches, and displays logs. In this workshop, Splunk Enterprise runs on one Ubuntu EC2 instance.</p>
+      <div class="step"><p class="step-title">Step 1 — Launch EC2 instance 1</p><p>Open EC2 and click <strong>Launch instance</strong>. Use these settings.</p></div>
+      <table>
+        <tr><th>Setting</th><th>Value</th></tr>
+        <tr><td>Name</td><td><code>splunk-server</code></td></tr>
+        <tr><td>AMI</td><td>Ubuntu Server 22.04 LTS</td></tr>
+        <tr><td>Instance type</td><td><code>t2.large</code></td></tr>
+        <tr><td>Key pair</td><td><code>vockey</code> or the key pair supplied by Learner Lab</td></tr>
+        <tr><td>Network</td><td><code>splunk-workshop</code> VPC</td></tr>
+        <tr><td>Subnet</td><td>Public subnet</td></tr>
+        <tr><td>Auto-assign public IP</td><td>Enable</td></tr>
+        <tr><td>Storage</td><td>30 GiB</td></tr>
+      </table>
+      <div class="step"><p class="step-title">Step 2 — Create the security group</p><p>Create a security group named <code>splunk-server-sg</code>.</p></div>
+      <table>
+        <tr><th>Type</th><th>Port</th><th>Source</th><th>Purpose</th></tr>
+        <tr><td>SSH</td><td>22</td><td>My IP</td><td>Browser terminal or admin access.</td></tr>
+        <tr><td>Custom TCP</td><td>8000</td><td>My IP</td><td>Splunk Web in your browser.</td></tr>
+        <tr><td>Custom TCP</td><td>9997</td><td><code>10.0.0.0/16</code></td><td>Receives data from the Universal Forwarder inside the VPC.</td></tr>
+      </table>
+      <div class="step"><p class="step-title">Step 3 — Connect using EC2 Instance Connect</p><ol><li>Select the <code>splunk-server</code> instance.</li><li>Click <strong>Connect</strong>.</li><li>Select <strong>EC2 Instance Connect</strong>.</li><li>Click <strong>Connect</strong>.</li></ol></div>
+      <div class="step"><p class="step-title">Step 4 — Install Splunk Enterprise</p><p>Copy your Splunk Enterprise Linux <code>.deb</code> download URL from your Splunk account. Then run the script below on the Splunk server.</p></div>
+      <div class="code-block">
+  <div class="code-header"><span>bash — create and run the install script</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>nano splunk-install.sh
+# Paste the script below. Save with Ctrl+O, Enter, then Ctrl+X.
 chmod +x splunk-install.sh
-./splunk-install.sh</pre>
-        </div>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — Splunk server browser terminal (no sudo prefix)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm">#!/bin/bash
-# ================================================================
-#  Splunk Enterprise â Automated Installation Script
-#  Run on: EC2 Instance 1 (splunk-server) â Ubuntu 22.04
-#
-#  BEFORE RUNNING:
-#  Replace SPLUNK_DEB_URL with the URL from your splunk.com account.
-#  How to get it:
-#    1. Log in at splunk.com
-#    2. Go to splunk.com/en_us/download/splunk-enterprise.html
-#    3. Select Linux â .deb package
-#    4. Copy the full URL from the wget command shown
-#    5. Paste it into SPLUNK_DEB_URL below
-#
-#  Run as: ubuntu user with sudo available (default on EC2)
-#    chmod +x splunk-install.sh
-#    ./splunk-install.sh
-# ================================================================
-set -euo pipefail
+./splunk-install.sh</code></pre>
+</div>
+      <div class="code-block">
+  <div class="code-header"><span>bash — splunk-install.sh</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>#!/bin/bash
+set -e
 
-<span class="cm"># ── PASTE YOUR DOWNLOAD URL HERE ────────────────────────────────────</span>
-<span class="cm"># Replace the URL below with the one from your splunk.com account</span>
-SPLUNK_DEB_URL=<span class="ck">"https://download.splunk.com/products/splunk/releases/10.x.0/linux/splunk-10.x.0-f798d4d4xxxx-linux-amd64.deb"</span>
-<span class="cm"># ────────────────────────────────────────────────────────────────────────</span>
+# Paste your Splunk Enterprise .deb download URL from splunk.com below.
+SPLUNK_DEB_URL=&quot;PASTE-YOUR-SPLUNK-ENTERPRISE-DEB-URL-HERE&quot;
+ADMIN_PASS=&quot;Workshop2026!&quot;
+SPLUNK_HOME=&quot;/opt/splunk&quot;
 
-<span class="cm"># Filename is extracted automatically from the URL — do not edit this line</span>
-SPLUNK_PKG=$(basename <span class="cs">"${SPLUNK_DEB_URL}"</span>)
-SPLUNK_HOME=<span class="cs">"/opt/splunk"</span>
-ADMIN_PASS=<span class="cs">"Workshop2026!"</span>
+sudo apt-get update -y
+sudo apt-get install -y wget curl net-tools rsyslog
 
-echo <span class="cs">"[1/6] Updating system packages..."</span>
-sudo apt-get update -qq
-sudo apt-get install -y wget curl ufw net-tools
+wget -O /tmp/splunk-enterprise.deb &quot;$SPLUNK_DEB_URL&quot;
+sudo dpkg -i /tmp/splunk-enterprise.deb
 
-echo <span class="cs">"[2/6] Downloading Splunk Enterprise..."</span>
-echo <span class="cs">"      URL: ${SPLUNK_DEB_URL}"</span>
-wget -q --show-progress <span class="cs">"${SPLUNK_DEB_URL}"</span> -O /tmp/<span class="cs">"${SPLUNK_PKG}"</span>
-
-echo <span class="cs">"[3/6] Installing Splunk..."</span>
-sudo dpkg -i /tmp/<span class="cs">"${SPLUNK_PKG}"</span>
-
-echo <span class="cs">"[4/6] Starting Splunk and accepting the licence..."</span>
-<span class="cm"># Splunk 10.x requires --run-as-root when dpkg installed the package as root.</span>
-<span class="cm"># This is expected and safe in a lab environment. Splunk still starts correctly.</span>
-sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk start \
+sudo $SPLUNK_HOME/bin/splunk start \
   --accept-license --answer-yes --no-prompt \
   --run-as-root \
-  --seed-passwd <span class="cs">"${ADMIN_PASS}"</span>
+  --seed-passwd &quot;$ADMIN_PASS&quot;
 
-<span class="cm"># Register Splunk as a systemd service so it survives reboots</span>
-sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk enable boot-start \
+sudo $SPLUNK_HOME/bin/splunk enable boot-start \
   --accept-license --answer-yes --no-prompt \
   --run-as-root
 
-echo <span class="cs">"[5/6] Opening forwarder receiver port and creating indexes..."</span>
-<span class="cm"># Port 9997 receives log data from the Universal Forwarder on the web server</span>
-sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk enable listen 9997 \
+sudo $SPLUNK_HOME/bin/splunk enable listen 9997 \
   --run-as-root \
-  -auth admin:<span class="cs">"${ADMIN_PASS}"</span>
+  -auth admin:&quot;$ADMIN_PASS&quot;
 
-<span class="cm"># Separate indexes keep web server logs and security logs organised</span>
-sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk add index webserver_logs \
+sudo $SPLUNK_HOME/bin/splunk add index webserverlogs \
   --run-as-root \
-  -auth admin:<span class="cs">"${ADMIN_PASS}"</span>
+  -auth admin:&quot;$ADMIN_PASS&quot;
 
-sudo <span class="cs">"${SPLUNK_HOME}"</span>/bin/splunk add index security_logs \
+sudo $SPLUNK_HOME/bin/splunk add index securitylogs \
   --run-as-root \
-  -auth admin:<span class="cs">"${ADMIN_PASS}"</span>
+  -auth admin:&quot;$ADMIN_PASS&quot;
 
-echo <span class="cs">"[6/6] Configuring firewall..."</span>
-sudo ufw allow 22/tcp     <span class="cm"># SSH</span>
-sudo ufw allow 8000/tcp   <span class="cm"># Splunk Web UI</span>
-sudo ufw allow 9997/tcp   <span class="cm"># Forwarder receiver</span>
-sudo ufw allow 8089/tcp   <span class="cm"># Splunk management API</span>
-sudo ufw --force enable
+# Enable and prepare Linux auth logging on the Splunk Enterprise VM.
+sudo systemctl enable --now rsyslog
+sudo touch /var/log/auth.log
+sudo chown root:adm /var/log/auth.log
+sudo chmod 640 /var/log/auth.log
 
-echo <span class="cs">""</span>
-echo <span class="cs">"================================================================"</span>
-echo <span class="cs">"  Installation complete."</span>
-echo <span class="cs">"  Open this URL in your browser:"</span>
-echo <span class="cs">"  Splunk Web  →  http://&lt;SPLUNK-PUBLIC-IP&gt;:8000"</span>
-echo <span class="cs">"  Username    →  admin"</span>
-echo <span class="cs">"  Password    →  Workshop2026!"</span>
-echo <span class="cs">"================================================================"</span></pre>
-        </div>
+# Monitor the Splunk Enterprise VM's own login-related Linux log.
+sudo $SPLUNK_HOME/bin/splunk add monitor /var/log/auth.log \
+  -index securitylogs \
+  -sourcetype linux_secure \
+  --run-as-root \
+  -auth admin:&quot;$ADMIN_PASS&quot;
 
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>What is <code>169.254.169.254</code>?</strong>
-            <p>This address is the <strong>AWS Instance Metadata Service</strong> — a special internal endpoint that exists only inside AWS. No traffic goes to the internet. The EC2 instance is asking AWS: <em>"What is my own public IP address?"</em> AWS responds with a single line of text, e.g. <code>54.210.33.107</code>. The script captures this and prints it at the end so you know exactly which URL to open in your browser.</p>
-          </div>
-        </div>
-
-        <div class="callout callout-warn">
-          <span class="callout-icon">⚠</span>
-          <div class="callout-body">
-            <strong>Change the admin password after first login</strong>
-            <p>The script sets a shared workshop password for convenience. Once logged in, go to <strong>Settings → Access Controls → Users → admin → Edit</strong> and set a personal password before conducting any real monitoring work.</p>
-          </div>
-        </div>
-
-        <div class="callout callout-ok">
-          <span class="callout-icon">✓</span>
-          <div class="callout-body">
-            <strong>Expected result</strong>
-            <p>The script prints a summary at the end showing your Splunk Web URL. Open that URL in your browser — you should see the Splunk login page. Log in with username <code>admin</code> and password <code>Workshop2026!</code>.</p>
-            <p>If Splunk was previously installed and the script failed, clean up first: <code>sudo /opt/splunk/bin/splunk stop</code>, then <code>sudo apt-get remove splunk -y &amp;&amp; sudo rm -rf /opt/splunk</code>, then re-run the script.</p>
-          </div>
-        </div>
-      </div>
+echo &quot;Splunk Enterprise is ready.&quot;
+echo &quot;Open: http://YOUR-SPLUNK-SERVER-PUBLIC-IP:8000&quot;
+echo &quot;Username: admin&quot;
+echo &quot;Password: $ADMIN_PASS&quot;</code></pre>
+</div>
+      <div class="success"><strong>Expected result</strong><p>Open <code>http://YOUR-SPLUNK-SERVER-PUBLIC-IP:8000</code>. Log in with username <code>admin</code> and the workshop password shown in the script.</p></div>
+      <div class="note"><strong>Record this value</strong><p>In the EC2 details page for the Splunk server, copy the <strong>Private IPv4 address</strong>. You will paste it into the Universal Forwarder setup script.</p></div>
     </section>
 
-    <div class="divider"></div>
+    <section id="forwarder">
+      <div class="section-title"><span class="num">07</span><h2>Launch web server and Universal Forwarder</h2></div>
+      <p>The second EC2 instance creates simple log data. It runs Apache for page visits and the Universal Forwarder to send logs to Splunk.</p>
+      <div class="step"><p class="step-title">Step 1 — Launch EC2 instance 2</p><p>Open EC2 and click <strong>Launch instance</strong>. Use these settings.</p></div>
+      <table>
+        <tr><th>Setting</th><th>Value</th></tr>
+        <tr><td>Name</td><td><code>webserver-forwarder</code></td></tr>
+        <tr><td>AMI</td><td>Ubuntu Server 22.04 LTS</td></tr>
+        <tr><td>Instance type</td><td><code>t2.micro</code></td></tr>
+        <tr><td>Key pair</td><td><code>vockey</code> or the key pair supplied by Learner Lab</td></tr>
+        <tr><td>Network</td><td><code>splunk-workshop</code> VPC</td></tr>
+        <tr><td>Subnet</td><td>Public subnet</td></tr>
+        <tr><td>Auto-assign public IP</td><td>Enable</td></tr>
+        <tr><td>Storage</td><td>8 GiB</td></tr>
+      </table>
+      <div class="step"><p class="step-title">Step 2 — Create the security group</p><p>Create a security group named <code>webserver-forwarder-sg</code>.</p></div>
+      <table>
+        <tr><th>Type</th><th>Port</th><th>Source</th><th>Purpose</th></tr>
+        <tr><td>SSH</td><td>22</td><td>My IP</td><td>Browser terminal or admin access.</td></tr>
+        <tr><td>HTTP</td><td>80</td><td>My IP</td><td>Allows learners to visit the simple web pages.</td></tr>
+      </table>
+      <div class="step"><p class="step-title">Step 3 — Add User Data</p><p>Scroll to <strong>Advanced details</strong>. Paste the script below into the <strong>User data</strong> field before launching. Replace the two placeholder values first.</p></div>
+      <ul>
+        <li>Replace <code>PASTE-SPLUNK-SERVER-PRIVATE-IP-HERE</code> with the private IP of the Splunk server.</li>
+        <li>Replace <code>PASTE-YOUR-UNIVERSAL-FORWARDER-DEB-URL-HERE</code> with your Universal Forwarder Linux <code>.deb</code> download URL.</li>
+      </ul>
+      <div class="code-block">
+  <div class="code-header"><span>bash — EC2 User Data for webserver-forwarder</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>#!/bin/bash
+set -e
 
-    <!-- ══════════════════════════════════════
-         SECTION 3 — FORWARDER + WEB SERVER
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="forwarder">
-      <div class="section-header">
-        <span class="section-num">03</span>
-        <h2>Deploying the Web Server and Universal Forwarder</h2>
-      </div>
-      <p class="section-intro">In this section you will launch a second EC2 instance using <strong>Amazon Linux 2023</strong> into the <strong>public subnet</strong>. Rather than SSH-ing in and running scripts manually, everything is automated using <strong>EC2 User Data</strong> — a startup script that AWS runs automatically the first time the instance boots. By the time the instance reaches Running state, Apache, PHP, the demo web application, and the Splunk Universal Forwarder will all be installed and configured.</p>
+# Replace this with the private IPv4 address of your Splunk server.
+SPLUNK_IP=&quot;PASTE-SPLUNK-SERVER-PRIVATE-IP-HERE&quot;
 
-      <div class="callout callout-note">
-        <span class="callout-icon">ℹ</span>
-        <div class="callout-body">
-          <strong>Before you start — two values you need</strong>
-          <p>Open a notepad and record these two values now. You will paste them into the User Data script in Step 2:</p>
-          <ul>
-            <li><strong>Splunk Server Private IP</strong> — go to EC2 console, click on Instance 1 (splunk-server), and copy the <strong>Private IPv4 address</strong>. It looks like <code>10.0.0.x</code>. The forwarder uses this to send logs to Splunk over the VPC internal network.</li>
-            <li><strong>Universal Forwarder download URL</strong> — log in to splunk.com, go to <strong>splunk.com/en_us/download/universal-forwarder</strong>, select <strong>Linux → RPM</strong> package (Amazon Linux 2023 uses RPM, not .deb), and copy the full URL from the wget command shown.</li>
-          </ul>
-        </div>
-      </div>
+# Paste your Splunk Universal Forwarder .deb download URL from splunk.com below.
+UF_DEB_URL=&quot;PASTE-YOUR-UNIVERSAL-FORWARDER-DEB-URL-HERE&quot;
+UF_PASS=&quot;Forwarder2026!&quot;
 
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 1</span><h3>Launch EC2 Instance 2 — Web Server</h3></div>
-        <p>In the EC2 console, click <strong>Launch Instance</strong>. Configure it exactly as follows:</p>
-        <table>
-          <tr><th>Setting</th><th>Value to use</th></tr>
-          <tr><td>Name</td><td><code>webserver</code></td></tr>
-          <tr><td>AMI</td><td><strong>Ubuntu Server 22.04</strong> Ubuntu Server 22.04 LTS (HVM), SSD Volume Type</td></tr>
-          <tr><td>Instance type</td><td><code>t2.micro</code> — 1 vCPU, 1 GiB RAM</td></tr>
-          <tr><td>Key pair</td><td><code>vockey</code> — same key pair as Instance 1</td></tr>
-          <tr><td>Network</td><td><code>splunk-workshop-vpc</code> — the VPC created in Section 1</td></tr>
-          <tr><td>Subnet</td><td><code>splunk-workshop-subnet-public1</code> — the <strong>public</strong> subnet</td></tr>
-          <tr><td>Auto-assign public IP</td><td><strong>Enable</strong> — required so you can send attack traffic from the Splunk server browser terminal</td></tr>
-          <tr><td>Storage</td><td>8 GiB, gp3 (default)</td></tr>
-        </table>
-        <p>Under <strong>Firewall (Security Groups)</strong>, create a new security group named <code>webserver-sg</code> with these inbound rules:</p>
-        <table>
-          <tr><th>Type</th><th>Port</th><th>Source</th><th>Purpose</th></tr>
-          <tr><td>SSH</td><td>22</td><td>My IP</td><td>SSH access if you need to troubleshoot</td></tr>
-          <tr><td>HTTP</td><td>80</td><td>0.0.0.0/0</td><td>Web traffic — required for SQL injection and traversal attack demos</td></tr>
-        </table>
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>Why public subnet for the web server?</strong>
-            <p>We place the web server in the public subnet so that attack traffic sent from the Splunk server browser terminal can reach it directly over HTTP on port 80 — this is what makes the brute force, SQL injection, and directory traversal demonstrations visible and realistic. The Splunk server is also in the public subnet, and both instances communicate with each other using their <strong>private IP addresses</strong> within the VPC — the forwarder never uses the public IP to send logs.</p>
-          </div>
-        </div>
-        <p><strong>Do not click Launch Instance yet.</strong> Continue to Step 2 to add the User Data script before launching.</p>
-      </div>
+apt-get update -y
+apt-get install -y apache2 php libapache2-mod-php wget curl
 
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Add the User Data script</h3></div>
-        <p>Scroll down on the Launch Instance page to the <strong>Advanced details</strong> section and expand it. At the very bottom you will find a field labelled <strong>User data</strong>. Paste the entire script below into that field.</p>
-        <p><strong>Before pasting</strong> — replace the two values marked in amber:</p>
-        <ul class="step-list">
-          <li>Replace <code>&lt;SPLUNK-SERVER-PRIVATE-IP&gt;</code> with the private IP of Instance 1 (e.g. <code>10.0.0.45</code>)</li>
-          <li>Replace the <code>UF_RPM_URL</code> value with your personal Universal Forwarder RPM download URL from splunk.com</li>
-        </ul>
+systemctl enable apache2
+systemctl start apache2
 
-        <div class="callout callout-warn">
-          <span class="callout-icon">⚠</span>
-          <div class="callout-body">
-            <strong>Select the RPM package, not .deb</strong>
-            <p>On the Universal Forwarder download page at splunk.com, select <strong>Linux → RPM</strong>. Amazon Linux uses RPM packages. The .deb package is for Ubuntu and will not install.</p>
-          </div>
-        </div>
+cat &gt; /var/www/html/index.html &lt;&lt;&#x27;EOF&#x27;
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Teacher Workshop Web Server&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Teacher Workshop Web Server&lt;/h1&gt;
+  &lt;p&gt;This page creates a normal Apache access log entry.&lt;/p&gt;
+  &lt;p&gt;&lt;a href=&quot;/about.html&quot;&gt;About&lt;/a&gt; | &lt;a href=&quot;/resources.html&quot;&gt;Resources&lt;/a&gt; | &lt;a href=&quot;/login.php?user=teacher&quot;&gt;Practice login page&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
 
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — paste into EC2 User Data field (Advanced details)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm">#!/bin/bash
-# ================================================================
-#  Web Server + Splunk Universal Forwarder — EC2 User Data
-#  AMI: Amazon Linux 2023
-#
-#  BEFORE PASTING — replace these two lines:
-#
-#  1.  SPLUNK_IP   — private IP of your Splunk server (Instance 1)
-#                   EC2 console → Instance 1 → Private IPv4 address
-#                   e.g.  10.0.0.45
-#
-#  2.  UF_RPM_URL  — your Universal Forwarder download URL
-#                   splunk.com → Downloads → Universal Forwarder
-#                   → Linux → RPM → copy the URL from the wget command
-# ================================================================
+cat &gt; /var/www/html/about.html &lt;&lt;&#x27;EOF&#x27;
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;About&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;About this lab&lt;/h1&gt;&lt;p&gt;This safe page is used to generate normal web logs.&lt;/p&gt;&lt;/body&gt;
+&lt;/html&gt;
+EOF
 
-SPLUNK_IP=<span class="ck">"&lt;SPLUNK-SERVER-PRIVATE-IP&gt;"</span>
-UF_RPM_URL=<span class="ck">"https://download.splunk.com/products/universalforwarder/releases/10.x.0/linux/splunkforwarder-10.x.0-f798d4d4xxxx.x86_64.rpm"</span>
+cat &gt; /var/www/html/resources.html &lt;&lt;&#x27;EOF&#x27;
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Resources&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;&lt;h1&gt;Resources&lt;/h1&gt;&lt;p&gt;Visit this page a few times to create simple page-view logs.&lt;/p&gt;&lt;/body&gt;
+&lt;/html&gt;
+EOF
 
-<span class="cm"># ── Step 1: Install Apache, PHP, and rsyslog ─────────────────────</span>
-<span class="cm"># rsyslog is required on Amazon Linux 2023 — it does not ship with</span>
-<span class="cm"># rsyslog by default. Without it /var/log/secure does not exist</span>
-<span class="cm"># and index=security_logs will show zero events in Splunk.</span>
-yum update -y
-yum install -y httpd php rsyslog
-
-systemctl enable rsyslog
-systemctl start rsyslog
-
-<span class="cm"># ── Step 2: Create the demo login page ───────────────────────────</span>
-cat &gt; /var/www/html/login.php &lt;&lt; 'PHPEOF'
+cat &gt; /var/www/html/login.php &lt;&lt;&#x27;EOF&#x27;
 &lt;?php
-  $user = $_GET['user'] ?? '';
-  $pass = $_GET['pass'] ?? '';
-  echo "&lt;h2&gt;Workshop Demo Login&lt;/h2&gt;";
-  echo "&lt;p&gt;Username: " . htmlspecialchars($user, ENT_QUOTES) . "&lt;/p&gt;";
-PHPEOF
+$user = preg_replace(&#x27;/[^A-Za-z0-9_.-]/&#x27;, &#x27;&#x27;, $_GET[&#x27;user&#x27;] ?? &#x27;guest&#x27;);
+$time = date(&#x27;Y-m-d H:i:s&#x27;);
+$line = &quot;$time event=login user=$user outcome=practice_page_visit\n&quot;;
+file_put_contents(&#x27;/var/log/simple-login.log&#x27;, $line, FILE_APPEND);
+?&gt;
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Practice Login&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Practice Login Page&lt;/h1&gt;
+  &lt;p&gt;A safe practice login event was written for user: &lt;strong&gt;&lt;?php echo htmlspecialchars($user); ?&gt;&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;Try another example: &lt;a href=&quot;/login.php?user=student1&quot;&gt;student1&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
 
-mkdir -p /var/www/html/admin /var/www/html/backup
-echo "Restricted" &gt; /var/www/html/admin/config.txt
+touch /var/log/apache2/access.log /var/log/apache2/error.log /var/log/simple-login.log
+chmod 644 /var/log/apache2/access.log /var/log/apache2/error.log /var/log/simple-login.log
 
-<span class="cm"># ── Step 3: Enable SSH password authentication ────────────────────</span>
-<span class="cm"># Amazon Linux 2023 disables password auth by default.</span>
-<span class="cm"># Enabling it allows the brute force demonstration in Section 6</span>
-<span class="cm"># to generate real failed login entries in /var/log/secure.</span>
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config.d/*.conf 2&gt;/dev/null || true
-systemctl restart sshd
+# Generate a few starter events so learners see data quickly.
+curl -s http://127.0.0.1/ &gt; /dev/null
+curl -s http://127.0.0.1/about.html &gt; /dev/null
+curl -s http://127.0.0.1/resources.html &gt; /dev/null
+curl -s http://127.0.0.1/login.php?user=teacher &gt; /dev/null
 
-<span class="cm"># ── Step 4: Start Apache ─────────────────────────────────────────</span>
-systemctl enable httpd
-systemctl start httpd
+wget -O /tmp/splunkforwarder.deb &quot;$UF_DEB_URL&quot;
+dpkg -i /tmp/splunkforwarder.deb
 
-<span class="cm"># ── Step 5: Fix log file permissions ─────────────────────────────</span>
-<span class="cm"># Pre-create Apache log files so the forwarder can monitor them</span>
-<span class="cm"># immediately. Apache only creates them on the first HTTP request.</span>
-touch /var/log/httpd/access_log /var/log/httpd/error_log
-chmod 644 /var/log/httpd/access_log /var/log/httpd/error_log
+/opt/splunkforwarder/bin/splunk start \
+  --accept-license --answer-yes --no-prompt \
+  --seed-passwd &quot;$UF_PASS&quot;
 
-<span class="cm"># Give rsyslog 3 seconds to create /var/log/secure after starting,</span>
-<span class="cm"># then set group-read so the splunkfwd user can tail it.</span>
-sleep 3
-touch /var/log/secure
-chmod 640 /var/log/secure
-chown root:adm /var/log/secure
-
-<span class="cm"># ── Step 6: Download and install the Universal Forwarder ─────────</span>
-UF_PKG=$(basename "${UF_RPM_URL}")
-wget -q "${UF_RPM_URL}" -O /tmp/"${UF_PKG}"
-rpm -i --nosignature /tmp/"${UF_PKG}"
-
-<span class="cm"># Add splunkfwd (created by the RPM) to adm group so it can</span>
-<span class="cm"># read /var/log/secure — must run after rpm -i creates the user</span>
-usermod -aG adm splunkfwd
-
-<span class="cm"># ── Step 7: Write outputs.conf — where to send logs ──────────────</span>
 mkdir -p /opt/splunkforwarder/etc/system/local
 
-cat &gt; /opt/splunkforwarder/etc/system/local/outputs.conf &lt;&lt; EOF
+cat &gt; /opt/splunkforwarder/etc/system/local/outputs.conf &lt;&lt;EOF
 [tcpout]
 defaultGroup = splunk_indexer
 
@@ -698,760 +423,366 @@ defaultGroup = splunk_indexer
 server = ${SPLUNK_IP}:9997
 EOF
 
-<span class="cm"># ── Step 8: Write inputs.conf — which files to monitor ───────────</span>
-cat &gt; /opt/splunkforwarder/etc/system/local/inputs.conf &lt;&lt; 'EOF'
-[monitor:///var/log/httpd/access_log]
-index = webserver_logs
-sourcetype = apache_access
+cat &gt; /opt/splunkforwarder/etc/system/local/inputs.conf &lt;&lt;&#x27;EOF&#x27;
+[monitor:///var/log/apache2/access.log]
+index = webserverlogs
+sourcetype = access_combined
 
-[monitor:///var/log/httpd/error_log]
-index = webserver_logs
+[monitor:///var/log/apache2/error.log]
+index = webserverlogs
 sourcetype = apache_error
 
-[monitor:///var/log/secure]
-index = security_logs
-sourcetype = linux_secure
+[monitor:///var/log/simple-login.log]
+index = securitylogs
+sourcetype = simple_login
 EOF
 
-<span class="cm"># ── Step 9: Start the forwarder ──────────────────────────────────</span>
-<span class="cm"># Reads outputs.conf and inputs.conf automatically on startup.</span>
-/opt/splunkforwarder/bin/splunk start \
-  --accept-license --answer-yes --no-prompt \
-  --seed-passwd "Forwarder2026!"
-
-<span class="cm"># Enable auto-start on reboot</span>
+/opt/splunkforwarder/bin/splunk restart
 /opt/splunkforwarder/bin/splunk enable boot-start \
-  --accept-license --answer-yes --no-prompt</pre>
-        </div>
+  --accept-license --answer-yes --no-prompt</code></pre>
+</div>
+      <div class="step"><p class="step-title">Step 4 — Visit the web pages</p><p>After the instance has been running for about three minutes, open these URLs in your browser. Replace <code>WEBSERVER-PUBLIC-IP</code> with the public IP of the second EC2 instance.</p></div>
+      <ul>
+        <li><code>http://WEBSERVER-PUBLIC-IP/</code></li>
+        <li><code>http://WEBSERVER-PUBLIC-IP/about.html</code></li>
+        <li><code>http://WEBSERVER-PUBLIC-IP/resources.html</code></li>
+        <li><code>http://WEBSERVER-PUBLIC-IP/login.php?user=teacher</code></li>
+        <li><code>http://WEBSERVER-PUBLIC-IP/login.php?user=student1</code></li>
+      </ul>
+      <div class="success"><strong>Safe scenario completed</strong><p>You have generated web server logs and practice login logs. The Universal Forwarder reads those logs and sends them to Splunk.</p></div>
+    </section>
 
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>How User Data works</strong>
-            <p>AWS runs the User Data script automatically as root the first time the instance boots. You do not SSH in or run anything manually — Apache, the demo app, and the Splunk Forwarder are all installed and configured within 2–3 minutes of the instance reaching Running state.</p>
-            <p>To confirm it completed: in the <strong>web server browser terminal</strong>, run <code>sudo tail -20 /var/log/cloud-init-output.log</code>. The last line should read <em>Cloud-init finished</em>.</p>
-          </div>
-        </div>
+    <section id="verify">
+      <div class="section-title"><span class="num">08</span><h2>Verify log collection</h2></div>
+      <p>Now confirm the full data path: logs are generated on the web server, forwarded by the Universal Forwarder, received by Splunk, and searched in Splunk Search &amp; Reporting.</p>
+      <div class="step"><p class="step-title">Step 1 — Check the forwarder locally</p><p>Connect to the web server using EC2 Instance Connect and run:</p></div>
+      <div class="code-block">
+  <div class="code-header"><span>bash — on the webserver-forwarder instance</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>sudo /opt/splunkforwarder/bin/splunk list forward-server -auth admin:Forwarder2026!
+sudo /opt/splunkforwarder/bin/splunk list monitor -auth admin:Forwarder2026!
+sudo tail -20 /var/log/simple-login.log</code></pre>
+</div>
+      <div class="step"><p class="step-title">Step 2 — Search for web logs in Splunk</p><p>Open Splunk Web. Click <strong>Search &amp; Reporting</strong>. Set the time range to <strong>Last 60 minutes</strong>. Run this search:</p></div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs</code></pre>
+</div>
+      <p><strong>Expected result:</strong> You should see Apache page visit events. These events came from <code>/var/log/apache2/access.log</code>.</p>
+      <div class="step"><p class="step-title">Step 3 — Confirm the Apache access sourcetype</p><p>Run this search to confirm that Apache page visits are indexed with the standard Apache sourcetype.</p></div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL — confirm Apache access sourcetype</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs source=&quot;/var/log/apache2/access.log&quot; | stats count by sourcetype</code></pre>
+</div>
+      <p><strong>Expected result:</strong> The table should show <code>access_combined</code>. This confirms that Apache access logs are being collected from the web server and stored with the correct sourcetype.</p>
+      <div class="step"><p class="step-title">Step 4 — Search for practice login logs</p><p>Run this search:</p></div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs</code></pre>
+</div>
+      <p><strong>Expected result:</strong> You should see safe practice events such as <code>event=login user=teacher outcome=practice_page_visit</code>.</p>
+    </section>
 
-        <p>After pasting the script into the User Data field, click <strong>Launch Instance</strong>.</p>
-      </div>
+    <section id="searches">
+      <div class="section-title"><span class="num">09</span><h2>Simple SPL examples</h2></div>
+      <p>SPL means <strong>Search Processing Language</strong>. It is the language used to search data in Splunk. Start simple. Run one search at a time in <strong>Search &amp; Reporting</strong>.</p>
+      <div class="note"><strong>How to run each search</strong><ol><li>Open <strong>Search &amp; Reporting</strong>.</li><li>Paste the SPL into the search bar.</li><li>Select <strong>Last 60 minutes</strong> or <strong>All time</strong>.</li><li>Click the search icon or press Enter.</li><li>Read the events or table results.</li></ol></div>
 
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 3</span><h3>Verify the web server and forwarder are running</h3></div>
-        <p>Wait approximately 3 minutes after the instance reaches <strong>Running</strong> state for the User Data script to complete. Then verify each component:</p>
+      <h3>Query 1 — Show web server logs</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>index</code></td><td>An index is a storage area in Splunk.</td></tr><tr><td><code>webserverlogs</code></td><td>This is where Apache web logs are stored.</td></tr></table>
+      <p><strong>Expected result:</strong> A list of web page visits. Learners can click an event to inspect fields such as time, host, source, and sourcetype.</p>
 
-        <p><strong>Verify Apache:</strong> Open a new browser tab and go to <code>http://&lt;WEBSERVER-PUBLIC-IP&gt;/login.php?user=test&amp;pass=test</code> — replacing <code>&lt;WEBSERVER-PUBLIC-IP&gt;</code> with the public IP of Instance 2 shown in the EC2 console. You should see a page displaying <em>Username attempted: test</em>.</p>
+      <h3>Query 2 — Show practice login and user activity logs</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>index</code></td><td>Search inside one Splunk storage area.</td></tr><tr><td><code>securitylogs</code></td><td>This index stores the safe practice login log.</td></tr></table>
+      <p><strong>Expected result:</strong> Events containing simple text such as <code>event=login user=teacher</code>.</p>
 
-        <p><strong>Verify the forwarder in Splunk</strong> using the two methods below. Note that <strong>Settings → Forwarder Management</strong> will not appear in a fresh Splunk install — it requires the Deployment Server feature which is not needed for this workshop. Use Method 1 and Method 2 instead.</p>
+      <h3>Query 3 — Count events by sourcetype</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs | stats count by sourcetype</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>index=webserverlogs</code></td><td>Start with web server events.</td></tr><tr><td><code>|</code></td><td>The pipe sends results to the next command.</td></tr><tr><td><code>stats count by sourcetype</code></td><td>Count how many events belong to each log type.</td></tr></table>
+      <p><strong>Expected result:</strong> A table showing counts for sourcetypes such as <code>access_combined</code> and <code>apache_error</code>.</p>
 
-        <div class="step" style="margin-bottom:1.5rem;">
-          <div class="step-header"><span class="step-badge">Method 1</span><h3>Run a search in Splunk Web — fastest check</h3></div>
-          <p>In Splunk Web, click <strong>Search &amp; Reporting</strong>. Set the time range to <strong>Last 60 minutes</strong> and run the query below. If log events appear, the forwarder is connected and sending data successfully.</p>
+      <h3>Query 4 — Find top pages visited</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs sourcetype=access_combined | top uri_path</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>sourcetype=access_combined</code></td><td>Only use normal Apache access log events.</td></tr><tr><td><code>top uri_path</code></td><td>Show the most common web page paths.</td></tr></table>
+      <p><strong>Expected result:</strong> A table with pages such as <code>/</code>, <code>/about.html</code>, <code>/resources.html</code>, and <code>/login.php</code>.</p>
+
+      <h3>Query 5 — Show events over time</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs | timechart count</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>timechart</code></td><td>Create a time-based chart.</td></tr><tr><td><code>count</code></td><td>Count events in each time period.</td></tr></table>
+      <p><strong>Expected result:</strong> A line chart that rises when learners visit pages.</p>
+
+      <h3>Query 6 — Search for the word login</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs | search login</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>index=securitylogs</code></td><td>Start with the practice login log data.</td></tr><tr><td><code>| search login</code></td><td>Keep only events that contain the word <code>login</code>.</td></tr></table>
+      <p><strong>Expected result:</strong> A focused list of login practice events.</p>
+
+      <h3>Query 7 — Count activity by user</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs | stats count by user</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>stats count</code></td><td>Count how many events were found.</td></tr><tr><td><code>by user</code></td><td>Group the count for each user value.</td></tr></table>
+      <p><strong>Expected result:</strong> A table showing users such as <code>teacher</code> and <code>student1</code>, with a count beside each one.</p>
+    </section>
+
+    <section id="splunk-login-monitoring">
+      <div class="section-title"><span class="num">10</span><h2>Monitor Splunk Enterprise VM login activity</h2></div>
+      <p>This activity teaches learners how to monitor login-related events on the Splunk Enterprise VM itself. The goal is defensive monitoring: learners look for successful login events and failed password events in Linux authentication logs.</p>
+      <div class="note"><strong>General monitoring scenario</strong><p>This activity uses Splunk to review login-related records from the Splunk Enterprise VM. It checks normal admin sign-ins, password failures, and repeated failures for the same username. Clearly labelled training events are created with the Linux <code>logger</code> command. These events are written to <code>/var/log/auth.log</code>, then Splunk indexes them.</p></div>
+
+      <div class="step"><p class="step-title">Step 1 — Confirm Splunk is monitoring the local auth log</p><p>Open <strong>Search &amp; Reporting</strong>. Set the time range to <strong>Last 60 minutes</strong>. Run this search:</p></div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>index=securitylogs</code></td><td>Look inside the security log index created earlier.</td></tr><tr><td><code>sourcetype=linux_secure</code></td><td>Show only Linux authentication log events from <code>/var/log/auth.log</code>.</td></tr></table>
+      <p><strong>Expected result:</strong> You may see Linux session messages such as <code>session opened</code>, <code>session closed</code>, or other authentication-related system events. If there are no results yet, continue to Step 2.</p>
+
+      <div class="step"><p class="step-title">Step 2 — Generate safe training login events</p><p>Connect to the <code>splunk-server</code> EC2 instance using <strong>EC2 Instance Connect</strong>. Run the commands below. They create safe, labelled training events. They do not attempt to sign in to any account.</p></div>
+      <div class="code-block">
+  <div class="code-header"><span>bash — on the Splunk Enterprise VM</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>sudo logger -p authpriv.notice "login_monitor event=login user=teacher result=success source=splunk-enterprise-vm"
+sudo logger -p authpriv.warn "login_monitor event=login user=student1 result=failure source=splunk-enterprise-vm reason=incorrect_password"
+sudo logger -p authpriv.warn "login_monitor event=login user=student1 result=failure source=splunk-enterprise-vm reason=incorrect_password"
+sudo logger -p authpriv.warn "login_monitor event=login user=student2 result=failure source=splunk-enterprise-vm reason=incorrect_password"</code></pre>
+</div>
+      <div class="note"><strong>What these commands do</strong><p><code>logger</code> writes a message to the Linux system log. The <code>authpriv</code> facility places the message in the authentication log area. The text <code>login_monitor</code> is a marker that makes the training events easy to find in Splunk.</p></div>
+
+      <div class="step"><p class="step-title">Step 3 — Search all training login events</p><p>Return to Splunk Web and run:</p></div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure login_monitor</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>login_monitor</code></td><td>Find only the safe training login events created by the <code>logger</code> command.</td></tr></table>
+      <p><strong>Expected result:</strong> You should see one success event for <code>teacher</code> and three failure events for <code>student1</code> and <code>student2</code>.</p>
+
+      <h3>Search failed password events</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure login_monitor result=failure</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>result=failure</code></td><td>Show only the training events where the login result was a password failure.</td></tr></table>
+      <p><strong>Expected result:</strong> Three rows should appear. Two are for <code>student1</code> and one is for <code>student2</code>.</p>
+
+      <h3>Search successful login events</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure login_monitor result=success</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>result=success</code></td><td>Show only the training events where the login result was successful.</td></tr></table>
+      <p><strong>Expected result:</strong> One row should appear for <code>teacher</code>.</p>
+
+      <h3>Count login activity by user</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure login_monitor | stats count by user</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>| stats count by user</code></td><td>Count how many login-monitoring events belong to each user.</td></tr></table>
+      <p><strong>Expected result:</strong> A table showing <code>student1</code> with the highest count, then <code>teacher</code> and <code>student2</code>.</p>
+
+      <h3>Count login activity by result</h3>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure login_monitor | stats count by result</code></pre>
+</div>
+      <table><tr><th>Part</th><th>Plain meaning</th></tr><tr><td><code>by result</code></td><td>Group the count into success and failure categories.</td></tr></table>
+      <p><strong>Expected result:</strong> A small table with <code>failure</code> count <code>3</code> and <code>success</code> count <code>1</code>.</p>
+
+      <div class="step"><p class="step-title">Step 4 — Search real Linux authentication text, if available</p><p>Some learners may also see normal Linux messages created by EC2 Instance Connect or system services. These searches help locate real authentication wording when it exists.</p></div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL — failed password text</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure "Failed password"</code></pre>
+</div>
+      <div class="spl-block">
+  <div class="code-header"><span>SPL — successful session text</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure ("Accepted password" OR "Accepted publickey" OR "session opened")</code></pre>
+</div>
+      <p><strong>Expected result:</strong> Results depend on the Linux image and the way the session was opened. The safe <code>login_monitor</code> events above are more reliable for classroom teaching because every learner can reproduce them.</p>
+    </section>
+
+    <section id="dashboard">
+      <div class="section-title"><span class="num">11</span><h2>Build the dashboard</h2></div>
+      <p>The dashboard gives learners a simple visual summary of the log data. Build it after the searches work, including the Splunk Enterprise VM login-monitoring activity.</p>
+      <div class="step"><p class="step-title">Create the dashboard shell</p><ol><li>Open <strong>Search &amp; Reporting</strong>.</li><li>Run the first panel search below.</li><li>Click <strong>Save As → Dashboard Panel</strong>.</li><li>Choose <strong>New dashboard</strong>.</li><li>Name it <strong>Beginner Log Analysis Dashboard</strong>.</li><li>Choose a simple layout option such as Classic Dashboard if prompted.</li><li>Save the panel.</li></ol></div>
+      <div class="panel-grid">
+        <div class="panel-card">
+          <h3>Panel 1 — Total events</h3>
+          <p>This panel shows the total number of events received from the web server and practice login log.</p>
           <div class="spl-block">
-            <div class="spl-header"><span class="spl-label">SPL — Method 1: confirm logs are arriving</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-            <pre>index=webserver_logs <span class="sp-pipe">|</span> <span class="sp-cmd">head</span> <span class="sp-num">5</span></pre>
-          </div>
-          <p>Each result is one Apache HTTP request logged by the web server and forwarded to Splunk. If you see results, proceed to Section 5. If no results appear after 5 minutes, continue to Method 2 to diagnose the connection.</p>
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs OR index=securitylogs | stats count as &quot;Total Events&quot;</code></pre>
+</div>
+          <p><strong>Visualisation:</strong> Single Value.</p>
         </div>
-
-        <div class="step" style="margin-bottom:1.5rem;">
-          <div class="step-header"><span class="step-badge">Method 2</span><h3>Check the active connection on the Splunk server</h3></div>
-          <p>In the <strong>Splunk server browser terminal</strong> (Instance 1), run the two commands below. They check whether the Splunk forwarder receiver port is open and whether the web server has established a connection to it.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">bash — Splunk server browser terminal (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm"># Check that Splunk is listening on port 9997 (the forwarder receiver port)</span>
-sudo ss -tnp | grep 9997
-
-<span class="cm"># Expected output when the web server is connected:</span>
-<span class="cm"># LISTEN  0  128  0.0.0.0:9997  ...  (Splunk is ready to receive)</span>
-<span class="cm"># ESTAB   0  0    10.0.0.x:9997  10.0.0.y:xxxxx  (active connection from web server)</span></pre>
-          </div>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">bash — confirm the forwarder receiver is enabled in Splunk</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm"># Lists all enabled receiving ports — should show port 9997</span>
-sudo /opt/splunk/bin/splunk list forward-server --run-as-root</pre>
-          </div>
-          <div class="callout callout-note">
-            <span class="callout-icon">ℹ</span>
-            <div class="callout-body">
-              <strong>Reading the ss output</strong>
-              <p>Look for two lines referencing port 9997. A line with state <code>LISTEN</code> means Splunk is waiting for connections. A line with state <code>ESTAB</code> (established) means the web server forwarder has connected. The web server's private IP (<code>10.0.0.x</code>) will appear in the ESTAB line. If you only see LISTEN but no ESTAB, the forwarder on the web server has not connected yet — wait another minute and re-run, or check the User Data log in the <strong>web server browser terminal</strong> with <code>sudo tail -30 /var/log/cloud-init-output.log</code>.</p>
-            </div>
-          </div>
+        <div class="panel-card">
+          <h3>Panel 2 — Events over time</h3>
+          <p>This panel shows when events arrived. It helps learners connect page visits with visible changes in Splunk.</p>
+          <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs OR index=securitylogs | timechart count</code></pre>
+</div>
+          <p><strong>Visualisation:</strong> Line Chart.</p>
         </div>
-
-        <div class="callout callout-ok">
-          <span class="callout-icon">✓</span>
-          <div class="callout-body">
-            <strong>Expected result</strong>
-            <p>The SPL query returns the 5 most recent Apache log entries from the web server. Each event represents one HTTP request — the visit to <code>login.php</code> you made above will appear here.</p>
-            <p>Also run <code>index=security_logs | head 5</code> to confirm the auth log is being forwarded. Results may be sparse until the brute force demonstration in Section 6 generates SSH login attempts — a few existing SSH session entries from your own login will appear if the forwarder is working correctly.</p>
-          </div>
+        <div class="panel-card">
+          <h3>Panel 3 — Top pages visited</h3>
+          <p>This panel shows which web pages were visited most often.</p>
+          <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=webserverlogs sourcetype=access_combined | top uri_path</code></pre>
+</div>
+          <p><strong>Visualisation:</strong> Bar Chart or Table.</p>
         </div>
-
-        <div class="callout callout-warn">
-          <span class="callout-icon">⚠</span>
-          <div class="callout-body">
-            <strong>If the query returns no results after 5 minutes</strong>
-          <p>Run <code>sudo tail -30 /var/log/cloud-init-output.log</code> on the web server. Common issues:</p>
-            <ul>
-              <li><strong>index=security_logs returns zero events</strong> — confirm <code>rsyslog</code> is running on the web server (<code>sudo systemctl status rsyslog</code>) and that <code>/var/log/secure</code> exists. The User Data script installs and starts rsyslog automatically.</li>
-              <li><strong>Forwarder not connecting to Splunk</strong> — confirm <code>SPLUNK_IP</code> is the correct private IP of Instance 1 and that port 9997 is open in the Splunk server security group.</li>
-              <li><strong>No web server response on port 80</strong> — confirm the security group allows HTTP and that the instance has a public IP assigned.</li>
-              <li><strong>Script did not complete</strong> — if the RPM download failed, confirm <code>UF_RPM_URL</code> is a valid RPM URL (ends in <code>.x86_64.rpm</code>, not <code>.deb</code>).</li>
-            </ul>
-          </div>
+        <div class="panel-card">
+          <h3>Panel 4 — Login practice activity</h3>
+          <p>This panel shows how many safe login practice events were created for each user.</p>
+          <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=simple_login | stats count by user</code></pre>
+</div>
+          <p><strong>Visualisation:</strong> Column Chart or Table.</p>
+        </div>
+        <div class="panel-card">
+          <h3>Panel 5 — Splunk VM login results</h3>
+          <p>This panel shows success and password failure training events from the Splunk Enterprise VM.</p>
+          <div class="spl-block">
+  <div class="code-header"><span>SPL</span><button type="button" onclick="copyBlock(this)">Copy</button></div>
+  <pre><code>index=securitylogs sourcetype=linux_secure login_monitor | stats count by result</code></pre>
+</div>
+          <p><strong>Visualisation:</strong> Pie Chart, Column Chart, or Table.</p>
         </div>
       </div>
+      <h3>How to add the remaining panels</h3>
+      <ol>
+        <li>Run the next search in <strong>Search &amp; Reporting</strong>.</li>
+        <li>Open the <strong>Visualisation</strong> tab and select the suggested visualisation.</li>
+        <li>Click <strong>Save As → Dashboard Panel</strong>.</li>
+        <li>Choose <strong>Existing dashboard</strong>.</li>
+        <li>Select <strong>Beginner Log Analysis Dashboard</strong>.</li>
+        <li>Give the panel a clear title.</li>
+        <li>Click <strong>Save</strong>.</li>
+      </ol>
+      <h3>Suggested layout</h3>
+      <ul>
+        <li>Place <strong>Total events</strong> at the top.</li>
+        <li>Place <strong>Events over time</strong> below it as a wide chart.</li>
+        <li>Place <strong>Top pages visited</strong> and <strong>Login practice activity</strong> side by side.</li>
+        <li>Place <strong>Splunk VM login results</strong> under the login activity panel or beside it if there is enough space.</li>
+        <li>Use simple panel names and avoid too many colours.</li>
+      </ul>
+      <div class="success"><strong>Expected result</strong><p>Learners can refresh the dashboard, visit the web pages again, and see the panels update with new events.</p></div>
     </section>
 
-        <!-- ══════════════════════════════════════
-         SECTION 4 — ARCHITECTURE
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="architecture">
-      <div class="section-header">
-        <span class="section-num">04</span>
-        <h2>Splunk Architecture Overview</h2>
-      </div>
-      <p class="section-intro">Now that both instances are running, it is useful to see how they relate to each other. The diagram below reflects exactly what you have deployed — data flows from the web server on the right, through the forwarder agent, across the private VPC network to the Splunk indexer, and up to the search interface you access in your browser.</p>
-      <div class="arch-diagram">
-        <div class="arch-row">
-          <span class="arch-tag">Data Sources</span>
-          <div><div class="arch-val">Apache access log &nbsp;·&nbsp; Apache error log &nbsp;·&nbsp; /var/log/secure</div><div class="arch-sub">Generated on EC2 Instance 2 (webserver — Amazon Linux 2023) at /var/log/httpd/ and /var/log/secure</div></div>
-        </div>
-        <div class="arch-row arrow">↓ &nbsp; Tailed continuously by the agent on the same machine</div>
-        <div class="arch-row highlight">
-          <span class="arch-tag">Universal Forwarder</span>
-          <div><div class="arch-val">Lightweight agent — EC2 Instance 2 (webserver, Amazon Linux 2023, public subnet)</div><div class="arch-sub">Sends logs over TCP port 9997 to the Splunk server's private IP (10.0.0.x) within the VPC — installed automatically via User Data on first boot</div></div>
-        </div>
-        <div class="arch-row arrow">↓ &nbsp; Encrypted stream over the VPC internal network — both instances in public subnet 10.0.0.0/24, communicating via private IPs</div>
-        <div class="arch-row highlight">
-          <span class="arch-tag">Indexer</span>
-          <div><div class="arch-val">Splunk Enterprise — EC2 Instance 1 (splunk-server)</div><div class="arch-sub">Receives, parses, timestamps, and stores events in the webserver_logs and security_logs indexes</div></div>
-        </div>
-        <div class="arch-row arrow">↓ &nbsp; SPL queries run against stored index data</div>
-        <div class="arch-row">
-          <span class="arch-tag">Search Head</span>
-          <div><div class="arch-val">Splunk Web — EC2 Instance 1, port 8000</div><div class="arch-sub">Dashboards, alerts, and the SPL search bar — accessed from your browser at http://&lt;SPLUNK-PUBLIC-IP&gt;:8000</div></div>
-        </div>
-      </div>
-      <p style="font-size:0.85rem;color:var(--ink-light);margin-top:1rem;">In this workshop the Indexer and Search Head are co-located on the same instance — called a <em>standalone</em> deployment. This is appropriate for labs. In production, these roles run on separate dedicated servers to distribute the query load.</p>
+    <section id="practice">
+      <div class="section-title"><span class="num">12</span><h2>Practice exercises</h2></div>
+      <p>Use these short activities to check understanding.</p>
+      <ol>
+        <li>Visit <code>/about.html</code> three times, then run <code>index=webserverlogs | timechart count</code>. What changed?</li>
+        <li>Visit <code>/resources.html</code> two times, then run <code>index=webserverlogs sourcetype=access_combined | top uri_path</code>. Which page is now near the top?</li>
+        <li>Open <code>/login.php?user=teacher</code> and <code>/login.php?user=student1</code>, then run <code>index=securitylogs | stats count by user</code>. Which users appear?</li>
+        <li>Run <code>index=webserverlogs | stats count by sourcetype</code>. What log types are shown?</li>
+        <li>Run <code>index=securitylogs sourcetype=linux_secure login_monitor | stats count by result</code>. How many success and failure events appear?</li>
+        <li>Explain the data journey in one sentence: server → log file → Splunk index → search → dashboard.</li>
+      </ol>
     </section>
 
-    <div class="divider"></div>
+    <section id="academy">
+      <div class="section-title"><span class="num">13</span><h2>Splunk Academy and certification introduction</h2></div>
+      <p>This final section connects the workshop to official Splunk learning pathways. The workshop gives a practical starting point. Splunk Academy, Splunk Education, and Splunk Certification provide the next structured steps for learners who want to continue.</p>
 
-    <!-- ══════════════════════════════════════
-         SECTION 5 — SPL
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="spl">
-      <div class="section-header">
-        <span class="section-num">05</span>
-        <h2>SPL Fundamentals</h2>
-      </div>
-      <p class="section-intro">Search Processing Language (SPL) is the query language built into Splunk. It follows a pipeline model — each command receives the output of the previous one, separated by a pipe character (<code>|</code>). Run the queries below in order in Splunk Web. Go to <strong>Search &amp; Reporting</strong> and set the time range to <strong>Last 15 minutes</strong> before running each one.</p>
+      <div class="note"><strong>What is Splunk Academy?</strong><p>Splunk Academy is the learning and training pathway connected to Splunk Education. It includes self-paced learning, official course catalogues, learning paths, and certification preparation. For a classroom setting, it is useful because students can continue practising after the workshop using official materials.</p></div>
 
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Query 1</span><h3>Confirm log data is arriving</h3></div>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs <span class="sp-pipe">|</span> <span class="sp-cmd">head</span> <span class="sp-num">20</span></pre>
-        </div>
-        <p>You should see the 20 most recent HTTP requests logged by Apache. Each line is one event — one web request.</p>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Query 2</span><h3>Count events by HTTP status code</h3></div>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">stats</span> <span class="sp-fn">count</span> <span class="sp-cmd">by</span> <span class="sp-field">status</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">sort</span> -<span class="sp-field">count</span></pre>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Query 3</span><h3>Plot event volume over time</h3></div>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs
-<span class="sp-pipe">|</span> <span class="sp-cmd">timechart</span> <span class="sp-field">span</span>=<span class="sp-num">1m</span> <span class="sp-fn">count</span></pre>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Query 4</span><h3>Extract a field from raw text using rex</h3></div>
-        <p>The <code>rex</code> command extracts fields from unstructured text using named regex capture groups. This is essential for logs Splunk has not automatically parsed.</p>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=security_logs sourcetype=linux_secure
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"from (?P&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">stats</span> <span class="sp-fn">count</span> <span class="sp-cmd">by</span> <span class="sp-field">src_ip</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">sort</span> -<span class="sp-field">count</span></pre>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Reference</span><h3>Core SPL command reference</h3></div>
-        <table>
-          <tr><th>Command</th><th>What it does</th><th>Example</th></tr>
-          <tr><td>search</td><td>Filter events by keyword or field value</td><td><code>index=main status=404</code></td></tr>
-          <tr><td>stats</td><td>Aggregate data (count, sum, avg, dc)</td><td><code>stats count by src_ip</code></td></tr>
-          <tr><td>timechart</td><td>Plot aggregated values over time</td><td><code>timechart span=5m count by status</code></td></tr>
-          <tr><td>rex</td><td>Extract named fields using regex</td><td><code>rex "user=(?P&lt;user&gt;\w+)"</code></td></tr>
-          <tr><td>eval</td><td>Create or compute new fields</td><td><code>eval risk=if(count&gt;10,"high","low")</code></td></tr>
-          <tr><td>where</td><td>Filter rows after aggregation</td><td><code>where count &gt; 5</code></td></tr>
-          <tr><td>table</td><td>Select and name output columns</td><td><code>table src_ip, count, risk</code></td></tr>
-          <tr><td>sort</td><td>Order results ascending or descending</td><td><code>sort -count</code></td></tr>
-          <tr><td>dedup</td><td>Remove duplicate events by a field</td><td><code>dedup src_ip</code></td></tr>
-          <tr><td>lookup</td><td>Enrich events with an external data file</td><td><code>lookup geoip src_ip</code></td></tr>
-        </table>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- ══════════════════════════════════════
-         SECTION 6 — ATTACKS
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="attacks">
-      <div class="section-header">
-        <span class="section-num">06</span>
-        <h2>Attack Demonstrations and Detection</h2>
-      </div>
-      <p class="section-intro">The following three demonstrations simulate attack patterns a SOC analyst encounters regularly. Each follows the same structure: run the attack against the web server, then switch to Splunk Web and run the detection query to find the evidence in the logs.</p>
-
-      <div class="callout callout-danger">
-        <span class="callout-icon">⚠</span>
-        <div class="callout-body">
-          <strong>Authorised use only</strong>
-          <p>Run these commands exclusively against <strong>EC2 Instance 2 (webserver)</strong> within your own AWS Academy Learner Lab environment. Executing these commands against any system you do not own or have explicit permission to test is illegal. This lab exists solely for education.</p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Attack 1</span><h3>SSH Brute Force</h3></div>
-        <p>A brute force attack systematically tries many passwords against an authentication service. The tool <code>hydra</code> automates this. Every failed attempt writes a <em>Failed password</em> entry to <code>/var/log/auth.log</code> on the web server, which the forwarder ships to Splunk's <code>security_logs</code> index.</p>
-        <p>Run the attack from the <strong>Splunk server browser terminal</strong> (Instance 1). Target the web server's <strong>public IP</strong> on port 22. Password authentication is enabled on the web server via User Data — each failed attempt writes a <em>Failed password</em> entry to <code>/var/log/secure</code> and flows into Splunk in real time.</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — Splunk server browser terminal (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Install hydra on the Splunk server</span>
-sudo apt-get install -y hydra
-
-<span class="cm"># Create a small wordlist of passwords to try</span>
-cat &gt; /tmp/wordlist.txt &lt;&lt; EOF
-password
-123456
-admin
-letmein
-workshop
-splunk
-amazon
-ec2user
-Password1
-Welcome1
-EOF
-
-<span class="cm"># Run the brute force — replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
-hydra -l ec2-user -P /tmp/wordlist.txt \
-  ssh://<span class="ck">&lt;WEBSERVER-PUBLIC-IP&gt;</span> \
-  -t 4 -vV 2&gt;&amp;1 | tail -30</pre>
-        </div>
-        <p>Wait for hydra to finish, then switch to Splunk Web and run this detection query:</p>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Detect SSH Brute Force</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=security_logs sourcetype=linux_secure <span class="sp-str">"Failed password"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"from (?P&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"for (?:invalid user )?(?P&lt;username&gt;\w+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">stats</span>
-    <span class="sp-fn">count</span>            <span class="sp-cmd">as</span> <span class="sp-field">attempts</span>
-    <span class="sp-fn">dc</span>(<span class="sp-field">username</span>)      <span class="sp-cmd">as</span> <span class="sp-field">usernames_tried</span>
-    <span class="sp-fn">earliest</span>(_time)  <span class="sp-cmd">as</span> <span class="sp-field">first_seen</span>
-    <span class="sp-fn">latest</span>(_time)    <span class="sp-cmd">as</span> <span class="sp-field">last_seen</span>
-    <span class="sp-cmd">by</span> <span class="sp-field">src_ip</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-field">attempts</span> &gt; <span class="sp-num">3</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">duration_sec</span> = <span class="sp-field">last_seen</span> - <span class="sp-field">first_seen</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">severity</span> = <span class="sp-fn">case</span>(
-    <span class="sp-field">attempts</span> &gt; <span class="sp-num">50</span>, <span class="sp-str">"CRITICAL"</span>,
-    <span class="sp-field">attempts</span> &gt; <span class="sp-num">20</span>, <span class="sp-str">"HIGH"</span>,
-    <span class="sp-field">attempts</span> &gt; <span class="sp-num">5</span>,  <span class="sp-str">"MEDIUM"</span>,
-    <span class="sp-fn">true</span>(),          <span class="sp-str">"LOW"</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">sort</span> -<span class="sp-field">attempts</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">table</span> <span class="sp-field">src_ip</span>, <span class="sp-field">attempts</span>, <span class="sp-field">usernames_tried</span>, <span class="sp-field">severity</span>, <span class="sp-field">duration_sec</span></pre>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Attack 2</span><h3>SQL Injection</h3></div>
-        <p>SQL injection sends malicious SQL syntax as a URL parameter. Even when the application rejects the input, Apache logs the full request URI — including the injected payload — in <code>/var/log/httpd/access_log</code>. Run from the <strong>Splunk server browser terminal</strong> (Instance 1).</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — Splunk server browser terminal (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
-TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
-
-payloads=(
-  <span class="cs">"' OR '1'='1"</span>
-  <span class="cs">"' OR 1=1--"</span>
-  <span class="cs">"' UNION SELECT NULL,NULL--"</span>
-  <span class="cs">"admin'--"</span>
-  <span class="cs">"1; DROP TABLE users--"</span>
-  <span class="cs">"' AND SLEEP(5)--"</span>
-  <span class="cs">"' OR 'x'='x"</span>
-)
-
-for payload in <span class="cs">"${payloads[@]}"</span>; do
-  encoded=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" <span class="cs">"${payload}"</span>)
-  http_code=$(curl -s -o /dev/null -w "%{http_code}"     <span class="cs">"${TARGET}/login.php?user=${encoded}&amp;pass=test"</span>)
-  echo <span class="cs">"HTTP ${http_code}  →  ${payload}"</span>
-  sleep 0.5
-done</pre>
-        </div>
-
-        <p style="font-size:0.88rem;color:var(--ink-light);margin:1rem 0;">You should see <code>HTTP 200</code> for every payload — this confirms the requests reached Apache and were logged. Now switch to Splunk Web to find them.</p>
-
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>Run the diagnostic query first</strong>
-            <p>Splunk auto-extracts a <code>uri_query</code> field from Apache logs, but on Amazon Linux 2023 with <code>sourcetype=apache_access</code> this field is often empty. The detection query below reads directly from <code>_raw</code> using <code>rex</code> — it always works regardless of which fields Splunk has parsed. First run the diagnostic below to confirm your events are present, then run the detection query.</p>
-          </div>
-        </div>
-
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Step 1: confirm events exist (run first)</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">head</span> <span class="sp-num">5</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">table</span> _time, _raw</pre>
-        </div>
-
-        <p style="font-size:0.85rem;color:var(--ink-light);margin:0.5rem 0 1rem;">You should see raw Apache log lines containing <code>login.php?user=</code> followed by the URL-encoded payloads. If you see these events, the detection query below will find them.</p>
-
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Step 2: detect SQL injection from raw logs</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"GET (?P&lt;full_uri&gt;[^ ]+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">decoded</span> = <span class="sp-fn">urldecode</span>(<span class="sp-field">full_uri</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">match</span>(<span class="sp-field">decoded</span>, <span class="sp-str">"(?i)(union|select|drop|sleep|or 1=1|admin)"</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">src_ip</span> = <span class="sp-fn">coalesce</span>(<span class="sp-field">clientip</span>, <span class="sp-fn">mvindex</span>(<span class="sp-fn">split</span>(_raw,<span class="sp-str">" "</span>),<span class="sp-num">0</span>))
-<span class="sp-pipe">|</span> <span class="sp-cmd">stats</span>
-    <span class="sp-fn">count</span>            <span class="sp-cmd">as</span> <span class="sp-field">injection_attempts</span>
-    <span class="sp-fn">values</span>(<span class="sp-field">decoded</span>) <span class="sp-cmd">as</span> <span class="sp-field">payloads_seen</span>
-    <span class="sp-cmd">by</span> <span class="sp-field">src_ip</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">sort</span> -<span class="sp-field">injection_attempts</span></pre>
-        </div>
-      </div>
-
-            <div class="step">
-        <div class="step-header"><span class="step-badge">Attack 3</span><h3>Directory Traversal</h3></div>
-        <p>A directory traversal attack uses <code>../</code> sequences — sometimes URL-encoded — to try to access files outside the web root such as <code>/etc/passwd</code>. Apache logs every attempt in <code>/var/log/httpd/access_log</code> even when it returns 404. Run from the <strong>Splunk server browser terminal</strong> (Instance 1).</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">bash — Splunk server browser terminal (Instance 1)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="cm"># Replace &lt;WEBSERVER-PUBLIC-IP&gt; with the public IP of Instance 2</span>
-TARGET=<span class="ck">"http://&lt;WEBSERVER-PUBLIC-IP&gt;"</span>
-
-traversal_paths=(
-  <span class="cs">"../../../../etc/passwd"</span>
-  <span class="cs">"../../../etc/shadow"</span>
-  <span class="cs">"..%2F..%2F..%2Fetc%2Fpasswd"</span>
-  <span class="cs">"%2e%2e%2f%2e%2e%2fetc%2fpasswd"</span>
-  <span class="cs">"....//....//etc/passwd"</span>
-  <span class="cs">"/admin/../../../etc/passwd"</span>
-)
-
-for path in <span class="cs">"${traversal_paths[@]}"</span>; do
-  http_code=$(curl -s -o /dev/null -w "%{http_code}" <span class="cs">"${TARGET}/${path}"</span>)
-  echo <span class="cs">"HTTP ${http_code}  →  ${path}"</span>
-  sleep 0.3
-done</pre>
-        </div>
-
-        <p style="font-size:0.88rem;color:var(--ink-light);margin:1rem 0;">HTTP 404 responses are expected — Apache correctly blocks the traversal but still logs every attempt. The log entry is what matters for detection.</p>
-
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>Run the diagnostic query first</strong>
-            <p>The fields <code>uri</code>, <code>uri_query</code>, and <code>clientip</code> are not reliably auto-extracted by Splunk when using <code>sourcetype=apache_access</code> on Amazon Linux 2023. The detection query below reads directly from <code>_raw</code> using <code>rex</code> — the same approach that works for Attack 2.</p>
-          </div>
-        </div>
-
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Step 1: confirm traversal events exist</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"GET (?P&lt;full_uri&gt;[^ ]+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">decoded</span> = <span class="sp-fn">urldecode</span>(<span class="sp-field">full_uri</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">like</span>(<span class="sp-field">decoded</span>, <span class="sp-str">"%etc%"</span>) OR <span class="sp-fn">like</span>(<span class="sp-field">decoded</span>, <span class="sp-str">"%shadow%"</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">table</span> _time, _raw</pre>
-        </div>
-
-        <p style="font-size:0.85rem;color:var(--ink-light);margin:0.5rem 0 1rem;">You should see log lines containing <code>passwd</code> or <code>shadow</code> in the URI. If these appear, the detection query below will find them.</p>
-
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Step 2: detect directory traversal attempts</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=webserver_logs sourcetype=apache_access
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"^(?P&lt;src_ip&gt;\S+) "</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"GET (?P&lt;full_uri&gt;[^ ]+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">" (?P&lt;status&gt;\d{3}) "</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">decoded</span> = <span class="sp-fn">urldecode</span>(<span class="sp-field">full_uri</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-fn">match</span>(<span class="sp-field">decoded</span>, <span class="sp-str">"[.][.][/\\]"</span>)
-    OR <span class="sp-fn">match</span>(<span class="sp-field">full_uri</span>, <span class="sp-str">"%2e%2e|%252e|2[Ff]\.\."</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">stats</span>
-    <span class="sp-fn">count</span>                 <span class="sp-cmd">as</span> <span class="sp-field">traversal_attempts</span>
-    <span class="sp-fn">values</span>(<span class="sp-field">decoded</span>)       <span class="sp-cmd">as</span> <span class="sp-field">paths_tried</span>
-    <span class="sp-fn">values</span>(<span class="sp-field">status</span>)        <span class="sp-cmd">as</span> <span class="sp-field">http_responses</span>
-    <span class="sp-cmd">by</span> <span class="sp-field">src_ip</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">risk_score</span> = <span class="sp-field">traversal_attempts</span> * <span class="sp-num">10</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">sort</span> -<span class="sp-field">traversal_attempts</span></pre>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- ══════════════════════════════════════
-         SECTION 7 — DASHBOARD
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="dashboard">
-      <div class="section-header">
-        <span class="section-num">07</span>
-        <h2>Building the SOC Threat Dashboard</h2>
-      </div>
-      <p class="section-intro">A SOC dashboard gives analysts a single view of current threat activity without running individual searches. The XML below creates a real-time dashboard with KPI panels, an attack timeline chart, a top attacker table, and an authentication failure log — all updating every 30 seconds.</p>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 1</span><h3>Create a new dashboard</h3></div>
-        <p>In Splunk Web, click <strong>Dashboards</strong> in the top navigation, then <strong>Create New Dashboard</strong>. Set the title to <em>SOC Threat Intelligence</em>, select <strong>Classic Dashboard</strong>, and click <strong>Create</strong>. Once the editor loads, click <strong>Source</strong> in the top-right of the editor panel to switch to raw XML mode.</p>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Step 2</span><h3>Paste the dashboard XML and save</h3></div>
-        <p>Select all existing content in the source editor (Ctrl+A), replace it with the XML below, then click <strong>Save</strong>.</p>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">Splunk Dashboard XML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-          <pre>&lt;dashboard theme="dark"&gt;
-  &lt;label&gt;SOC Threat Intelligence&lt;/label&gt;
-  &lt;description&gt;Real-time security monitoring — Workshop Lab&lt;/description&gt;
-
-  &lt;!-- Row 1: KPI single-value panels --&gt;
-  &lt;row&gt;
-    &lt;panel&gt;
-      &lt;title&gt;Total Events (24 h)&lt;/title&gt;
-      &lt;single&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=webserver_logs OR index=security_logs earliest=-24h | stats count&lt;/query&gt;
-          &lt;earliest&gt;-24h&lt;/earliest&gt;&lt;latest&gt;now&lt;/latest&gt;
-        &lt;/search&gt;
-        &lt;option name="useColors"&gt;1&lt;/option&gt;
-      &lt;/single&gt;
-    &lt;/panel&gt;
-    &lt;panel&gt;
-      &lt;title&gt;Brute Force Source IPs (1 h)&lt;/title&gt;
-      &lt;single&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=security_logs "Failed password" earliest=-1h
-| rex field=_raw "from (?P&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)"
-| stats dc(src_ip) as attackers&lt;/query&gt;
-          &lt;earliest&gt;-1h&lt;/earliest&gt;&lt;latest&gt;now&lt;/latest&gt;
-        &lt;/search&gt;
-        &lt;option name="rangeColors"&gt;["0x53A051","0xF8BE34","0xDC4E41"]&lt;/option&gt;
-        &lt;option name="rangeValues"&gt;[0,1,5]&lt;/option&gt;
-        &lt;option name="useColors"&gt;1&lt;/option&gt;
-      &lt;/single&gt;
-    &lt;/panel&gt;
-    &lt;panel&gt;
-      &lt;title&gt;SQL Injection Attempts (24 h)&lt;/title&gt;
-      &lt;single&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=webserver_logs earliest=-24h
-| rex field=_raw "GET (?P&lt;full_uri&gt;[^ ]+)"
-| eval decoded=urldecode(full_uri)
-| where match(decoded,"(?i)(union|select|drop|sleep|or 1=1|admin)")
-| stats count&lt;/query&gt;
-          &lt;earliest&gt;-24h&lt;/earliest&gt;
-        &lt;/search&gt;
-        &lt;option name="useColors"&gt;1&lt;/option&gt;
-        &lt;option name="rangeColors"&gt;["0x53A051","0xF8BE34","0xDC4E41"]&lt;/option&gt;
-        &lt;option name="rangeValues"&gt;[0,1,10]&lt;/option&gt;
-      &lt;/single&gt;
-    &lt;/panel&gt;
-    &lt;panel&gt;
-      &lt;title&gt;Directory Traversal (24 h)&lt;/title&gt;
-      &lt;single&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=webserver_logs earliest=-24h
-| rex field=_raw &quot;GET (?P&lt;full_uri&gt;[^ ]+)&quot;
-| eval decoded=urldecode(full_uri)
-| where match(decoded,"\.\.[\\/]") OR match(uri,"%2e%2e|%252e")
-| stats count&lt;/query&gt;
-          &lt;earliest&gt;-24h&lt;/earliest&gt;
-        &lt;/search&gt;
-        &lt;option name="useColors"&gt;1&lt;/option&gt;
-        &lt;option name="rangeColors"&gt;["0x53A051","0xF8BE34","0xDC4E41"]&lt;/option&gt;
-        &lt;option name="rangeValues"&gt;[0,1,5]&lt;/option&gt;
-      &lt;/single&gt;
-    &lt;/panel&gt;
-  &lt;/row&gt;
-
-  &lt;!-- Row 2: Attack activity timeline --&gt;
-  &lt;row&gt;
-    &lt;panel&gt;
-      &lt;title&gt;Attack Activity — Last 6 Hours&lt;/title&gt;
-      &lt;chart&gt;
-        &lt;search&gt;
-          &lt;query&gt;(index=security_logs "Failed password")
-OR (index=webserver_logs ("union" OR "select" OR "drop" OR "sleep"))
-OR (index=webserver_logs ("passwd" OR "shadow" OR "%2e%2e" OR "etc"))
-| eval attack_type=case(
-    searchmatch("Failed password"), "Brute Force",
-    searchmatch("union") OR searchmatch("select"), "SQL Injection",
-    searchmatch("passwd") OR searchmatch("%2e%2e"), "Dir Traversal",
-    true(), "Other")
-| timechart span=5m count by attack_type&lt;/query&gt;
-          &lt;earliest&gt;-6h&lt;/earliest&gt;&lt;latest&gt;now&lt;/latest&gt;
-        &lt;/search&gt;
-        &lt;option name="charting.chart"&gt;area&lt;/option&gt;
-        &lt;option name="charting.chart.stackMode"&gt;stacked&lt;/option&gt;
-        &lt;option name="charting.legend.placement"&gt;bottom&lt;/option&gt;
-        &lt;option name="charting.seriesColors"&gt;["0xDC4E41","0xF8BE34","0x00A4FF"]&lt;/option&gt;
-      &lt;/chart&gt;
-    &lt;/panel&gt;
-  &lt;/row&gt;
-
-  &lt;!-- Row 3: Top attackers and HTTP response codes --&gt;
-  &lt;row&gt;
-    &lt;panel&gt;
-      &lt;title&gt;Top Attacker IPs (24 h)&lt;/title&gt;
-      &lt;table&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=security_logs OR index=webserver_logs earliest=-24h
-| rex field=_raw "^(?P&lt;src_ip&gt;\S+) "
-| search src_ip=*
-| stats count as total_events, dc(sourcetype) as attack_vectors by src_ip
-| sort -total_events | head 15
-| eval threat_level=case(
-    total_events&gt;100,"Critical",
-    total_events&gt;50,"High",
-    total_events&gt;10,"Medium",
-    true(),"Low")&lt;/query&gt;
-          &lt;earliest&gt;-24h&lt;/earliest&gt;
-        &lt;/search&gt;
-      &lt;/table&gt;
-    &lt;/panel&gt;
-    &lt;panel&gt;
-      &lt;title&gt;HTTP Response Codes (6 h)&lt;/title&gt;
-      &lt;chart&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=webserver_logs sourcetype=apache_access earliest=-6h
-| rex field=_raw " (?P&lt;status&gt;\d{3}) "
-| stats count by status
-| sort -count&lt;/query&gt;
-          &lt;earliest&gt;-6h&lt;/earliest&gt;
-        &lt;/search&gt;
-        &lt;option name="charting.chart"&gt;pie&lt;/option&gt;
-      &lt;/chart&gt;
-    &lt;/panel&gt;
-  &lt;/row&gt;
-
-  &lt;!-- Row 4: Recent authentication failures --&gt;
-  &lt;row&gt;
-    &lt;panel&gt;
-      &lt;title&gt;Recent Authentication Failures (Last Hour)&lt;/title&gt;
-      &lt;table&gt;
-        &lt;search&gt;
-          &lt;query&gt;index=security_logs sourcetype=linux_secure "Failed password" earliest=-1h
-| rex field=_raw "from (?P&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)"
-| rex field=_raw "for (?:invalid user )?(?P&lt;user&gt;\w+)"
-| table _time, src_ip, user, host
-| sort -_time&lt;/query&gt;
-          &lt;earliest&gt;-1h&lt;/earliest&gt;
-        &lt;/search&gt;
-      &lt;/table&gt;
-    &lt;/panel&gt;
-  &lt;/row&gt;
-&lt;/dashboard&gt;</pre>
-        </div>
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>Enable auto-refresh</strong>
-            <p>After saving, click the pencil (Edit) icon on the dashboard, then the clock icon. Set the refresh interval to <strong>Every 30 seconds</strong> and save. The dashboard will now update live while you run attacks — project it on screen for maximum demonstration impact.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- ══════════════════════════════════════
-         SECTION 8 — INCIDENT RESPONSE
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="incident">
-      <div class="section-header">
-        <span class="section-num">08</span>
-        <h2>Incident Response Workflow</h2>
-      </div>
-      <p class="section-intro">Detection is only the first step. A mature SOC follows a structured process to investigate, contain, and document each incident. The table below maps each phase of incident response to the action taken in Splunk and the AWS console.</p>
-
+      <h3>Recommended learning pathway after this workshop</h3>
       <table>
-        <tr><th>Phase</th><th>SOC Action</th><th>Tool Used</th></tr>
-        <tr><td>1. Detection</td><td>Scheduled alert fires — 10+ failed SSH attempts from one IP in 5 minutes</td><td>Splunk alert configured under <strong>Settings → Alerts</strong></td></tr>
-        <tr><td>2. Triage</td><td>Analyst reviews alert severity, confirms the IP is not an internal scanner</td><td>Splunk dashboard — top attacker IPs panel</td></tr>
-        <tr><td>3. Investigation</td><td>Determine whether any attempt succeeded and which accounts were targeted</td><td>SPL query below — checks for successful logins from the attacker IP</td></tr>
-        <tr><td>4. Containment</td><td>Block the attacking IP at the security group level</td><td>AWS Console → EC2 → Security Groups → Edit inbound rules → Deny the IP</td></tr>
-        <tr><td>5. Documentation</td><td>Record the timeline, affected systems, and actions taken</td><td>Export SPL results to CSV; attach to ITSM ticket</td></tr>
-        <tr><td>6. Post-Incident</td><td>Review alert thresholds, harden SSH configuration, consider fail2ban</td><td>Dashboard used in debrief to replay the event timeline</td></tr>
+        <tr><th>Stage</th><th>Focus</th><th>Good next step</th></tr>
+        <tr><td>1. Beginner user</td><td>Searching, fields, events, reports, and dashboards.</td><td>Complete free introductory Splunk training and repeat the searches from this workshop.</td></tr>
+        <tr><td>2. Core user</td><td>Use SPL confidently, understand fields, save reports, and create basic alerts and dashboards.</td><td>Prepare for <strong>Splunk Core Certified User</strong>.</td></tr>
+        <tr><td>3. Power user</td><td>Build stronger searches and use knowledge objects such as field aliases, event types, macros, and data models.</td><td>Prepare for <strong>Splunk Core Certified Power User</strong>.</td></tr>
+        <tr><td>4. Administrator</td><td>Manage Splunk Enterprise, users, indexes, forwarders, inputs, and platform health.</td><td>Prepare for <strong>Splunk Enterprise Certified Admin</strong> after meeting the required prerequisite.</td></tr>
       </table>
 
-      <div class="step" style="margin-top:1.5rem;">
-        <div class="step-header"><span class="step-badge">SPL</span><h3>Check whether a brute force attack succeeded</h3></div>
-        <p>Run this query during the Investigation phase. If the result set is not empty, a compromise may have occurred and the account should be locked immediately.</p>
-        <div class="spl-block">
-          <div class="spl-header"><span class="spl-label">SPL — Successful Login After Failed Attempts</span><button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
-          <pre>index=security_logs sourcetype=linux_secure
-<span class="sp-pipe">|</span> <span class="sp-cmd">rex</span> field=_raw <span class="sp-str">"from (?P&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)"</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">outcome</span> = <span class="sp-fn">case</span>(
-    <span class="sp-fn">searchmatch</span>(<span class="sp-str">"Failed password"</span>),   <span class="sp-str">"failure"</span>,
-    <span class="sp-fn">searchmatch</span>(<span class="sp-str">"Accepted password"</span>), <span class="sp-str">"success"</span>,
-    <span class="sp-fn">true</span>(), <span class="sp-str">"other"</span>)
-<span class="sp-pipe">|</span> <span class="sp-cmd">stats</span>
-    <span class="sp-fn">sum</span>(<span class="sp-fn">eval</span>(<span class="sp-field">outcome</span>=<span class="sp-str">"failure"</span>)) <span class="sp-cmd">as</span> <span class="sp-field">failures</span>
-    <span class="sp-fn">sum</span>(<span class="sp-fn">eval</span>(<span class="sp-field">outcome</span>=<span class="sp-str">"success"</span>)) <span class="sp-cmd">as</span> <span class="sp-field">successes</span>
-    <span class="sp-cmd">by</span> <span class="sp-field">src_ip</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">where</span> <span class="sp-field">failures</span> &gt; <span class="sp-num">3</span> AND <span class="sp-field">successes</span> &gt; <span class="sp-num">0</span>
-<span class="sp-pipe">|</span> <span class="sp-cmd">eval</span> <span class="sp-field">alert</span> = <span class="sp-str">"POTENTIAL COMPROMISE — investigate immediately"</span></pre>
-        </div>
-      </div>
+      <h3>Beginner-friendly certification overview</h3>
+      <table>
+        <tr><th>Certification</th><th>Who it suits</th><th>Plain-language description</th></tr>
+        <tr><td><strong>Splunk Core Certified User</strong></td><td>New Splunk users and students after an introductory lab.</td><td>Shows that a learner understands Splunk basics such as searching, fields, lookups, alerts, basic statistical reports, and dashboards.</td></tr>
+        <tr><td><strong>Splunk Core Certified Power User</strong></td><td>Learners who already understand basic searching and want stronger reporting skills.</td><td>Shows broader skill with SPL, reports, dashboards, field knowledge, event types, macros, workflow actions, and data models.</td></tr>
+        <tr><td><strong>Splunk Enterprise Certified Admin</strong></td><td>Technical staff who manage Splunk Enterprise environments.</td><td>Shows administration skill, including data inputs, forwarders, users, indexes, configuration, and daily platform management. Splunk lists <strong>Splunk Core Certified Power User</strong> as a prerequisite.</td></tr>
+        <tr><td><strong>Splunk Cloud Certified Admin</strong></td><td>Teams using Splunk Cloud rather than self-managed Splunk Enterprise.</td><td>Focuses on daily Splunk Cloud administration, data inputs, forwarders, user accounts, and troubleshooting.</td></tr>
+      </table>
+
+      <div class="warning"><strong>Certification details can change</strong><p>Exam names, prerequisites, prices, and registration processes may change. Always check the official Splunk Certification pages before advising students or planning assessment pathways.</p></div>
+
+      <h3>Useful official links</h3>
+      <ul>
+        <li><a href="https://www.splunk.com/en_us/training.html" target="_blank" rel="noopener">Splunk Training and Certification</a></li>
+        <li><a href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank" rel="noopener">Splunk free training courses</a></li>
+        <li><a href="https://www.splunk.com/en_us/training/certification.html" target="_blank" rel="noopener">Splunk Certification overview</a></li>
+        <li><a href="https://www.splunk.com/en_us/resources/splunk-academic-alliance.html" target="_blank" rel="noopener">Splunk Academic Alliance</a></li>
+      </ul>
+
+      <h3>How to introduce certification in class</h3>
+      <ol>
+        <li>Start with the practical skills from this workshop: indexes, sourcetypes, searches, reports, and dashboards.</li>
+        <li>Explain that certification is optional, but useful for students who want evidence of Splunk skills.</li>
+        <li>Present <strong>Splunk Core Certified User</strong> as the most suitable first target after introductory practice.</li>
+        <li>Present <strong>Splunk Core Certified Power User</strong> as the next step for students who want deeper SPL and reporting skills.</li>
+        <li>Present <strong>Splunk Enterprise Certified Admin</strong> as a later pathway for students interested in system administration, platform management, or SOC infrastructure roles.</li>
+      </ol>
+
     </section>
 
-    <div class="divider"></div>
-
-    <!-- ══════════════════════════════════════
-         SECTION 9 — ACADEMY
-    ══════════════════════════════════════ -->
-    <section class="lab-section" id="academy">
-      <div class="section-header">
-        <span class="section-num">09</span>
-        <h2>Splunk Academic Alliance and Certification Pathways</h2>
-      </div>
-      <p class="section-intro">Splunk's Academic Alliance programme provides enrolled students with free access to eLearning courses and discounted or waived certification exam vouchers. The certifications listed below are recognised by employers across SOC, cloud security, and SIEM engineering roles.</p>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Resource</span><h3>Accessing the Academic Alliance</h3></div>
-        <p>Register at <strong>splunk.com/en_us/training/academic-alliance.html</strong> using your institution email address. Once approved, you receive:</p>
-        <table>
-          <tr><th>Benefit</th><th>Details</th></tr>
-          <tr><td>Free eLearning</td><td>Splunk Fundamentals 1, 2, and 3 — each valued at approximately $500 USD</td></tr>
-          <tr><td>Exam vouchers</td><td>Discounted or waived exam fees for qualifying enrolled students</td></tr>
-          <tr><td>Instructor resources</td><td>Curriculum guides, lab environments, and slide decks for educators</td></tr>
-          <tr><td>Education Portal</td><td>Full access to education.splunk.com for all course content and progress tracking</td></tr>
-        </table>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Certifications</span><h3>Certification pathways</h3></div>
-        <div class="cert-grid">
-          <div class="cert-card">
-            <div class="cert-level">Entry Level</div>
-            <h4>Core Certified User</h4>
-            <p>Search, fields, lookups, reports, charts, and dashboards. The recommended starting point. Free training via Academic Alliance.</p>
-          </div>
-          <div class="cert-card">
-            <div class="cert-level">Intermediate</div>
-            <h4>Core Certified Power User</h4>
-            <p>Advanced SPL, alert creation, knowledge objects, and data models. Requires completion of Fundamentals 1 and 2.</p>
-          </div>
-          <div class="cert-card">
-            <div class="cert-level">Intermediate</div>
-            <h4>Enterprise Certified Admin</h4>
-            <p>Deployment, configuration, distributed architecture, and user management. Suited to infrastructure and platform engineering roles.</p>
-          </div>
-          <div class="cert-card">
-            <div class="cert-level">Advanced</div>
-            <h4>Enterprise Security Certified Admin</h4>
-            <p>Configures and manages Splunk ES — the full SIEM product. The target certification for SOC engineers. Highly valued in financial services and government sectors.</p>
-          </div>
-          <div class="cert-card">
-            <div class="cert-level">Advanced</div>
-            <h4>SOAR Certified Automation Developer</h4>
-            <p>Builds automated incident response playbooks using Splunk SOAR. Growing demand as SOCs move toward automation-first workflows.</p>
-          </div>
-          <div class="cert-card">
-            <div class="cert-level">Intermediate</div>
-            <h4>Core Certified Consultant</h4>
-            <p>Implementation, SPL optimisation, and design best practices. Bridges technical expertise with client-facing delivery skills.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header"><span class="step-badge">Roadmap</span><h3>Recommended study path for cybersecurity students</h3></div>
-        <table>
-          <tr><th>Timeline</th><th>Activity</th><th>Outcome</th></tr>
-          <tr><td>Weeks 1–2</td><td>Complete Splunk Fundamentals 1 (free via Academic Alliance)</td><td>Basic search and dashboard skills</td></tr>
-          <tr><td>Weeks 3–4</td><td>Complete Splunk Fundamentals 2 (free via Academic Alliance)</td><td>Advanced SPL and knowledge objects</td></tr>
-          <tr><td>Week 5</td><td>Practice with this workshop lab and the Splunk Attack Range</td><td>Hands-on threat detection experience</td></tr>
-          <tr><td>Week 6</td><td>Sit the Core Certified User exam (use Academic Alliance voucher)</td><td>First industry-recognised Splunk certification</td></tr>
-          <tr><td>Weeks 7–10</td><td>Fundamentals 3 and Power User exam preparation</td><td>Ready for Core Certified Power User exam</td></tr>
-          <tr><td>Month 3+</td><td>Choose specialisation: Enterprise Admin or ES/SOAR pathway</td><td>Role-specific certification aligned to career goal</td></tr>
-        </table>
-        <div class="callout callout-note">
-          <span class="callout-icon">ℹ</span>
-          <div class="callout-body">
-            <strong>Splunk Attack Range</strong>
-            <p>The Splunk Attack Range is a free open-source project that deploys a pre-configured lab environment including Splunk Enterprise, Atomic Red Team, and a Windows victim machine — ideal for extended practice beyond this workshop. Available at <code>github.com/splunk/attack_range</code>.</p>
-          </div>
-        </div>
-      </div>
+    <section id="summary">
+      <div class="section-title"><span class="num">14</span><h2>Summary and next steps</h2></div>
+      <p>In this workshop, learners built a complete beginner Splunk environment in AWS Academy Learner Lab.</p>
+      <ul>
+        <li>They created a VPC and launched two EC2 instances.</li>
+        <li>They installed Splunk Enterprise on the Splunk server.</li>
+        <li>They installed Apache and the Universal Forwarder on the second server.</li>
+        <li>They generated simple web and login practice logs.</li>
+        <li>They monitored Splunk Enterprise VM login success and password failure events.</li>
+        <li>They searched logs using beginner-friendly SPL.</li>
+        <li>They created a five-panel dashboard.</li>
+        <li>They were introduced to Splunk Academy, official learning paths, and Splunk certification options.</li>
+      </ul>
+      <div class="warning"><strong>End of lab reminder</strong><p>When finished, return to AWS Academy Learner Lab and stop the lab session. This helps avoid unnecessary resource use.</p></div>
     </section>
-
-  </article>
+  </main>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
-<footer class="site-footer">
+<footer class="footer">
   <div class="footer-inner">
-    <div class="footer-info">
-      <h4>Teaching Splunk: A Train-the-Trainer Workshop</h4>
-      <p>By Akhtar Jalbani &nbsp;·&nbsp; 13 July 2026 &nbsp;·&nbsp; Holmesglen &nbsp;·&nbsp; Cyber Team<br>All attack demonstrations are authorised lab exercises only — AWS Academy Learner Lab.</p>
-    </div>
-    <ul class="footer-links">
-      <li><a href="https://www.splunk.com/en_us/training/academic-alliance.html" target="_blank">Splunk Academic Alliance</a></li>
-      <li><a href="https://education.splunk.com" target="_blank">Splunk Education Portal</a></li>
-      <li><a href="https://docs.splunk.com" target="_blank">Splunk Documentation</a></li>
-      <li><a href="https://github.com/splunk/attack_range" target="_blank">Splunk Attack Range (GitHub)</a></li>
-      <li><a href="https://aws.amazon.com/training/awsacademy/" target="_blank">AWS Academy</a></li>
-    </ul>
+    <p><strong>Teaching Splunk: A Train-the-Trainer Workshop</strong><br />By Akhtar Jalbani · 13 July 2026 · Holmesglen · AWS Academy Learner Lab · Splunk Enterprise · Universal Forwarder</p>
   </div>
 </footer>
 
 <script>
-function copyCode(btn) {
-  const pre = btn.closest('.code-block').querySelector('pre');
-  navigator.clipboard.writeText(pre.innerText).then(() => {
-    btn.textContent = 'Copied';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+function copyBlock(button) {
+  const block = button.closest('.code-block, .spl-block');
+  const text = block.querySelector('pre').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const old = button.textContent;
+    button.textContent = 'Copied';
+    setTimeout(() => button.textContent = old, 1500);
   });
 }
-function copySpl(btn) {
-  const pre = btn.closest('.spl-block').querySelector('pre');
-  navigator.clipboard.writeText(pre.innerText).then(() => {
-    btn.textContent = 'Copied';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-const sections = document.querySelectorAll('.lab-section');
-const navLinks = document.querySelectorAll('.left-nav ul li a');
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(a => a.classList.remove('active'));
-      const a = document.querySelector(`.left-nav a[href="#${e.target.id}"]`);
-      if (a) a.classList.add('active');
-    }
-  });
-}, { rootMargin: '-20% 0px -70% 0px' });
-sections.forEach(s => obs.observe(s));
 </script>
 </body>
 </html>

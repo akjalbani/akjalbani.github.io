@@ -1,0 +1,3 @@
+To Change port
+sudo /opt/splunk/bin/splunk set web-port 443 --run-as-root
+sudo /opt/splunk/bin/splunk restart --run-as-root

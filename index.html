@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Akhtar Ali Jalbani — Cybersecurity, Cloud &amp; AI</title>
+<meta name="description" content="Dr. Akhtar Ali Jalbani — Senior Lecturer, researcher and practitioner in cybersecurity, cloud computing and AI. AWS Community Builder. ASEF InnoLab participant. AE4AI Founding Member.">
+<meta property="og:title" content="Dr. Akhtar Ali Jalbani — Cybersecurity, Cloud &amp; AI">
+<meta property="og:description" content="Senior Lecturer, researcher and practitioner in cybersecurity, cloud computing and AI.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231b2a3a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' fill='%23ffffff' text-anchor='middle'%3EAJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b2a3a;
+  --body:#3d4a58;
+  --muted:#6b7684;
+  --accent:#0f6b66;
+  --paper:#ffffff;
+  --wash:#f5f7f6;
+  --line:#e2e6e4;
+  --line-dark:#c9d0cd;
+  --shadow:0 10px 30px rgba(20,35,50,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+body{
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  color:var(--body);
+  background:var(--paper);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:#d8ebe9;color:var(--ink)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px}
+.icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- header & dropdown navigation ---------- */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.brand .mono{
+  width:34px;height:34px;border-radius:6px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Newsreader',serif;font-size:.95rem;font-weight:600;letter-spacing:.02em;
+}
+.brand .name{font-family:'Newsreader',serif;font-size:1.12rem;font-weight:600}
+
+.menu{display:flex;align-items:center;gap:4px;list-style:none}
+.menu > li{position:relative}
+.menu > li > a,
+.menu > li > button{
+  display:flex;align-items:center;gap:6px;
+  padding:9px 13px;border-radius:5px;
+  color:var(--muted);font-size:.86rem;font-weight:500;letter-spacing:.02em;
+  transition:color .15s,background .15s;
+}
+.menu > li > a:hover,
+.menu > li > button:hover,
+.menu > li.open > button{color:var(--ink);background:var(--wash);text-decoration:none}
+.menu .chev{width:13px;height:13px;transition:transform .18s}
+.menu li.open .chev{transform:rotate(180deg)}
+
+.submenu{
+  position:absolute;top:calc(100% + 8px);left:0;min-width:250px;
+  background:#fff;border:1px solid var(--line);border-radius:8px;
+  box-shadow:var(--shadow);padding:7px;list-style:none;
+  opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity .16s,transform .16s,visibility .16s;
+}
+.menu li.open > .submenu,
+.menu li:focus-within > .submenu{opacity:1;visibility:visible;transform:translateY(0)}
+@media(hover:hover){
+  .menu li:hover > .submenu{opacity:1;visibility:visible;transform:translateY(0)}
+}
+.submenu a{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 12px;border-radius:5px;
+  color:var(--body);font-size:.88rem;font-weight:500;
+}
+.submenu a:hover{background:var(--wash);color:var(--ink);text-decoration:none}
+.submenu a .icon{width:16px;height:16px;color:var(--accent)}
+.submenu .sub-note{display:block;font-size:.76rem;font-weight:400;color:var(--muted);margin-top:1px}
+
+.nav-cta{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 16px;border-radius:5px;
+  background:var(--ink);color:#fff!important;font-size:.85rem;font-weight:500;
+}
+.nav-cta:hover{background:#0f1c2a;text-decoration:none}
+
+.hamburger{display:none;padding:8px;border-radius:5px;color:var(--ink)}
+.hamburger:hover{background:var(--wash)}
+
+/* mobile menu */
+.mobile-panel{
+  display:none;position:fixed;inset:64px 0 0 0;z-index:99;
+  background:#fff;overflow-y:auto;padding:20px 28px 48px;
+}
+body.menu-open .mobile-panel{display:block}
+body.menu-open{overflow:hidden}
+.mobile-panel .group{padding:14px 0;border-bottom:1px solid var(--line)}
+.mobile-panel .group-label{
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px;
+}
+.mobile-panel a{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 4px;color:var(--ink);font-size:1rem;font-weight:500;
+}
+.mobile-panel a:hover{text-decoration:none;color:var(--accent)}
+.mobile-panel a .icon{color:var(--accent)}
+
+@media(max-width:880px){
+  .menu,.nav-cta{display:none}
+  .hamburger{display:flex}
+}
+
+/* ---------- hero ---------- */
+.hero{padding:78px 0 66px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:center}
+.kicker{
+  display:flex;align-items:center;gap:9px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:22px;
+}
+.kicker .icon{width:15px;height:15px}
+h1{
+  font-family:'Newsreader',serif;font-weight:500;
+  font-size:clamp(2.2rem,5vw,3.2rem);
+  line-height:1.12;color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:20px;
+}
+.hero .lede{max-width:56ch;font-size:1.05rem;margin-bottom:14px}
+.hero .roles{color:var(--muted);font-size:.93rem;max-width:56ch;margin-bottom:32px}
+.hero-links{display:flex;flex-wrap:wrap;gap:12px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 20px;border-radius:5px;
+  font-size:.9rem;font-weight:500;letter-spacing:.01em;
+  border:1px solid var(--line-dark);color:var(--ink);
+  transition:border-color .15s,background .15s;
+}
+.btn .icon{width:16px;height:16px}
+.btn:hover{text-decoration:none;border-color:var(--ink)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.primary:hover{background:#0f1c2a}
+
+/* hero emblem */
+.emblem{position:relative;width:300px;height:300px}
+.emblem svg{width:100%;height:100%}
+@media(max-width:880px){
+  .hero-grid{grid-template-columns:1fr}
+  .emblem{display:none}
+}
+
+/* ---------- sections ---------- */
+section{padding:70px 0;border-bottom:1px solid var(--line)}
+section.wash{background:var(--wash)}
+.sec-label{
+  display:flex;align-items:center;gap:9px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;
+}
+.sec-label .icon{width:16px;height:16px;color:var(--accent)}
+h2{
+  font-family:'Newsreader',serif;font-weight:500;
+  font-size:clamp(1.6rem,3vw,2.05rem);color:var(--ink);
+  line-height:1.2;margin-bottom:34px;letter-spacing:-.005em;
+}
+h3{font-family:'Newsreader',serif;font-weight:600;font-size:1.12rem;color:var(--ink);line-height:1.35}
+
+/* ---------- focus areas ---------- */
+.focus{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.focus-card{
+  border:1px solid var(--line);border-radius:10px;
+  padding:26px 24px;background:#fff;
+  transition:border-color .15s,box-shadow .15s;
+}
+.focus-card:hover{border-color:var(--line-dark);box-shadow:var(--shadow)}
+.focus-card .fc-icon{
+  width:44px;height:44px;border-radius:9px;
+  background:var(--wash);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);margin-bottom:18px;
+}
+.focus-card .fc-icon .icon{width:21px;height:21px}
+.focus-card p{font-size:.93rem;margin-top:9px}
+@media(max-width:760px){.focus{grid-template-columns:1fr}}
+
+/* ---------- innolab / international ---------- */
+.intro-note{max-width:66ch;margin-bottom:36px;font-size:1rem}
+.ledger{border-top:1px solid var(--line-dark)}
+.ledger-row{
+  display:grid;grid-template-columns:150px 1fr;gap:28px;
+  padding:26px 0;border-bottom:1px solid var(--line-dark);
+}
+.ledger-key{
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+  color:var(--accent);letter-spacing:.05em;padding-top:3px;
+}
+.ledger-key .sub{display:block;color:var(--muted);margin-top:4px;font-size:.74rem;letter-spacing:.03em}
+.ledger-body h3{margin-bottom:6px}
+.ledger-body p{font-size:.95rem;max-width:64ch}
+.badge-founder{
+  display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;
+  color:var(--accent);border:1px solid var(--accent);
+  padding:5px 11px;border-radius:3px;
+}
+.badge-founder .icon{width:14px;height:14px}
+@media(max-width:640px){
+  .ledger-row{grid-template-columns:1fr;gap:8px}
+}
+
+/* ---------- experience / cv timeline ---------- */
+.cv{border-top:1px solid var(--line)}
+.cv-row{
+  display:grid;grid-template-columns:190px 1fr;gap:28px;
+  padding:24px 0;border-bottom:1px solid var(--line);
+}
+.cv-when{
+  font-family:'IBM Plex Mono',monospace;font-size:.78rem;
+  color:var(--muted);padding-top:4px;letter-spacing:.02em;
+}
+.cv-what h3{margin-bottom:2px}
+.cv-what .org{display:flex;align-items:center;gap:7px;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.cv-what .org .icon{width:14px;height:14px}
+.cv-what p{font-size:.94rem;max-width:66ch}
+@media(max-width:640px){.cv-row{grid-template-columns:1fr;gap:6px}}
+
+/* ---------- credentials ---------- */
+.cred-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.cred-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.cred-head .icon{width:18px;height:18px;color:var(--accent)}
+.cred-list{list-style:none}
+.cred-list li{
+  padding:11px 0;border-bottom:1px solid var(--line-dark);
+  font-size:.94rem;color:var(--ink);
+}
+.cred-list li span{display:block;font-size:.82rem;color:var(--muted);margin-top:1px}
+@media(max-width:760px){.cred-cols{grid-template-columns:1fr;gap:36px}}
+
+/* ---------- community ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.comm-card{
+  border:1px solid var(--line);border-radius:10px;padding:24px;background:var(--wash);
+}
+section.wash .comm-card{background:#fff}
+.comm-card .cc-top{display:flex;align-items:flex-start;gap:13px;margin-bottom:9px}
+.comm-card .cc-icon{
+  width:38px;height:38px;border-radius:8px;flex:none;
+  background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;color:var(--accent);
+}
+section.wash .comm-card .cc-icon{background:var(--wash)}
+.comm-card .cc-icon .icon{width:18px;height:18px}
+.comm-card h3{font-size:1.05rem}
+.comm-card .org{font-size:.84rem;color:var(--muted)}
+.comm-card p{font-size:.92rem}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+
+/* ---------- publications ---------- */
+.pub{padding:22px 0;border-bottom:1px solid var(--line-dark)}
+.pub:first-of-type{border-top:1px solid var(--line-dark)}
+.pub .venue{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--muted);margin-bottom:6px;letter-spacing:.03em}
+.pub p{font-size:.94rem;max-width:66ch;margin-top:6px}
+.pub-more{display:flex;align-items:center;gap:8px;margin-top:26px;font-size:.94rem}
+.pub-more .icon{width:16px;height:16px;color:var(--accent)}
+
+/* ---------- contact ---------- */
+.contact p{max-width:60ch;margin-bottom:30px}
+
+footer{padding:38px 0 52px;color:var(--muted);font-size:.84rem}
+footer .foot-line{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between;align-items:baseline}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--ink)}
+
+/* back to top */
+.to-top{
+  position:fixed;right:22px;bottom:22px;z-index:90;
+  width:44px;height:44px;border-radius:8px;
+  background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .2s,transform .2s,visibility .2s;
+}
+.to-top.show{opacity:1;visibility:visible;transform:translateY(0)}
+.to-top:hover{background:#0f1c2a}
+</style>
+</head>
+<body>
+
+<!-- ======= SVG icon sprite ======= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V9h4v1a6 6 0 0 1 2-2z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+    <symbol id="i-grad" viewBox="0 0 24 24"><path d="m22 9-10-5L2 9l10 5 10-5z"/><path d="M6 11.5V17c0 1.66 2.69 3 6 3s6-1.34 6-3v-5.5M22 9v6"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 6-10 6L2 8l10-6zM2 17l10 6 10-6M2 12.5l10 6 10-6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Akhtar Ali Jalbani — home">
+      <span class="mono">AJ</span>
+      <span class="name">Akhtar Ali Jalbani</span>
+    </a>
+
+    <ul class="menu" id="desktop-menu">
+      <li>
+        <button type="button" aria-expanded="false" aria-haspopup="true">Profile <svg class="icon chev"><use href="#i-chevron"/></svg></button>
+        <ul class="submenu">
+          <li><a href="#top"><svg class="icon"><use href="#i-user"/></svg><span>Overview<span class="sub-note">Who I am and what I do</span></span></a></li>
+          <li><a href="#focus"><svg class="icon"><use href="#i-layers"/></svg><span>Areas of focus<span class="sub-note">Security, cloud &amp; AI</span></span></a></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" aria-expanded="false" aria-haspopup="true">Engagement <svg class="icon chev"><use href="#i-chevron"/></svg></button>
+        <ul class="submenu">
+          <li><a href="#international"><svg class="icon"><use href="#i-globe"/></svg><span>ASEF InnoLab<span class="sub-note">Editions 3, 4 &amp; 7 · AE4AI</span></span></a></li>
+          <li><a href="#conferences"><svg class="icon"><use href="#i-mic"/></svg><span>Conferences<span class="sub-note">HERA · Shanghai Forum · SAI</span></span></a></li>
+          <li><a href="#community"><svg class="icon"><use href="#i-users"/></svg><span>Community &amp; awards<span class="sub-note">Mentoring &amp; recognition</span></span></a></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" aria-expanded="false" aria-haspopup="true">Career <svg class="icon chev"><use href="#i-chevron"/></svg></button>
+        <ul class="submenu">
+          <li><a href="#experience"><svg class="icon"><use href="#i-briefcase"/></svg><span>Experience<span class="sub-note">20+ years across 3 continents</span></span></a></li>
+          <li><a href="#credentials"><svg class="icon"><use href="#i-award"/></svg><span>Credentials<span class="sub-note">Education &amp; certifications</span></span></a></li>
+        </ul>
+      </li>
+      <li><a href="#publications"><svg class="icon" style="width:14px;height:14px"><use href="#i-book"/></svg> Publications</a></li>
+    </ul>
+
+    <a class="nav-cta" href="#contact"><svg class="icon" style="width:15px;height:15px"><use href="#i-mail"/></svg> Contact</a>
+
+    <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false" id="hamburger">
+      <svg class="icon" id="ham-icon" style="width:22px;height:22px"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- mobile menu -->
+<div class="mobile-panel" id="mobile-panel">
+  <div class="group">
+    <p class="group-label">Profile</p>
+    <a href="#top"><svg class="icon"><use href="#i-user"/></svg>Overview</a>
+    <a href="#focus"><svg class="icon"><use href="#i-layers"/></svg>Areas of focus</a>
+  </div>
+  <div class="group">
+    <p class="group-label">Engagement</p>
+    <a href="#international"><svg class="icon"><use href="#i-globe"/></svg>ASEF InnoLab &amp; AE4AI</a>
+    <a href="#conferences"><svg class="icon"><use href="#i-mic"/></svg>Conferences &amp; presentations</a>
+    <a href="#community"><svg class="icon"><use href="#i-users"/></svg>Community &amp; awards</a>
+  </div>
+  <div class="group">
+    <p class="group-label">Career</p>
+    <a href="#experience"><svg class="icon"><use href="#i-briefcase"/></svg>Experience</a>
+    <a href="#credentials"><svg class="icon"><use href="#i-award"/></svg>Credentials</a>
+  </div>
+  <div class="group">
+    <p class="group-label">Research &amp; contact</p>
+    <a href="#publications"><svg class="icon"><use href="#i-book"/></svg>Publications</a>
+    <a href="#contact"><svg class="icon"><use href="#i-mail"/></svg>Contact</a>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker"><svg class="icon"><use href="#i-shield"/></svg> Cybersecurity · Cloud Computing · Artificial Intelligence</p>
+        <h1>Dr. Akhtar Ali Jalbani</h1>
+        <p class="lede">Academic, researcher and practitioner with more than two decades of experience across cybersecurity, cloud architecture and AI — teaching, publishing and building communities in Australia, Europe and Asia.</p>
+        <p class="roles">Senior Lecturer, Holmesglen Institute · AWS Community Builder (Security) · ACS Professional Member · Founding Member, AE4AI Network · Ph.D. in Computer Science, University of Göttingen</p>
+        <div class="hero-links">
+          <a class="btn primary" href="mailto:jalbani.vic@outlook.com"><svg class="icon"><use href="#i-mail"/></svg> Email me</a>
+          <a class="btn" href="https://www.linkedin.com/in/akhtar-jalbani" rel="noopener"><svg class="icon"><use href="#i-linkedin"/></svg> LinkedIn</a>
+          <a class="btn" href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" rel="noopener"><svg class="icon"><use href="#i-grad"/></svg> Google Scholar</a>
+          <a class="btn" href="https://medium.com/@akjalbani_15286" rel="noopener"><svg class="icon"><use href="#i-pen"/></svg> Medium</a>
+        </div>
+      </div>
+      <div class="emblem" aria-hidden="true">
+        <svg viewBox="0 0 300 300" fill="none">
+          <circle cx="150" cy="150" r="132" stroke="#e2e6e4" stroke-width="1.5"/>
+          <circle cx="150" cy="150" r="104" stroke="#c9d0cd" stroke-width="1.5" stroke-dasharray="3 7"/>
+          <circle cx="150" cy="150" r="76" stroke="#e2e6e4" stroke-width="1.5"/>
+          <path d="M150 96s42 21 42 52.5c0 33-42 55.5-42 55.5s-42-22.5-42-55.5C108 117 150 96 150 96z" stroke="#1b2a3a" stroke-width="2.5" fill="#f5f7f6"/>
+          <path d="M133 150l12 12 24-25" stroke="#0f6b66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="150" cy="18" r="4" fill="#0f6b66"/>
+          <circle cx="262" cy="216" r="4" fill="#1b2a3a"/>
+          <circle cx="38" cy="216" r="4" fill="#c9d0cd"/>
+          <text x="150" y="268" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="3" fill="#6b7684">SECURITY · CLOUD · AI</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Focus -->
+  <section id="focus">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-layers"/></svg> Areas of focus</p>
+      <h2>Where research meets practice</h2>
+      <div class="focus">
+        <div class="focus-card">
+          <div class="fc-icon"><svg class="icon"><use href="#i-shield"/></svg></div>
+          <h3>Cybersecurity</h3>
+          <p>Network and web application security, security modelling and threat intelligence — from Layer 2 defences to security frameworks, compliance and digital discipline across enterprise and academic settings.</p>
+        </div>
+        <div class="focus-card">
+          <div class="fc-icon"><svg class="icon"><use href="#i-cloud"/></svg></div>
+          <h3>Cloud &amp; AWS</h3>
+          <p>AWS-certified architect and Community Builder in the Security category, with deep expertise in cloud security, IAM, VPC design, infrastructure as code and secure multi-cloud solutions.</p>
+        </div>
+        <div class="focus-card">
+          <div class="fc-icon"><svg class="icon"><use href="#i-cpu"/></svg></div>
+          <h3>Research &amp; AI</h3>
+          <p>Active researcher in AI and machine learning, blockchain and data provenance, software quality modelling and pattern recognition, with peer-reviewed work published by Springer and others.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- International engagement / InnoLab -->
+  <section id="international" class="wash">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-globe"/></svg> International engagement</p>
+      <h2>ASEF Higher Education Innovation Laboratory</h2>
+      <p class="intro-note">The ASEF InnoLab series, organised by the Asia-Europe Foundation, brings together academics and university leaders from Asia and Europe to co-create ideas on the role of universities in AI innovation ecosystems. I have contributed to three editions of the programme.</p>
+
+      <div class="ledger">
+        <div class="ledger-row">
+          <div class="ledger-key">InnoLab 3<span class="sub">Online · 2023</span></div>
+          <div class="ledger-body">
+            <h3>Universities' Role in Teaching AI Skills and Entrepreneurship</h3>
+            <p>Selected participant in the five-week online programme (June–July 2023), collaborating with academics and senior administrators from Asian and European universities on action plans for AI skills education and entrepreneurship.</p>
+          </div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-key">InnoLab 4<span class="sub">Shanghai · 2023</span></div>
+          <div class="ledger-body">
+            <h3>Advancing Teaching AI Skills and Entrepreneurship</h3>
+            <p>Participant in the onsite programme hosted at Fudan University, Shanghai (October 2023), held in conjunction with the Shanghai Forum. Contributed to roundtable discussions and workshops on AI governance and skills, and co-founded the AE4AI Network with fellow participants.</p>
+            <span class="badge-founder"><svg class="icon"><use href="#i-star"/></svg> Founding Member — AE4AI (Asia-Europe for Artificial Intelligence) Network</span>
+          </div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-key">InnoLab 7<span class="sub">2026</span></div>
+          <div class="ledger-body">
+            <h3>The Role of Universities in Advancing AI for Good</h3>
+            <p>Contributor to the seventh edition of the programme, which convenes experts, scholars and higher-education leaders from Asia and Europe to develop strategic white papers and public dialogue on how universities can ensure AI is researched, governed and applied for the common good.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conferences & presentations -->
+  <section id="conferences">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-mic"/></svg> Conferences &amp; presentations</p>
+      <h2>Speaking at international forums</h2>
+      <div class="cv">
+        <div class="cv-row">
+          <div class="cv-when">Jun 2026</div>
+          <div class="cv-what">
+            <h3>HERA Conference 2026 — Presenter</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Higher Education Research Association · Beijing, China</p>
+            <p>Presenting research at the 12th HERA Conference, themed "Higher Education Transformation in a Changing World: Global Perspectives and Comparative Insights," joining scholars from across Asia and Europe to examine how universities navigate digital change, emerging technologies and innovation-driven talent development.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">Jun 2024</div>
+          <div class="cv-what">
+            <h3>HERA Conference 2024 — Presenter</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Higher Education Research Association · National Chengchi University, Taipei</p>
+            <p>Presented research at the 10th HERA Conference, themed "From Competition to Collaboration in Higher Education," contributing to international dialogue on collaborative pedagogical models and interdisciplinary partnership across higher education institutions.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">Oct 2023</div>
+          <div class="cv-what">
+            <h3>Shanghai Forum — Roundtable Contributor</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Fudan University · Shanghai, China</p>
+            <p>Invited to participate and speak in roundtable discussions of the Shanghai Forum as part of ASEF InnoLab 4, contributing to the joint statement on universities' role in AI skills and entrepreneurship.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2026</div>
+          <div class="cv-what">
+            <h3>SAI Computing Conference 2026 — Committee Member</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Science and Information Organization · London, UK</p>
+            <p>Serving on the conference committee, contributing expertise in AI, security and software engineering to programming and peer review for the international computing research community.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">Ongoing</div>
+          <div class="cv-what">
+            <h3>AWS Community Workshops &amp; Talks</h3>
+            <p class="org"><svg class="icon"><use href="#i-cloud"/></svg> AWS Community Builder — Security</p>
+            <p>Delivering hands-on workshops and talks on cloud security, AWS architecture and secure infrastructure design for developer and student communities.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="wash">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-briefcase"/></svg> Career</p>
+      <h2>Professional experience</h2>
+      <div class="cv">
+        <div class="cv-row">
+          <div class="cv-when">2019 — Present</div>
+          <div class="cv-what">
+            <h3>Senior Lecturer</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Holmesglen Institute · Melbourne, Australia</p>
+            <p>Delivering higher education and VET courses in cybersecurity, networking, cloud computing and IT. Designing and validating assessments to AQF, ASQA and training-package standards, coordinating subjects, and supporting industry alignment, academic quality assurance and student success.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2024 — 2025</div>
+          <div class="cv-what">
+            <h3>Lecturer</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> RMIT University · Melbourne, Australia</p>
+            <p>Taught cybersecurity, cloud computing, virtualisation and digital infrastructure across vocational and undergraduate programs. Designed industry-aligned labs using AWS and Splunk, and mentored students preparing for WorldSkills 2025.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2020 — 2024</div>
+          <div class="cv-what">
+            <h3>Casual Lecturer</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> La Trobe University · Melbourne, Australia</p>
+            <p>Delivered undergraduate and postgraduate teaching in cybersecurity principles, network security and applied cyber defence, facilitating tutorials, labs and assessment support for diverse cohorts.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2018 — 2019</div>
+          <div class="cv-what">
+            <h3>Casual Lecturer</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> ATMC / Federation University · Melbourne, Australia</p>
+            <p>Delivered tutorials and lectures in IT and computing disciplines, supporting international student cohorts through lab facilitation and academic mentoring.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2011 — 2018</div>
+          <div class="cv-what">
+            <h3>Assistant Professor &amp; Postgraduate Coordinator</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Sindh Agricultural University · Tandojam, Pakistan</p>
+            <p>Taught and researched software engineering with a focus on model-driven engineering. Coordinated postgraduate programs and supervised Master's and PhD research in software quality, modelling and system design. Also served as Director of IT (2013–2014), leading university IT strategy, enterprise systems and digital transformation.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2007 — 2011</div>
+          <div class="cv-what">
+            <h3>Research Assistant</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> University of Göttingen · Germany</p>
+            <p>Supported funded research in software engineering and software quality while completing doctoral studies — conducting empirical research, assisting in teaching and collaborating on peer-reviewed publications.</p>
+          </div>
+        </div>
+        <div class="cv-row">
+          <div class="cv-when">2002 — 2007</div>
+          <div class="cv-what">
+            <h3>Lecturer &amp; Undergraduate Coordinator</h3>
+            <p class="org"><svg class="icon"><use href="#i-map-pin"/></svg> Sindh Agricultural University · Tandojam, Pakistan</p>
+            <p>Taught core computing subjects including programming, databases and information systems; coordinated undergraduate programs and supervised final-year research projects.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials -->
+  <section id="credentials">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-award"/></svg> Credentials</p>
+      <h2>Education, certifications &amp; memberships</h2>
+      <div class="cred-cols">
+        <div>
+          <div class="cred-head"><svg class="icon"><use href="#i-grad"/></svg><h3>Education</h3></div>
+          <ul class="cred-list">
+            <li>Ph.D. in Computer Science<span>Georg-August-Universität Göttingen, Germany · 2007–2011 · DAAD Scholar</span></li>
+            <li>MS in Software Engineering<span>National University of Sciences &amp; Technology, Pakistan · 2000–2002</span></li>
+            <li>BE in Electrical Engineering<span>NED University of Engineering &amp; Technology, Pakistan · 1995–1999</span></li>
+            <li>Associate Degree — Vocational Education &amp; Training<span>Federation University, Australia · 2021–2022</span></li>
+            <li>Diploma of VET &amp; Diploma of Training Design<span>Plenty Training, Australia · 2020–2021</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="cred-head"><svg class="icon"><use href="#i-shield"/></svg><h3>Certifications &amp; memberships</h3></div>
+          <ul class="cred-list">
+            <li>AWS Certified Solutions Architect — Associate<span>Amazon Web Services</span></li>
+            <li>AWS Certified Security — Specialty<span>Amazon Web Services</span></li>
+            <li>AWS Certified Cloud Practitioner<span>Amazon Web Services</span></li>
+            <li>AWS Community Builder — Security<span>Amazon Web Services</span></li>
+            <li>CCNA: Introduction to Networks · Switching, Routing &amp; Wireless<span>Cisco Networking Academy</span></li>
+            <li>ACS Certified Professional &amp; Professional Member<span>Australian Computer Society</span></li>
+            <li>Founding Member, AE4AI Network<span>Asia-Europe for Artificial Intelligence</span></li>
+            <li>Member, SDL Forum<span>System Design Languages Forum</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community -->
+  <section id="community" class="wash">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-users"/></svg> Community &amp; recognition</p>
+      <h2>Mentoring, service &amp; awards</h2>
+      <div class="grid2">
+        <div class="comm-card">
+          <div class="cc-top">
+            <div class="cc-icon"><svg class="icon"><use href="#i-star"/></svg></div>
+            <div><h3>WorldSkills Australia Mentor</h3><p class="org">Cloud Computing &amp; Cyber Security</p></div>
+          </div>
+          <p>Mentored students who won Gold and Silver medals at WorldSkills Australia 2025, contributing to Victoria's top medal tally and progression to WorldSkills International 2026.</p>
+        </div>
+        <div class="comm-card">
+          <div class="cc-top">
+            <div class="cc-icon"><svg class="icon"><use href="#i-award"/></svg></div>
+            <div><h3>CoVE High Achiever Award, 2025</h3><p class="org">RMIT University</p></div>
+          </div>
+          <p>Awarded for exceptional teaching performance based on consistently high Course Experience Survey results and effective, learner-centred design.</p>
+        </div>
+        <div class="comm-card">
+          <div class="cc-top">
+            <div class="cc-icon"><svg class="icon"><use href="#i-award"/></svg></div>
+            <div><h3>Finalist, Trainer of the Year 2023</h3><p class="org">Holmesglen Institute</p></div>
+          </div>
+          <p>Recognised for exemplary teaching across higher education and VET, and sustained commitment to innovative delivery.</p>
+        </div>
+        <div class="comm-card">
+          <div class="cc-top">
+            <div class="cc-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+            <div><h3>SummerTechLive Mentor</h3><p class="org">Multiple grant recipient</p></div>
+          </div>
+          <p>Awarded multiple mentor grants to run mentorship programs for students entering technology careers.</p>
+        </div>
+        <div class="comm-card">
+          <div class="cc-top">
+            <div class="cc-icon"><svg class="icon"><use href="#i-pen"/></svg></div>
+            <div><h3>Technical Author</h3><p class="org">Medium · Dev.to</p></div>
+          </div>
+          <p>Writing on cybersecurity, AWS, VPC networking and cloud architecture for a global technical audience.</p>
+        </div>
+        <div class="comm-card">
+          <div class="cc-top">
+            <div class="cc-icon"><svg class="icon"><use href="#i-grad"/></svg></div>
+            <div><h3>DAAD PhD Scholarship</h3><p class="org">Germany · 2007–2011</p></div>
+          </div>
+          <p>Fully funded doctoral scholarship covering tuition, living stipend, research funding and international academic collaboration in Germany.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publications -->
+  <section id="publications">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-book"/></svg> Research</p>
+      <h2>Selected publications</h2>
+      <div class="pub">
+        <p class="venue">2025 · CSI Transactions on ICT — Springer</p>
+        <h3>Enhancing Data Provenance in AI with Blockchain Technology</h3>
+        <p>A quality model for assessing data quality in AI systems using blockchain technology and ISO/IEC 9126 standards.</p>
+      </div>
+      <div class="pub">
+        <p class="venue">2014 · Software &amp; Systems Modeling — Springer</p>
+        <h3>Security Modeling for Service-Oriented Systems</h3>
+        <p>A security-pattern refinement approach for modelling secure service-oriented architectures.</p>
+      </div>
+      <p class="pub-more"><svg class="icon"><use href="#i-grad"/></svg> A complete list of publications is available on <a href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" rel="noopener">Google Scholar</a>.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact wash">
+    <div class="wrap">
+      <p class="sec-label"><svg class="icon"><use href="#i-mail"/></svg> Contact</p>
+      <h2>Get in touch</h2>
+      <p>I welcome conversations about research collaboration, guest lectures and speaking, industry partnerships, and all things cybersecurity, cloud and AI.</p>
+      <div class="hero-links">
+        <a class="btn primary" href="mailto:jalbani.vic@outlook.com"><svg class="icon"><use href="#i-mail"/></svg> jalbani.vic@outlook.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/akhtar-jalbani" rel="noopener"><svg class="icon"><use href="#i-linkedin"/></svg> LinkedIn</a>
+        <a class="btn" href="https://scholar.google.com/citations?user=hUrOmVkAAAAJ" rel="noopener"><svg class="icon"><use href="#i-grad"/></svg> Google Scholar</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-line">
+    <span>© 2026 Dr. Akhtar Ali Jalbani</span>
+    <span>Melbourne, Australia · <a href="https://medium.com/@akjalbani_15286" rel="noopener">Medium</a> · <a href="https://www.linkedin.com/in/akhtar-jalbani" rel="noopener">LinkedIn</a></span>
+  </div>
+</footer>
+
+<button class="to-top" id="to-top" aria-label="Back to top">
+  <svg class="icon"><use href="#i-up"/></svg>
+</button>
+
+<script>
+(function(){
+  // Desktop dropdowns: click toggles (works alongside hover), close on outside click / Escape / link click
+  var items = document.querySelectorAll('#desktop-menu > li');
+  items.forEach(function(li){
+    var btn = li.querySelector('button');
+    if(!btn) return;
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var wasOpen = li.classList.contains('open');
+      items.forEach(function(o){ o.classList.remove('open'); var b=o.querySelector('button'); if(b) b.setAttribute('aria-expanded','false'); });
+      if(!wasOpen){ li.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', function(){
+    items.forEach(function(o){ o.classList.remove('open'); var b=o.querySelector('button'); if(b) b.setAttribute('aria-expanded','false'); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      items.forEach(function(o){ o.classList.remove('open'); var b=o.querySelector('button'); if(b) b.setAttribute('aria-expanded','false'); });
+      closeMobile();
+    }
+  });
+  document.querySelectorAll('.submenu a').forEach(function(a){
+    a.addEventListener('click', function(){
+      items.forEach(function(o){ o.classList.remove('open'); });
+    });
+  });
+
+  // Mobile menu
+  var ham = document.getElementById('hamburger');
+  var hamIcon = document.getElementById('ham-icon');
+  function closeMobile(){
+    document.body.classList.remove('menu-open');
+    ham.setAttribute('aria-expanded','false');
+    hamIcon.innerHTML = '<use href="#i-menu"/>';
+  }
+  ham.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = document.body.classList.toggle('menu-open');
+    ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hamIcon.innerHTML = open ? '<use href="#i-x"/>' : '<use href="#i-menu"/>';
+  });
+  document.querySelectorAll('.mobile-panel a').forEach(function(a){
+    a.addEventListener('click', closeMobile);
+  });
+
+  // Back to top
+  var toTop = document.getElementById('to-top');
+  window.addEventListener('scroll', function(){
+    toTop.classList.toggle('show', window.scrollY > 600);
+  }, {passive:true});
+  toTop.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -8,8 +8,7 @@ indicator questions across six policy domains and receive an instant,
 board-ready picture of your institution's GenAI governance maturity — where
 you are strong, where you are exposed, and what to do next.
 
-**Try it live:** `https://<username>.github.io/<repo>/` *(replace with your
-deployed URL)*
+**Try it live:** `https://akjalbani.github.io/genaigov_maturitymodel_v1/
 
 ---
 
@@ -141,18 +140,6 @@ Everything about the assessment lives in the `CONFIG` object:
 Nothing in the other files hard-codes "six domains", "56 indicators", or
 "0–3": they read whatever `config.js` defines.
 
-### Deploying to GitHub Pages
-
-1. Create a repository and put these files at its root (so `index.html`
-   is top-level).
-2. Commit and push.
-3. In the repository: **Settings → Pages → Source: Deploy from a branch**,
-   choose `main` and `/ (root)`, save.
-4. Your site appears at `https://<username>.github.io/<repo>/` within a
-   minute or two.
-
-To update the tool later, edit the relevant file (usually just
-`js/config.js`), commit, and push — Pages redeploys automatically.
 
 ### Notes
 
@@ -161,9 +148,8 @@ To update the tool later, edit the relevant file (usually just
 - The AI Auditor calls the Anthropic API directly from the browser with a
   key the user pastes in. The key is never stored; it stays in the input
   field for the session only.
-- The site also works opened directly from disk (double-click
-  `index.html`) — no local server required.
+
 
 ---
 
-*Developed through ASEF INNOLAB7. Free to use, adapt, and share.*
+*Developed: Akhtar Jalbani through ASEF INNOLAB7. Free to use, adapt, and share.*

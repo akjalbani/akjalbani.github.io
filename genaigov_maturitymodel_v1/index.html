@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenAI Governance Maturity Model: ASEF INNOLAB7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<a class="skip-link" href="#ov-about" onclick="navigateTo('p1','ov-about');return false;">Skip to main content</a>
+<nav id="site-nav" aria-label="Primary navigation">
+  <div class="nav-i">
+    <a class="nav-logo" href="#overview-top" onclick="showLanding();return false;">
+      <span class="nav-logo-title">GenAI·Gov Maturity Model</span>
+      <span class="nav-logo-mantra">&ldquo;Evidence over Opinion with Responsibility&rdquo;</span>
+    </a>
+    <ul class="nav-links">
+      <li class="has-submenu" data-page="p1">
+        <div class="nav-main-row">
+          <a href="#ov-about" onclick="openOverview();return false;" id="nav-p1" class="nav-main-link active" aria-current="page">Overview</a>
+          <button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="nav-sub-p1" aria-label="Toggle Overview submenu" onclick="toggleSubmenu(event,'nav-sub-p1')"></button>
+        </div>
+        <ul class="nav-submenu" id="nav-sub-p1" aria-label="Overview sections">
+          <li><a href="#ov-about" data-section="ov-about" onclick="navigateTo('p1','ov-about');return false;">About</a></li>
+          <li><a href="#ov-framework" data-section="ov-framework" onclick="navigateTo('p1','ov-framework');return false;">Framework</a></li>
+          <li><a href="#ov-guide" data-section="ov-guide" onclick="navigateTo('p1','ov-guide');return false;">HEI Guide</a></li>
+        </ul>
+      </li>
+      <li><a href="#ov-team" onclick="navigateTo('p4','ov-team');return false;" id="nav-p4" class="nav-main-link">Research Team</a></li>
+      <li class="has-submenu" data-page="p2">
+        <div class="nav-main-row">
+          <a href="#framework-top" onclick="navigateTo('p2','framework-top');return false;" id="nav-p2" class="nav-main-link">Maturity Framework</a>
+          <button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="nav-sub-p2" aria-label="Toggle Maturity Framework submenu" onclick="toggleSubmenu(event,'nav-sub-p2')"></button>
+        </div>
+        <ul class="nav-submenu" id="nav-sub-p2" aria-label="Maturity Framework sections">
+          <li><a href="#mf-tiers" data-section="mf-tiers" onclick="navigateTo('p2','mf-tiers');return false;">Maturity Tiers</a></li>
+          <li><a href="#mf-overview" data-section="mf-overview" onclick="navigateTo('p2','mf-overview');return false;">Framework Overview</a></li>
+          <li><a href="#mf-domains" data-section="mf-domains" onclick="navigateTo('p2','mf-domains');return false;">Policy Domains</a></li>
+          <li><a href="#mf-scoring" data-section="mf-scoring" onclick="navigateTo('p2','mf-scoring');return false;">Scoring &amp; Coherence</a></li>
+        </ul>
+      </li>
+      <li><a href="#assess-view" onclick="navigateTo('p3','assess-view');return false;" id="nav-p3" class="nav-main-link">Self-Assessment</a></li>
+      <li><a href="#auditor-top" onclick="navigateTo('p5','auditor-top');return false;" id="nav-p5" class="nav-main-link">AI Auditor</a></li>
+    </ul>
+    <span class="nav-pill">ASEF INNOLAB7 · 2026</span>
+    <button class="nav-ham" id="nav-ham" type="button" onclick="toggleDrawer()" aria-label="Open navigation menu" aria-controls="nav-drawer" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+  <div class="drawer-group">
+    <div class="drawer-row">
+      <a href="#ov-about" onclick="openOverview();return false;" id="mob-p1" class="drawer-main-link active" aria-current="page">Overview</a>
+      <button class="mobile-submenu-toggle" type="button" aria-expanded="false" aria-controls="mob-sub-p1" aria-label="Toggle Overview submenu" onclick="toggleMobileSubmenu('mob-sub-p1',this)"></button>
+    </div>
+    <div class="drawer-submenu" id="mob-sub-p1" hidden>
+      <a href="#ov-about" data-section="ov-about" onclick="navigateTo('p1','ov-about');return false;">About</a>
+      <a href="#ov-framework" data-section="ov-framework" onclick="navigateTo('p1','ov-framework');return false;">Framework</a>
+      <a href="#ov-guide" data-section="ov-guide" onclick="navigateTo('p1','ov-guide');return false;">HEI Guide</a>
+    </div>
+  </div>
+  <a href="#ov-team" onclick="navigateTo('p4','ov-team');return false;" id="mob-p4" class="drawer-main-link">Research Team</a>
+  <div class="drawer-group">
+    <div class="drawer-row">
+      <a href="#framework-top" onclick="navigateTo('p2','framework-top');return false;" id="mob-p2" class="drawer-main-link">Maturity Framework</a>
+      <button class="mobile-submenu-toggle" type="button" aria-expanded="false" aria-controls="mob-sub-p2" aria-label="Toggle Maturity Framework submenu" onclick="toggleMobileSubmenu('mob-sub-p2',this)"></button>
+    </div>
+    <div class="drawer-submenu" id="mob-sub-p2" hidden>
+      <a href="#mf-tiers" data-section="mf-tiers" onclick="navigateTo('p2','mf-tiers');return false;">Maturity Tiers</a>
+      <a href="#mf-overview" data-section="mf-overview" onclick="navigateTo('p2','mf-overview');return false;">Framework Overview</a>
+      <a href="#mf-domains" data-section="mf-domains" onclick="navigateTo('p2','mf-domains');return false;">Policy Domains</a>
+      <a href="#mf-scoring" data-section="mf-scoring" onclick="navigateTo('p2','mf-scoring');return false;">Scoring &amp; Coherence</a>
+    </div>
+  </div>
+  <a href="#assess-view" onclick="navigateTo('p3','assess-view');return false;" id="mob-p3" class="drawer-main-link">Self-Assessment</a>
+  <a href="#auditor-top" onclick="navigateTo('p5','auditor-top');return false;" id="mob-p5" class="drawer-main-link">AI Auditor</a>
+  <div class="nav-drawer-footer">ASEF INNOLAB7 · GenAI Governance Maturity Model · 2026</div>
+</div>
+
+<!-- ═══════ PAGE 1 ═══════ -->
+<div class="page active landing-mode" id="p1">
+
+<div class="opening-viewport" id="overview-top">
+<div class="hero">
+  <div class="hero-i">
+    <div class="hero-flex">
+      <div class="hero-text">
+        <div class="hero-kicker">
+          <span class="hbadge">Peer-Validated Research Framework</span>
+          <span class="hbadge gold">ASEF INNOLAB7 · Funded Project</span>
+          <span class="hbadge" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);font-style:italic;letter-spacing:.06em">&ldquo;Evidence over Opinion with Responsibility&rdquo;</span>
+        </div>
+        <h1>Generative AI Governance<br><em>Maturity Model</em> for Higher Education Institutions</h1>
+        <p class="hero-sub">A cross-regional, evidence-based instrument enabling universities to diagnose, benchmark, and advance their institutional governance of generative artificial intelligence, spanning teaching, research, equity, data privacy, and public accountability.</p>
+        <p class="landing-support">Built for practical institutional use, the model connects six governance domains with five progressive maturity tiers and evidence-led indicators, helping higher education institutions identify strengths, expose gaps, and plan responsible improvement.</p>
+        <div class="hero-meta">
+          <div class="hmi"><span class="hml">Programme</span><span class="hmv">ASEF INNOLAB7</span></div>
+          <div class="hmi"><span class="hml">Workshop Venue</span><span class="hmv">Nottingham, United Kingdom</span></div>
+          <div class="hmi"><span class="hml">Workshop Dates</span><span class="hmv">24 – 29 August 2026</span></div>
+          <div class="hmi"><span class="hml">Regional Coverage</span><span class="hmv">Asia, Europe & Australia</span></div>
+        </div>
+      </div>
+      <div class="hero-radar">
+        <svg width="100%" viewBox="0 0 320 320" role="img" aria-label="Animated sample governance maturity radar chart cycling through five tiers">
+          <g id="hr-grid"></g>
+          <polygon id="hr-poly" points="" fill="rgba(212,176,96,0.18)" stroke="#d4b060" stroke-width="2" stroke-linejoin="round"/>
+          <g id="hr-dots"></g>
+          <g id="hr-labels"></g>
+        </svg>
+        <div class="hero-radar-cap">
+          <span class="hero-radar-tier" id="hr-tier-label">Tier 1 · Reactive</span>
+          <span class="hero-radar-sub">Sample institutional governance profile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="logo-strip">
+  <div class="logo-strip-i">
+    <span class="funded-lbl">Supported by</span>
+    <a class="logo-block logo-link" href="https://asef.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit the Asia-Europe Foundation website">
+      <div class="logo-icon">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect width="26" height="26" rx="3" fill="#1e2d6b" opacity=".1"/><path d="M5 21L13 5L21 21H5Z" fill="#1e2d6b" opacity=".55"/><path d="M8 16h10" stroke="#1e2d6b" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div><div class="logo-name">ASEF</div><div class="logo-sub">Asia–Europe Foundation</div></div>
+    </a>
+    <div class="logo-sep"></div>
+    <a class="logo-block logo-link" href="https://www.asiaeurope4ai.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit the AE4AI Network website">
+      <div class="logo-icon">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect width="26" height="26" rx="3" fill="#0f5f5f" opacity=".1"/><circle cx="13" cy="13" r="6" stroke="#0f5f5f" stroke-width="1.4" opacity=".65"/><path d="M7 13h4M15 13h4M13 7v4M13 15v4" stroke="#0f5f5f" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div><div class="logo-name">AE4AI</div><div class="logo-sub">Asia–Europe for AI</div></div>
+    </a>
+    <div class="logo-sep"></div>
+    <a class="logo-link logo-link-text" href="https://asef.org/projects/asefinnolab7/" target="_blank" rel="noopener noreferrer" aria-label="Visit the official ASEFInnoLab7 project website">
+      <div class="logo-name">INNOLAB7</div><div class="logo-sub">Innovation Lab Programme, Cohort 7</div>
+    </a>
+  </div>
+</div>
+
+<!-- Mantra strip -->
+<div class="mantra-strip" style="background:linear-gradient(135deg,var(--navy) 0%,#2a3f95 100%);border-bottom:1px solid rgba(255,255,255,.08);padding:1rem 2rem">
+  <div class="mantra-strip-i" style="max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div class="mantra-copy" style="display:flex;align-items:center;gap:1.25rem">
+      <!-- Scales of justice icon -->
+      <div class="mantra-icon-large" style="width:44px;height:44px;border-radius:50%;background:rgba(212,176,96,.18);border:1.5px solid rgba(212,176,96,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4b060" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v18M5 6l7-3 7 3"/><path d="M3 9l4 8H3M17 9l4 8h-4"/><path d="M3 17h4M17 17h4"/><line x1="8" y1="21" x2="16" y2="21"/>
+        </svg>
+      </div>
+      <div>
+        <div class="mantra-label" style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(212,176,96,.65);margin-bottom:2px">Project Mantra</div>
+        <div class="mantra-quote" style="font-family:var(--fd);font-size:1.35rem;font-weight:400;font-style:italic;color:#f0d080;letter-spacing:.01em;line-height:1.1">&ldquo;Evidence over Opinion with Responsibility&rdquo;</div>
+      </div>
+    </div>
+    <div class="mantra-stats" style="display:flex;gap:2rem;flex-wrap:wrap">
+      <div class="mantra-stat" style="text-align:center">
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:400;color:#fff;line-height:1">6</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.07em;text-transform:uppercase;margin-top:2px">Domains</div>
+      </div>
+      <div class="mantra-stat" style="text-align:center">
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:400;color:#fff;line-height:1">5</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.07em;text-transform:uppercase;margin-top:2px">Maturity Tiers</div>
+      </div>
+      <div class="mantra-stat" style="text-align:center">
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:400;color:#fff;line-height:1">56</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.07em;text-transform:uppercase;margin-top:2px">Indicators</div>
+      </div>
+      <div class="mantra-stat" style="text-align:center">
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:400;color:#fff;line-height:1">3</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.07em;text-transform:uppercase;margin-top:2px">Regions</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end opening viewport -->
+
+<div class="sec" id="ov-about">
+  <div class="why-hdr-flex">
+    <div class="why-hdr-text">
+      <span class="ey">About the Project</span>
+      <h2 class="sh">Why institutional governance of GenAI cannot wait</h2>
+      <p class="slead" style="margin-bottom:0">Generative AI is reshaping higher education faster than policy can respond. This project delivers the first cross-regional, peer-validated maturity framework, grounded in evidence drawn from across Asia, Europe, and Australia, that gives institutions a principled instrument for governance self-assessment and strategic improvement.</p>
+    </div>
+    <div class="why-hdr-img"><svg width="100%" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+<line x1="40" y1="230" x2="330" y2="230" stroke="#9898b2" stroke-width="0.5" opacity="0.4"/>
+<line x1="40" y1="230" x2="40" y2="30" stroke="#9898b2" stroke-width="0.5" opacity="0.4"/>
+
+<path d="M40 210 C 130 195, 230 75, 320 45" fill="none" stroke="#D85A30" stroke-width="3" stroke-linecap="round"/>
+<path d="M40 218 C 150 214, 270 195, 320 172" fill="none" stroke="#0F6E56" stroke-width="3" stroke-linecap="round"/>
+
+<circle cx="320" cy="45" r="4" fill="#D85A30"/>
+<circle cx="320" cy="172" r="4" fill="#0F6E56"/>
+
+<line x1="320" y1="52" x2="320" y2="166" stroke="#9898b2" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+
+<text x="40" y="22" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#993C1D">GenAI capability</text>
+<text x="40" y="252" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#085041">Institutional policy</text>
+
+<text x="40" y="266" font-family="Inter, sans-serif" font-size="10" fill="#68688a">2022</text>
+<text x="320" y="266" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#68688a">2026</text>
+</svg>
+      <p style="font-size:10.5px;color:var(--ink-faint);font-style:italic;margin-top:.5rem;text-align:right;line-height:1.5">Source: Illustrative trend based on cross-regional<br>policy evidence synthesis (ASEF INNOLAB7, 2026)</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-h">Research Significance</div>
+    <div class="callout-t">This framework addresses a critical gap in the higher education governance literature. Unlike single-institution policy reviews or national regulatory surveys, the GenAI Governance Maturity Model synthesises comparative evidence across Asia, Europe, and Australia to produce a validated, sector-applicable instrument. Its five-tier continuum and six-domain scoring logic are designed to generate findings publishable in leading educational governance and technology policy journals. The model was developed through the ASEF INNOLAB7 programme and will be presented and piloted at the international workshop in Nottingham, UK, 24–29 August 2026.</div>
+  </div>
+
+  <div class="quad" style="margin-top:2rem">
+    <div class="qc"><div class="ql">Research Problem</div><div class="qt">Policy fragmentation at scale</div><div class="qb">Most institutions have issued one-off integrity guidance while teaching, research, equity, and privacy governance remain largely unaddressed. Responses are reactive, inconsistent, and invisible to most staff and students.</div></div>
+    <div class="qc"><div class="ql">Research Approach</div><div class="qt">Comparative evidence synthesis</div><div class="qb">Drawing on publicly available documentary evidence, including published institutional AI policies, governance frameworks, and official guidance documents from universities across Asia, Europe, and Australia, the model maps six policy domains across a five-tier maturity continuum with face-validated indicators.</div></div>
+    <div class="qc"><div class="ql">Research Output</div><div class="qt">Self-Assessment Tool</div><div class="qb">A scored, multi-domain self-assessment tool that produces an institutional governance profile, a maturity tier classification, and prioritised, domain-specific improvement recommendations.</div></div>
+    <div class="qc"><div class="ql">Research Impact</div><div class="qt">Cross-regional benchmarking</div><div class="qb">Aggregated institutional data from ASEF member countries contributes to an international benchmark dataset, enabling sector-level policy development across Asia and Europe and informing future comparative scholarship.</div></div>
+  </div>
+</div>
+
+<hr class="hr">
+
+<div class="sec" id="ov-framework">
+  <div class="two">
+    <div>
+      <span class="ey">Maturity Continuum</span>
+      <h2 class="sh">Five tiers, from reactive to leading</h2>
+      <p class="slead">Each tier describes a qualitatively distinct pattern of institutional governance, not merely a score threshold, but a recognisable state of coherence, coverage, and embedded capability.</p>
+      <div>
+        <div class="trow"><div class="tn t1c">1</div><div class="ti"><div class="tname">Reactive</div><div class="tdesc">No settled position; responses are incident-driven and fragmented</div></div><div class="tbar t1b" style="--bar:18"></div></div>
+        <div class="trow"><div class="tn t2c">2</div><div class="ti"><div class="tname">Emerging</div><div class="tdesc">Initial policies exist, concentrated in academic integrity only</div></div><div class="tbar t2b" style="--bar:38"></div></div>
+        <div class="trow"><div class="tn t3c">3</div><div class="ti"><div class="tname">Developing</div><div class="tdesc">Governance spans multiple domains; partial coordination underway</div></div><div class="tbar t3b" style="--bar:58"></div></div>
+        <div class="trow"><div class="tn t4c">4</div><div class="ti"><div class="tname">Coherent</div><div class="tdesc">Integrated, comprehensive governance with named accountability</div></div><div class="tbar t4b" style="--bar:78"></div></div>
+        <div class="trow"><div class="tn t5c">5</div><div class="ti"><div class="tname">Leading</div><div class="tdesc">Self-renewing governance; institution shapes sector practice</div></div><div class="tbar t5b" style="--bar:100"></div></div>
+      </div>
+      <button class="btnp" style="margin-top:1.5rem" onclick="showPage('p2')">Explore the full framework →</button>
+    </div>
+    <div>
+      <span class="ey">Six Policy Domains</span>
+      <h2 class="sh">The governance landscape</h2>
+      <p class="slead">Each domain is assessed through validated indicator questions scored 0–3. Domain totals aggregate to an institutional score on a 0–100 scale, mapped to a maturity tier.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.25rem">
+        <div style="background:var(--s2);border:1px solid var(--rule);border-radius:var(--r);padding:.85rem 1rem"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px">Teaching &amp; Learning</div><div style="font-size:11.5px;color:var(--ink-light)">Curriculum, practice, staff capability</div></div>
+        <div style="background:var(--s2);border:1px solid var(--rule);border-radius:var(--r);padding:.85rem 1rem"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px">Assessment &amp; Integrity</div><div style="font-size:11.5px;color:var(--ink-light)">Design, disclosure, misconduct</div></div>
+        <div style="background:var(--s2);border:1px solid var(--rule);border-radius:var(--r);padding:.85rem 1rem"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px">Research Ethics</div><div style="font-size:11.5px;color:var(--ink-light)">Authorship, data, integrity training</div></div>
+        <div style="background:var(--s2);border:1px solid var(--rule);border-radius:var(--r);padding:.85rem 1rem"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px">Equity &amp; Access</div><div style="font-size:11.5px;color:var(--ink-light)">Fairness, inclusion, digital access</div></div>
+        <div style="background:var(--s2);border:1px solid var(--rule);border-radius:var(--r);padding:.85rem 1rem"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px">Data Privacy</div><div style="font-size:11.5px;color:var(--ink-light)">Risk, procurement, security</div></div>
+        <div style="background:var(--s2);border:1px solid var(--rule);border-radius:var(--r);padding:.85rem 1rem"><div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:3px">Public Trust</div><div style="font-size:11.5px;color:var(--ink-light)">Transparency, accountability</div></div>
+      </div>
+      <div style="margin-top:.75rem;background:var(--navyL);border:1px solid var(--navy2);border-radius:var(--r);padding:.85rem 1rem;border-left:3px solid var(--navy)">
+        <div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px">+ Coherence Diagnostic (cross-cutting)</div>
+        <div style="font-size:11.5px;color:var(--ink-mid)">Assesses whether the six domains form an integrated whole, the binding constraint at Tier 3 and above. <a href="#" onclick="showPage('p2');setTimeout(()=>document.getElementById('coherence-detail').scrollIntoView({behavior:'smooth',block:'start'}),50);return false;" style="color:var(--navy2);font-weight:600;text-decoration:underline">See the Maturity Framework for details &rarr;</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="hr">
+
+<!-- HEI GUIDE -->
+<div class="guide-sec" id="ov-guide">
+  <div class="guide-i">
+    <span class="ey">Guide for Higher Education Institutions</span>
+    <h2 class="sh">How your institution can use this framework</h2>
+    <p class="slead">The GenAI Governance Maturity Model is designed for direct institutional application. Whether your institution is just beginning to respond to generative AI or already operating structured governance, this instrument provides a rigorous, externally validated diagnostic and a clear, evidenced pathway forward.</p>
+
+    <div class="gsteps">
+      <div class="gs">
+        <div class="gsn">01</div>
+        <div class="gst">Complete the Self-Assessment</div>
+        <div class="gsb">A designated governance lead, working group, or senior academic team completes the structured instrument across all six domains. Each indicator is rated 0–3 against a defined scale, anchored in institutional policy evidence drawn from comparable institutions across Asia and Europe.</div>
+        <div class="gsarr">→</div>
+      </div>
+      <div class="gs">
+        <div class="gsn">02</div>
+        <div class="gst">Receive Your Governance Profile</div>
+        <div class="gsb">The tool calculates domain-level scores, an aggregated institutional score on a 0–100 scale, and a Tier 1–5 maturity classification, accompanied by a radar visualisation of your governance footprint across all six policy domains.</div>
+        <div class="gsarr">→</div>
+      </div>
+      <div class="gs">
+        <div class="gsn">03</div>
+        <div class="gst">Prioritise Governance Action</div>
+        <div class="gsb">Domain scores reveal where governance is strong and where gaps persist. The coherence diagnostic identifies whether existing policies are integrated or siloed, frequently the binding constraint at Tier 3 and above. Targeted recommendations guide your next steps.</div>
+        <div class="gsarr">→</div>
+      </div>
+      <div class="gs">
+        <div class="gsn">04</div>
+        <div class="gst">Benchmark &amp; Contribute to Research</div>
+        <div class="gsb">Participating institutions contribute anonymised data to the cross-regional benchmark dataset assembled through ASEF INNOLAB7, enabling sector-level comparison across Asia and Europe, and becoming part of ongoing comparative scholarship.</div>
+      </div>
+    </div>
+
+    <div class="steps-deliver-heading">
+      <span class="steps-deliver-line"></span>
+      <h3 class="steps-deliver-title">What these steps deliver for your institution</h3>
+      <span class="steps-deliver-line"></span>
+    </div>
+
+    <div class="ben-grid" style="margin-top:3rem">
+      <div class="ben">
+        <div class="ben-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <div class="ben-t">Evidence-Based Policy Audit</div>
+        <div class="ben-b">Transform an informal policy review into a structured, evidence-referenced diagnostic that can be cited in institutional governance reporting, quality assurance submissions, and strategic planning documents.</div>
+      </div>
+      <div class="ben">
+        <div class="ben-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="ben-t">Strategic Roadmap to the Next Tier</div>
+        <div class="ben-b">Each maturity tier has a defined governance profile. The model translates your current assessment into a targeted, sequenced improvement agenda, from publishing principles (Tier 2) to embedding review cycles and contributing to sector benchmarking (Tier 5).</div>
+      </div>
+      <div class="ben">
+        <div class="ben-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="ben-t">Governance Communication to Stakeholders</div>
+        <div class="ben-b">The visual profile output provides an accessible representation of governance maturity suitable for governing boards, academic senates, student unions, and external quality agencies, making complex policy coherence visible and communicable.</div>
+      </div>
+      <div class="ben">
+        <div class="ben-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="ben-t">Track Institutional Progress Over Time</div>
+        <div class="ben-b">The instrument is designed for annual re-administration. Institutions can track tier advancement, demonstrate improvement to quality agencies and regulators, and align with evolving national and international AI governance requirements.</div>
+      </div>
+      <div class="ben">
+        <div class="ben-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <div class="ben-t">International Benchmarking Access</div>
+        <div class="ben-b">ASEF participating institutions receive access to the aggregate benchmark dataset, the first cross-regional comparison of GenAI governance maturity in higher education, enabling evidence-based peer comparison across Asia and Europe.</div>
+      </div>
+      <div class="ben">
+        <div class="ben-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="ben-t">Research Collaboration Pathway</div>
+        <div class="ben-b">Participating institutions join an active international research network with opportunities for co-authorship on comparative studies, joint grant applications, and contribution to follow-on scholarship across the ASEF network.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <p>GenAI Governance Maturity Model for Higher Education Institutions &nbsp;·&nbsp; ASEF INNOLAB7 &nbsp;·&nbsp; Nottingham, UK, 24–29 August 2026</p>
+  <p style="margin-top:5px">© 2026 Research Team. All rights reserved. &nbsp;·&nbsp; <a href="#">Contact the Research Team</a></p>
+</footer>
+</div><!-- end p1 -->
+
+<!-- ═══════ PAGE 4 — RESEARCH TEAM ═══════ -->
+<div class="page" id="p4">
+
+<!-- RESEARCH TEAM -->
+<div class="team-sec" id="ov-team">
+  <div class="team-i">
+    <div class="team-hdr-flex">
+      <div class="team-hdr-text">
+        <span class="team-ey">Research Team</span>
+        <h2 class="team-h">The scholars behind<br><em>this framework</em></h2>
+        <p class="team-intro">This project unites researchers from across Asia, Europe, and Australia, each contributing documented policy evidence from their institutional and national contexts. Their combined expertise spans educational governance, AI policy, academic integrity, research ethics, and higher education quality assurance, together mapping governance practices across Asia, Europe, and Australia to produce this cross-regional instrument.</p>
+      </div>
+      <div class="team-hdr-img"><svg width="100%" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<circle cx="130" cy="105" r="78" fill="none" stroke="rgba(138,106,26,.4)" stroke-width="1"/>
+<ellipse cx="130" cy="105" rx="78" ry="30" fill="none" stroke="rgba(30,45,107,.2)" stroke-width="1"/>
+<ellipse cx="130" cy="105" rx="40" ry="76" fill="none" stroke="rgba(30,45,107,.16)" stroke-width="1"/>
+<line x1="62" y1="70" x2="130" y2="105" stroke="rgba(138,106,26,.55)" stroke-width="1"/>
+<line x1="196" y1="62" x2="130" y2="105" stroke="rgba(138,106,26,.55)" stroke-width="1"/>
+<line x1="176" y1="160" x2="130" y2="105" stroke="rgba(138,106,26,.55)" stroke-width="1"/>
+<line x1="76" y1="152" x2="130" y2="105" stroke="rgba(138,106,26,.55)" stroke-width="1"/>
+<line x1="62" y1="70" x2="196" y2="62" stroke="rgba(30,45,107,.25)" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="196" y1="62" x2="176" y2="160" stroke="rgba(30,45,107,.25)" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="176" y1="160" x2="76" y2="152" stroke="rgba(30,45,107,.25)" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="76" y1="152" x2="62" y2="70" stroke="rgba(30,45,107,.25)" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="130" cy="105" r="7" fill="#8a6a1a"/>
+<circle cx="62" cy="70" r="5" fill="#1e2d6b"/>
+<circle cx="196" cy="62" r="5" fill="#1e2d6b"/>
+<circle cx="176" cy="160" r="5" fill="#1e2d6b"/>
+<circle cx="76" cy="152" r="5" fill="#1e2d6b"/>
+<text x="130" y="205" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#68688a" letter-spacing=".12em">AUSTRALIA · ASIA · EUROPE</text>
+</svg></div>
+    </div>
+
+    <div class="team-grid">
+
+      <!-- 1. SHALINKA - Project Leader -->
+      <div class="tcard leader">
+        <div class="tphoto"><img src="assets/team-1.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="tname">Shalinka Jayatilleke</div>
+        <span class="leader-badge" style="margin-top:.15rem;margin-bottom:.5rem">Project Leader</span>
+        <div class="tinst">La Trobe University<br>Australia</div>
+        <div class="tbio">Dr Shalinka Jayatilleke is a Senior Lecturer in AI and Analytics and a course coordinator at La Trobe University, Australia. Her work focuses on responsible and inclusive AI, generative AI governance, higher education transformation, and applied AI. She leads curriculum innovation, industry partnerships, and practical frameworks for ethical, future-ready teaching and research.</div>
+        <div class="tdtags"><span class="dtag">Project Direction</span><span class="dtag">Framework Design</span><span class="dtag">Cross-regional Synthesis</span></div>
+      </div>
+
+      <!-- 2. AKHTAR -->
+      <div class="tcard">
+        <div class="tphoto"><img src="assets/team-2.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="tname">Akhtar Jalbani</div>
+        <div class="trole">Project Member</div>
+        <div class="tinst">Holmesglen Institute<br>Australia</div>
+        <div class="tbio">Dr Akhtar Jalbani is a Senior Lecturer and researcher in the Faculty of Higher Education and Applied Research at Holmesglen Institute, Australia. His work focuses on cybersecurity, trustworthy computing, artificial intelligence, blockchain-based data provenance, and digital education, developing applied interdisciplinary initiatives that strengthen secure AI, collaborative learning, and sustainable, future-ready education.</div>
+        <div class="tdtags"><span class="dtag">Cybersecurity</span><span class="dtag">Trustworthy AI</span><span class="dtag">Blockchain Provenance</span></div>
+      </div>
+
+      <!-- 3. RASHIKALA -->
+      <div class="tcard">
+        <div class="tphoto"><img src="assets/team-3.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="tname">Rashikala Weerawarna</div>
+        <div class="trole">Project Member</div>
+        <div class="tinst">Holmesglen Institute<br>Australia</div>
+        <div class="tbio">Rashikala Weerawarna is a Senior Lecturer and researcher in the Faculty of Higher Education and Applied Research at Holmesglen Institute, Australia. Her work focuses on responsible AI, GenAI governance, applied AI in digital learning, secure educational technologies, and blockchain data provenance. She develops frameworks for ethical, future-ready education.</div>
+        <div class="tdtags"><span class="dtag">Responsible AI</span><span class="dtag">GenAI Governance</span><span class="dtag">Blockchain Provenance</span></div>
+      </div>
+
+      <!-- 4. ANDREA MASCOLO -->
+      <div class="tcard">
+        <div class="tphoto"><img src="assets/team-4.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="tname">Andrea Mascolo</div>
+        <div class="trole">Project Member</div>
+        <div class="tinst">European Institute for Medical Studies (EIMS)<br>Malta</div>
+        <div class="tbio">Prof. Andrea Mascolo, DDS, MSc (Oral Surgery), is Academic Director of the European Institute for Medical Studies (EIMS), Malta. His work focuses on AI governance in higher education, digital transformation, healthcare education, and translational educational innovation. Within ASEF INNOLAB7 he contributes comparative policy analysis and cross-regional governance framework development.</div>
+        <div class="tdtags"><span class="dtag">AI Governance</span><span class="dtag">Healthcare Education</span><span class="dtag">Comparative Policy</span></div>
+      </div>
+
+      <!-- 5. SUNYUB -->
+      <div class="tcard">
+        <div class="tphoto"><img src="assets/team-5.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="tname">Sunyub Kim</div>
+        <div class="trole">Project Member</div>
+        <div class="tinst">Science and Technology Policy Institute (STEPI)<br>South Korea</div>
+        <div class="tbio">Dr Sunyub Kim is an Associate Research Fellow at the Science and Technology Policy Institute (STEPI), South Korea. Holding a PhD from China, her expertise bridges international relations and science, technology, and innovation policy. Her work spans AI governance, economic security, and science diplomacy, including drafting Korean data governance guidelines for safe, inclusive AI.</div>
+        <div class="tdtags"><span class="dtag">AI Governance</span><span class="dtag">Data Governance</span><span class="dtag">Science Diplomacy</span></div>
+      </div>
+
+      <!-- 6. PLACEHOLDER -->
+      <div class="tcard">
+        <div class="tphoto"><img src="assets/team-6.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+        <div class="tname">Julija Mironova</div>
+        <div class="trole">Project Member</div>
+        <div class="tinst">Riga Nordic University<br>Latvia</div>
+        <div class="tbio">Julija Mironova is Director of the Business Administration in Tourism programme and a researcher at Riga Nordic University, Latvia. Her research covers financial literacy, sustainability, entrepreneurship, burnout in business, digital transformation, and artificial intelligence in education and business, with active contributions to international research on inclusive and sustainable economic development.</div>
+        <div class="tdtags"><span class="dtag">AI in Education</span><span class="dtag">Digital Transformation</span><span class="dtag">Sustainability</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<footer><p>GenAI Governance Maturity Model · ASEF INNOLAB7 · Nottingham, UK, 24–29 August 2026</p></footer>
+</div><!-- end p4 -->
+
+<!-- ═══════ PAGE 5: AI AUDITOR ═══════ -->
+<div class="page" id="p5">
+<div class="mm-hdr" id="auditor-top">
+  <div class="mm-hdr-i">
+    <div class="aud-hdr-flex">
+      <div class="aud-hdr-text">
+        <span class="ey">AI-Assisted Policy Audit</span>
+        <h2 class="sh">AI Auditor</h2>
+        <p style="font-size:15px;color:var(--ink-mid);max-width:760px;line-height:1.65">Provide your institution's GenAI policy documents, either by letting Claude discover them from the official website with your verification of every link, or by uploading files, and Claude will assess them against all 56 indicators of the maturity model. You then review and adjust every AI-assigned score before the final results, identical to the Self-Assessment output, are generated. Results include the full Excel export.</p>
+      </div>
+      <div class="aud-hdr-img"><svg width="100%" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A university atop an ascending five-tier maturity staircase, examined under a magnifying glass">
+<!-- tier staircase -->
+<rect x="10"  y="196" width="56" height="28" rx="3" fill="#e6e9f5" stroke="#9898c0" stroke-width="1"/>
+<rect x="66"  y="180" width="56" height="44" rx="3" fill="#d0e0f8" stroke="#5a88d0" stroke-width="1"/>
+<rect x="122" y="162" width="56" height="62" rx="3" fill="#d0ead8" stroke="#3a9a68" stroke-width="1"/>
+<rect x="178" y="142" width="56" height="82" rx="3" fill="#f0e4c0" stroke="#c09030" stroke-width="1"/>
+<rect x="234" y="120" width="56" height="104" rx="3" fill="#f8d0d8" stroke="#b03050" stroke-width="1"/>
+<text x="38"  y="214" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#4a4a6a">1</text>
+<text x="94"  y="205" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#1a3a7a">2</text>
+<text x="150" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#0a5a3a">3</text>
+<text x="206" y="186" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#6a4a08">4</text>
+<text x="262" y="175" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#7a1030">5</text>
+<!-- university building on the top tier -->
+<g>
+<rect x="238" y="88" width="48" height="32" fill="#1e2d6b"/>
+<rect x="243" y="94" width="7" height="26" fill="#f4f5fa"/>
+<rect x="254" y="94" width="7" height="26" fill="#f4f5fa"/>
+<rect x="265" y="94" width="7" height="26" fill="#f4f5fa"/>
+<rect x="276" y="94" width="7" height="26" fill="#f4f5fa"/>
+<polygon points="234,88 290,88 262,70" fill="#2a3d85"/>
+<rect x="235" y="85" width="54" height="4" fill="#d4b060"/>
+<line x1="262" y1="70" x2="262" y2="58" stroke="#8a6a1a" stroke-width="1.6"/>
+<polygon points="262,58 276,61 262,65" fill="#d4b060"/>
+</g>
+<!-- audit magnifying glass over the middle tiers -->
+<g>
+<circle cx="118" cy="112" r="34" fill="rgba(255,255,255,.35)" stroke="#1e2d6b" stroke-width="4"/>
+<line x1="143" y1="137" x2="168" y2="162" stroke="#1e2d6b" stroke-width="7" stroke-linecap="round"/>
+<path d="M100 118 l10 10 l20 -22" fill="none" stroke="#0f6e56" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<!-- ascent arrow -->
+<path d="M20 178 C 90 150, 180 96, 252 52" fill="none" stroke="#8a6a1a" stroke-width="1.4" stroke-dasharray="4 4" opacity=".6"/>
+<polygon points="252,52 242,54 248,61" fill="#8a6a1a" opacity=".7"/>
+</svg></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="aud-setup">
+  <div class="aud-steps">
+    <div class="aud-step"><span class="aud-step-n">1</span><span>Enter API key</span></div>
+    <div class="aud-step"><span class="aud-step-n">2</span><span>Provide documents</span></div>
+    <div class="aud-step"><span class="aud-step-n">3</span><span>AI analysis</span></div>
+    <div class="aud-step"><span class="aud-step-n">4</span><span>Review &amp; adjust</span></div>
+    <div class="aud-step"><span class="aud-step-n">5</span><span>Results &amp; Excel</span></div>
+  </div>
+
+  <div class="aud-card">
+    <div class="aud-card-h">Step 1 · Anthropic API key</div>
+    <p class="aud-note">The key is held only in this browser tab for this session. It is never stored, logged, or sent anywhere except directly to the Anthropic API. Obtain a key at console.anthropic.com.</p>
+    <input type="password" id="aud-key" class="aud-input" placeholder="sk-ant-..." autocomplete="off">
+  </div>
+
+  <div class="aud-card">
+    <div class="aud-card-h">Step 2, Option A · Discover documents from the institution's website</div>
+    <p class="aud-note">Enter the university's details and Claude will search the web for publicly available GenAI and AI governance documents, prioritising the official domain. You then verify each link before it is used. Nothing is analysed until you confirm the sources.</p>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem">
+      <input type="text" id="aud-uni" class="aud-input" style="max-width:260px" placeholder="University name">
+      <input type="text" id="aud-country" class="aud-input" style="max-width:180px" placeholder="Country">
+      <input type="text" id="aud-site" class="aud-input" style="max-width:260px" placeholder="Official website, e.g. https://uni.edu">
+    </div>
+    <button class="btno" onclick="audDiscover()" id="aud-discover-btn">Find policy documents</button>
+    <div id="aud-url-status" class="aud-note hidden" style="margin-top:.7rem"></div>
+    <div id="aud-url-list" class="aud-file-list"></div>
+    <div id="aud-url-confirm" class="hidden" style="margin-top:.7rem">
+      <button class="btnp" onclick="audConfirmUrls()">Confirm selected sources</button>
+      <span class="aud-note" style="display:inline;margin-left:.6rem">Open each link to check it is genuine and publicly accessible before confirming.</span>
+    </div>
+    <div id="aud-url-confirmed" class="aud-note hidden" style="margin-top:.6rem;color:#0f6e56;font-weight:600"></div>
+  </div>
+
+  <div class="aud-card">
+    <div class="aud-card-h">Step 2, Option B · Upload policy documents</div>
+    <p class="aud-note">Upload one or more documents: institutional GenAI policies, academic integrity procedures, governance frameworks, official guidance. Supported: PDF, DOCX, TXT/MD. Recommended total size under 15 MB. You can combine uploads with discovered links.</p>
+    <input type="file" id="aud-files" multiple accept=".pdf,.docx,.txt,.md" style="display:none" onchange="audAddFiles(this.files)">
+    <button class="btno" onclick="document.getElementById('aud-files').click()">Choose files…</button>
+    <div id="aud-file-list" class="aud-file-list"></div>
+  </div>
+
+  <div class="aud-card" style="text-align:center;border-style:dashed">
+    <button class="btnp" id="aud-run" onclick="audRun()" disabled>Analyse documents with Claude →</button>
+    <div id="aud-progress" class="aud-progress hidden">
+      <div class="aud-progress-bar"><div id="aud-progress-fill" class="aud-progress-fill"></div></div>
+      <div id="aud-progress-text" class="aud-note" style="margin-top:.5rem">Preparing…</div>
+    </div>
+    <div id="aud-error" class="aud-error hidden"></div>
+  </div>
+</div>
+
+<div class="sec hidden" id="aud-review">
+  <span class="ey">Step 4 · Review AI-Assigned Scores</span>
+  <h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:400;color:var(--ink);margin:.4rem 0 .6rem">Review and adjust before generating results</h3>
+  <p class="aud-note" style="max-width:760px">Claude has scored each indicator from the uploaded documents, citing the evidence it relied on. The AI assessment is advisory: you remain the auditor. Adjust any score by clicking a different value, then generate the results.</p>
+  <div id="aud-review-list"></div>
+  <div style="text-align:center;padding:1.5rem 0">
+    <button class="btnp" onclick="audFinalize()">Accept scores &amp; generate results →</button>
+    <button class="btno" onclick="audReset()" style="margin-left:.6rem">Start over</button>
+  </div>
+</div>
+<footer><p>GenAI Governance Maturity Model · ASEF INNOLAB7 · Nottingham, UK, 24–29 August 2026</p></footer>
+</div><!-- end p5 -->
+
+
+
+
+<!-- ═══════ PAGE 2 ═══════ -->
+<div class="page" id="p2">
+<div class="mm-hdr" id="framework-top">
+  <div class="mm-hdr-i">
+    <div class="mm-hdr-flex">
+      <div class="mm-hdr-text">
+        <span class="ey">Framework: Maturity Model</span>
+        <h2 class="sh">Five-Tier GenAI Governance Framework</h2>
+        <p style="font-size:15px;color:var(--ink-mid);max-width:700px;line-height:1.65">Each tier represents a qualitatively distinct institutional governance state. Select a tier to read its full definition, developed through comparative analysis of cross-regional institutional policy evidence.</p>
+      </div>
+      <div class="mm-hdr-img"><svg width="100%" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#9898b2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<rect x="40" y="170" width="108" height="40" rx="4" fill="#e6e9f5" stroke="#9898c0" stroke-width="0.5"/>
+<text x="94" y="194" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#4a4a6a">Reactive</text>
+
+<rect x="152" y="148" width="108" height="62" rx="4" fill="#d0e0f8" stroke="#5a88d0" stroke-width="0.5"/>
+<text x="206" y="172" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#1a3a7a">Emerging</text>
+
+<rect x="264" y="120" width="108" height="90" rx="4" fill="#d0ead8" stroke="#3a9a68" stroke-width="0.5"/>
+<text x="318" y="144" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#0a5a3a">Developing</text>
+
+<rect x="376" y="92" width="108" height="118" rx="4" fill="#f0e4c0" stroke="#c09030" stroke-width="0.5"/>
+<text x="430" y="116" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#6a4a08">Coherent</text>
+
+<rect x="488" y="64" width="108" height="146" rx="4" fill="#f8d0d8" stroke="#b03050" stroke-width="0.5"/>
+<text x="542" y="88" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#7a1030">Leading</text>
+
+<path d="M40 50 L 596 50" stroke="#9898b2" stroke-width="0.5" opacity="0.4" fill="none" marker-end="url(#arrow2)"/>
+<text x="318" y="34" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#68688a">Increasing governance maturity</text>
+</svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 1: MATURITY TIERS ── -->
+<div class="mf-section" id="mf-tiers">
+  <div class="mf-section-hdr">
+    <span class="mf-section-num">01</span>
+    <div>
+      <h3 class="mf-section-title">Maturity Tiers</h3>
+      <p class="mf-section-sub">Select any tier to expand its full definition. Multiple tiers can be open simultaneously for comparison.</p>
+    </div>
+  </div>
+  <div class="tier-accordion" id="tier-accordion">
+    <div class="tacc-item tacc-open" data-tier="1">
+      <button class="tacc-head" onclick="toggleTier(1)">
+        <span class="tacc-num t1c">1</span>
+        <span class="tacc-titles"><span class="tacc-name">Reactive</span><span class="tacc-tag">No coherent position; incident-driven</span></span>
+        <span class="tacc-range">0&ndash;20</span>
+        <span class="tacc-chevron">&#9662;</span>
+      </button>
+      <div class="tacc-body"><p>The institution has no settled position on generative AI. Responses are improvised by individual academics, schools, or committees as problems surface, typically an integrity incident or a tool that suddenly appears in classrooms. Guidance, where it exists, is informal, contradictory, and invisible to most staff and students. Across the six domains the dominant state is not in place. There is no named owner and no shared language; coherence is effectively absent. The institution is being acted upon by GenAI rather than governing it.</p></div>
+    </div>
+    <div class="tacc-item" data-tier="2">
+      <button class="tacc-head" onclick="toggleTier(2)">
+        <span class="tacc-num t2c">2</span>
+        <span class="tacc-titles"><span class="tacc-name">Emerging</span><span class="tacc-tag">Initial policies; narrow coverage</span></span>
+        <span class="tacc-range">21&ndash;40</span>
+        <span class="tacc-chevron">&#9662;</span>
+      </button>
+      <div class="tacc-body"><p>The institution has begun to respond deliberately, but in a concentrated and uneven way. Almost always the first movement is in Assessment and Academic Integrity, such as a disclosure rule or an updated misconduct procedure, while teaching, research, equity, privacy, and public trust remain largely untouched. Policies that exist tend to be statements of intent rather than embedded practice, and uptake varies widely by faculty. Ownership is partial or contested.</p></div>
+    </div>
+    <div class="tacc-item" data-tier="3">
+      <button class="tacc-head" onclick="toggleTier(3)">
+        <span class="tacc-num t3c">3</span>
+        <span class="tacc-titles"><span class="tacc-name">Developing</span><span class="tacc-tag">Multi-domain; partial coordination</span></span>
+        <span class="tacc-range">41&ndash;60</span>
+        <span class="tacc-chevron">&#9662;</span>
+      </button>
+      <div class="tacc-body"><p>GenAI governance now reaches across multiple domains rather than sitting in one. Good work exists in several places but is not yet pulled together. Terminology drifts between documents, messaging to staff and students is not fully aligned, and a governance body may exist without clear authority. Coherence becomes the binding constraint on further progress, as the challenge shifts from writing policies to connecting them.</p></div>
+    </div>
+    <div class="tacc-item" data-tier="4">
+      <button class="tacc-head" onclick="toggleTier(4)">
+        <span class="tacc-num t4c">4</span>
+        <span class="tacc-titles"><span class="tacc-name">Coherent</span><span class="tacc-tag">Integrated; named accountability</span></span>
+        <span class="tacc-range">61&ndash;80</span>
+        <span class="tacc-chevron">&#9662;</span>
+      </button>
+      <div class="tacc-body"><p>Coverage is comprehensive across all six domains, and the policies are integrated. There is a named senior accountable owner, an active governance committee with real remit, consistent terminology, aligned staff- and student-facing messaging, and a defined review cycle. GenAI governance is connected to broader institutional strategy. The institution is governing coherently, not merely complying.</p></div>
+    </div>
+    <div class="tacc-item" data-tier="5">
+      <button class="tacc-head" onclick="toggleTier(5)">
+        <span class="tacc-num t5c">5</span>
+        <span class="tacc-titles"><span class="tacc-name">Leading</span><span class="tacc-tag">Sector-shaping; self-renewing</span></span>
+        <span class="tacc-range">81&ndash;100</span>
+        <span class="tacc-chevron">&#9662;</span>
+      </button>
+      <div class="tacc-body"><p>Governance is whole-of-institution and self-renewing. Practices are embedded, reviewed on a defined cadence, audited, evidenced, and refreshed as tools and risks evolve. The institution co-designs with students, conducts equity and accessibility audits, reports publicly, and contributes to the wider sector. GenAI governance is treated as a living institutional capability rather than a finished document set.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: FRAMEWORK OVERVIEW ── -->
+<div class="mf-section mf-section-alt" id="mf-overview">
+  <div class="mf-section-hdr">
+    <span class="mf-section-num">02</span>
+    <div>
+      <h3 class="mf-section-title">Framework Overview</h3>
+      <p class="mf-section-sub">Visual overview of the five-tier GenAI governance maturity model, its six policy domains, and the relationships between tiers.</p>
+    </div>
+  </div>
+  <div class="mf-infog-wrap">
+    <div style="border:1px solid var(--rule);border-radius:var(--rl);overflow:hidden;box-shadow:0 4px 24px rgba(18,18,42,.07);background:var(--s2)">
+      <img src="assets/maturity-model-infographic.png" 
+           alt="GenAI Governance Maturity Model infographic showing six policy domains, five maturity tiers from Reactive to Leading, scoring logic, and coherence diagnostic"
+           style="width:100%;height:auto;display:block"/>
+      <div style="padding:1rem 1.5rem;border-top:1px solid var(--rule);background:var(--surface);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+    </div>
+    <div class="mf-infog-meta">
+      <div style="font-size:12px;color:var(--ink-light);font-style:italic;margin-bottom:.75rem">Fig. 1: GenAI Governance Maturity Model for Higher Education Institutions · ASEF INNOLAB7 · 2026</div>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <span class="mf-legend-dot" style="--dot:#a0a0c8">Tier 1–2 · Reactive–Emerging</span>
+        <span class="mf-legend-dot" style="--dot:#3a9a68">Tier 3 · Developing</span>
+        <span class="mf-legend-dot" style="--dot:#c09030">Tier 4 · Coherent</span>
+        <span class="mf-legend-dot" style="--dot:#b03050">Tier 5 · Leading</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: POLICY DOMAINS ── -->
+<div class="mf-section" id="mf-domains">
+  <div class="mf-section-hdr">
+    <span class="mf-section-num">03</span>
+    <div>
+      <h3 class="mf-section-title">Policy Domains</h3>
+      <p class="mf-section-sub">Six governance domains assessed across all tiers, plus a cross-cutting Coherence Diagnostic that measures how well your policies work together.</p>
+    </div>
+  </div>
+  <span class="ey">Policy Domain Attributes and Research-Attributed Indicators</span>
+  <h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:.35rem">Six domains, each with research-attributed indicators</h3>
+  <p style="font-size:13.5px;color:var(--ink-light);margin-bottom:0">Each indicator is scored 0–3 (Not in place / Partial / Substantially in place / Fully embedded). Attribution identifies the researcher and the source institution or country evidence base from which each indicator was developed.</p>
+
+  <div class="dgrid">
+    <div class="dcard">
+      <div class="dicon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+      <div class="dbadge">Domain 1</div>
+      <div class="dname">Teaching &amp; Learning</div>
+      <div class="ddesc">How GenAI is governed in curriculum design, classroom practice, and staff capability. Addresses AI literacy as a graduate attribute and the distinction between appropriate and inappropriate pedagogical use.</div>
+      <ul class="qlist">
+        <li>The institution has published principles governing GenAI use in teaching and learning</li>
+        <li>Course outlines specify the scope of permitted GenAI use, including any restriction or risk classification levels</li>
+        <li>Staff have access to professional development on GenAI pedagogy and are supported to experiment with AI-assisted teaching</li>
+        <li>Curriculum design addresses GenAI's impact on learning outcomes; AI literacy is an explicit graduate attribute</li>
+        <li>Students are trained to critically evaluate and verify AI-generated outputs rather than accept them passively</li>
+        <li>Guidance clearly distinguishes appropriate AI-assisted learning from inappropriate reliance on AI-generated content</li>
+      </ul>
+    </div>
+
+    <div class="dcard">
+      <div class="dicon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="dbadge">Domain 2</div>
+      <div class="dname">Assessment &amp; Academic Integrity</div>
+      <div class="ddesc">How GenAI is governed in assessment design, misconduct procedures, and student disclosure. Addresses detection approaches, marker capability, and consistency of rules across faculties and modes of delivery.</div>
+      <ul class="qlist">
+        <li>Clear, published rules govern GenAI use in all assessed work, applied consistently across schools and faculties</li>
+        <li>Students are required to disclose GenAI use in assignments and submissions via a defined declaration process</li>
+        <li>Assessment design has been reviewed to incorporate GenAI-resilient approaches across programmes</li>
+        <li>Academic misconduct procedures explicitly address GenAI, with a defined detection or verification approach</li>
+        <li>Markers and examiners receive guidance on assessing work where GenAI may have been used</li>
+        <li>Policies specify permissible AI-assisted activities and distinguish these from AI-generated replacement of student work</li>
+      </ul>
+    </div>
+
+    <div class="dcard">
+      <div class="dicon"><svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 006 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></svg></div>
+      <div class="dbadge">Domain 3</div>
+      <div class="dname">Research Ethics</div>
+      <div class="ddesc">How GenAI is governed in research design, data handling, authorship, and integrity training. Covers researcher disclosure of AI-assisted activities and compliance with external funder requirements.</div>
+      <ul class="qlist">
+        <li>Human research ethics processes explicitly address GenAI use in research design, data handling, and analysis</li>
+        <li>Researchers are required to disclose AI-assisted drafting, literature review, data analysis, and content generation</li>
+        <li>Institutional guidance covers authorship, attribution, accountability, and the limits of AI-generated research outputs</li>
+        <li>Research integrity training includes GenAI-specific modules; discipline-specific guidance is available</li>
+        <li>Compliance with external research funder requirements regarding AI use is explicitly addressed</li>
+        <li>GenAI governance in research is integrated with broader responsible AI and research ethics principles</li>
+      </ul>
+    </div>
+
+    <div class="dcard">
+      <div class="dicon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div class="dbadge">Domain 4</div>
+      <div class="dname">Student Support, Equity &amp; Access</div>
+      <div class="ddesc">How GenAI governance addresses fairness, access, and the needs of diverse cohorts, including EAL learners, students with limited digital fluency, and those unable to access commercial AI tools.</div>
+      <ul class="qlist">
+        <li>Institutional decisions on GenAI explicitly consider equitable access across diverse student cohorts</li>
+        <li>Guidance addresses disparities arising from paid versus free AI tool tiers and unequal prior digital competence</li>
+        <li>AI literacy support is embedded in student services and treated as part of educational inclusion policy</li>
+        <li>Assessment and grading guidance accounts for variations in student access to GenAI tools</li>
+        <li>Students who choose not to use AI tools are provided equivalent alternatives and are not disadvantaged</li>
+        <li>An equity audit of GenAI policies has been conducted, addressing EAL, international, and disadvantaged cohorts</li>
+      </ul>
+    </div>
+
+    <div class="dcard">
+      <div class="dicon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+      <div class="dbadge">Domain 5</div>
+      <div class="dname">Data Privacy &amp; Security</div>
+      <div class="ddesc">How institutional GenAI use protects data, manages risk, and maintains procurement and security standards, including GDPR compliance, data classification, and cybersecurity review of AI tools in use.</div>
+      <ul class="qlist">
+        <li>Privacy implications of GenAI use are documented; guidance covers GDPR or equivalent compliance requirements</li>
+        <li>Staff and students are advised not to input confidential or sensitive institutional data into public AI systems</li>
+        <li>Users are informed of risks related to data retention, third-party processing, and external AI service provider terms</li>
+        <li>An approved and prohibited GenAI tools register is maintained; data classification covers what may be entered into AI tools</li>
+        <li>Procurement prioritises contracted vendors or local sandboxes with data protection agreements over public AI accounts</li>
+        <li>A cybersecurity review of AI tools in use has been undertaken; records management addresses AI-generated content</li>
+      </ul>
+    </div>
+
+    <div class="dcard">
+      <div class="dicon"><svg viewBox="0 0 24 24"><path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg></div>
+      <div class="dbadge">Domain 6</div>
+      <div class="dname">Public Trust &amp; Transparency</div>
+      <div class="ddesc">How the institution demonstrates transparency, accountability, and stakeholder engagement on GenAI, including public reporting, student voice in governance, and defined accountability for AI-supported decisions.</div>
+      <ul class="qlist">
+        <li>The institution has published a substantive, publicly accessible statement on its GenAI governance position</li>
+        <li>Decision-making processes around GenAI policy are documented; community and student consultation informs governance</li>
+        <li>Transparency and disclosure principles are promoted when GenAI contributes to academic or institutional outputs</li>
+        <li>Named individuals or bodies hold defined accountability for GenAI-related decisions and errors arising from AI use</li>
+        <li>A formal recourse process exists for students or staff with grievances related to AI-assisted decisions</li>
+        <li>Annual reporting on GenAI governance progress is published; mechanisms exist for stakeholders to raise concerns</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="coherence-detail" style="margin-top:1.25rem;border:1px solid var(--navy2);border-radius:var(--rl);padding:1.6rem;background:var(--navyL);border-left:3px solid var(--navy)">
+    <div class="dbadge">Coherence Diagnostic: Cross-cutting</div>
+    <div class="dname" style="margin-top:.5rem">Coherence: Integration across all six domains</div>
+    <div class="ddesc" style="margin-top:.35rem">The Coherence Diagnostic is not a seventh domain scored numerically. It is a structural assessment of whether the six domains form an integrated, self-consistent governance framework. Coherence becomes the binding constraint at Tier 3: institutions may have good individual policies while failing to connect them. Key indicators: consistent terminology, cross-referencing policies, a named senior governance owner, an active institutional committee, a defined review cadence, and alignment with national regulatory frameworks.</div>
+    <ul class="qlist" style="margin-top:1rem">
+      <li>Policies in different domains cross-reference each other where relevant</li>
+      <li>Teaching, assessment, research, privacy and integrity policies present a consistent institutional GenAI position</li>
+      <li>GenAI governance is coordinated across multiple institutional functions rather than managed through isolated policies</li>
+      <li>Institutional AI policies are aligned with national regulatory frameworks and HE quality assurance requirements</li>
+      <li>AI governance documents demonstrate coherence between policy statements and operational educational practices</li>
+      <li>AI governance committees are structured with multi-disciplinary clusters to oversee holistic policy alignment</li>
+      <li>There is a named senior accountable owner for GenAI governance; a committee oversees GenAI institution-wide; messaging to staff and students is aligned</li>
+      <li>A review and update cycle for GenAI policies is defined and active; policies are integrated with broader institutional strategy</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── SECTION 4: SCORING & COHERENCE ── -->
+<div class="mf-section mf-section-alt" id="mf-scoring">
+  <div class="mf-section-hdr">
+    <span class="mf-section-num">04</span>
+    <div>
+      <h3 class="mf-section-title">Scoring &amp; Coherence</h3>
+      <p class="mf-section-sub">How domain scores combine into an institutional maturity score (0–100), and how the Coherence Diagnostic anchors overall classification.</p>
+    </div>
+  </div>
+  <div class="scorebox" style="margin-top:2.5rem">
+    <span class="ey" style="margin-bottom:.75rem;display:block">Scoring and Tier Classification Logic</span>
+    <p style="font-size:14px;color:var(--ink-mid);margin-bottom:1.25rem">Each indicator is scored 0–3. Domain raw scores are aggregated and converted to a 0–100 institutional scale, then mapped to the five-tier classification. The Coherence Diagnostic is evaluated qualitatively alongside the numeric score.</p>
+    <div class="srow"><span class="stier t1c">Tier 1 · Reactive</span><span class="srange">0 – 20</span><div class="sbarw"><div class="sbar t1b" style="width:20%"></div></div></div>
+    <div class="srow"><span class="stier t2c">Tier 2 · Emerging</span><span class="srange">21 – 40</span><div class="sbarw"><div class="sbar t2b" style="width:40%"></div></div></div>
+    <div class="srow"><span class="stier t3c">Tier 3 · Developing</span><span class="srange">41 – 60</span><div class="sbarw"><div class="sbar t3b" style="width:60%"></div></div></div>
+    <div class="srow"><span class="stier t4c">Tier 4 · Coherent</span><span class="srange">61 – 80</span><div class="sbarw"><div class="sbar t4b" style="width:80%"></div></div></div>
+    <div class="srow"><span class="stier t5c">Tier 5 · Leading</span><span class="srange">81 – 100</span><div class="sbarw"><div class="sbar t5b" style="width:100%"></div></div></div>
+    <div style="margin-top:1.25rem;padding:1rem;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);font-size:13px;color:var(--ink-mid)">
+      <strong>Worked example (Institution XYZ):</strong> Teaching &amp; Learning 2, Assessment 1, Research Ethics 3, Equity 1, Data Privacy 2, Public Trust 2 = 11 raw points from a representative subset. 11/50 × 100 = <strong>22 → Tier 2 (Emerging)</strong>. The Coherence Diagnostic indicates low coherence; policies that exist do not cross-reference each other, confirming the Tier 2 classification.
+    </div>
+  </div>
+  <div style="margin-top:2.5rem;text-align:center">
+    <button class="btnp" onclick="showPage('p3')">Proceed to Self-Assessment →</button>
+</div>
+
+
+  </div>
+</div>
+<footer><p>GenAI Governance Maturity Model · ASEF INNOLAB7 · Nottingham, UK, 24–29 August 2026</p></footer>
+</div><!-- end p2 -->
+
+</div><!-- end p2 -->
+
+<!-- ═══════ PAGE 3 ═══════ -->
+<div class="page" id="p3">
+<div id="assess-view">
+  <!-- Mobile section nav (shown on tablet/mobile instead of sidebar) -->
+  <div class="mobile-sec-nav" style="display:none;overflow-x:auto;border-bottom:1px solid var(--rule);background:var(--s2);padding:.6rem 1rem;gap:.4rem">
+    <div id="mob-sec-items" style="display:flex;gap:.4rem;min-width:max-content"></div>
+  </div>
+  <div class="alay">
+    <div class="aside">
+      <div class="aslbl">Assessment Sections</div>
+      <div id="aside-items"></div>
+      <div class="asprog">
+        <div class="aspl">Overall completion</div>
+        <div class="progbar"><div class="progfill" id="prog-fill" style="width:0%"></div></div>
+        <div class="progpct" id="prog-pct">0%</div>
+      </div>
+      <div class="sb-guide">
+        <strong>Rating guide</strong>
+        <span id="sb-rating-guide"></span>
+      </div>
+      <div class="sb-guide" style="margin-top:.6rem">
+        <strong>Tip</strong>
+        Rate based on documented evidence, not aspiration. If unsure, choose the lower score.
+      </div>
+    </div>
+    <div class="amain" id="amain"></div>
+  </div>
+</div>
+
+<div id="results-view" class="hidden">
+  <div class="res-hdr">
+    <div class="res-hdr-i">
+      <div class="res-ey">Governance Assessment: Results</div>
+      <h2 class="res-h">Institutional GenAI Governance Profile</h2>
+      <p class="res-s">Self-assessment across six policy domains with coherence diagnostic · ASEF INNOLAB7 Maturity Model · Nottingham 2026</p>
+    </div>
+  </div>
+  <div class="res-body">
+    <div class="sgrid">
+      <div class="scard"><div class="snum" id="r-score">—</div><div class="slbl">Overall Score (0–100)</div><div class="stier-badge" id="r-tier-badge">—</div></div>
+      <div class="scard"><div class="snum" id="r-strong">—</div><div class="slbl">Strongest Domain</div></div>
+      <div class="scard"><div class="snum" id="r-priority">—</div><div class="slbl">Priority for Development</div></div>
+      <div class="scard"><div class="snum">6</div><div class="slbl">Domains Assessed</div></div>
+    </div>
+
+    <div class="tier-pos">
+      <div class="tp-lbl">Maturity Tier: Current Classification</div>
+      <div class="tpips">
+        <div class="tpip" id="tp-1"></div><div class="tpip" id="tp-2"></div><div class="tpip" id="tp-3"></div><div class="tpip" id="tp-4"></div><div class="tpip" id="tp-5"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-faint)">
+        <span>1 · Reactive</span><span>2 · Emerging</span><span>3 · Developing</span><span>4 · Coherent</span><span>5 · Leading</span>
+      </div>
+      <p class="tp-desc" id="r-tier-desc">—</p>
+    </div>
+
+    <div class="rgrid">
+      <div class="ccrd">
+        <div class="ctit">Domain Scores: Percentage of Maximum</div>
+        <div id="d-bars"></div>
+      </div>
+      <div class="ccrd">
+        <div class="ctit">Governance Profile: Radar View</div>
+        <div class="radar-wrap"><canvas id="radar-c" role="img" aria-label="Radar chart of governance domain scores">Radar chart showing relative governance strength across six domains.</canvas></div>
+      </div>
+    </div>
+
+    <div class="ccrd" style="margin-top:1.1rem;border-left:4px solid var(--gold,#8a6a1a)">
+      <div class="ctit">Coherence Diagnostic (cross-cutting, not counted in the 0&ndash;100 score)</div>
+      <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin-top:.5rem">
+        <div style="font-family:var(--fd);font-size:2rem;color:var(--ink)" id="r-coh-pct">&ndash;</div>
+        <div id="r-coh-band" style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">&ndash;</div>
+        <div style="flex:1;min-width:220px">
+          <div class="dbwrap" style="max-width:none"><div class="db" id="r-coh-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+      <p id="r-coh-note" style="font-size:12px;color:var(--ink-light);line-height:1.6;margin:.7rem 0 0"></p>
+    </div>
+
+
+    <div class="ccrd" style="margin-bottom:1.5rem">
+      <div class="ctit">Full Domain Comparison: All Seven Dimensions Including Coherence</div>
+      <div style="position:relative;width:100%;height:260px"><canvas id="bar-c" role="img" aria-label="Bar chart of all domain scores">Bar chart of domain scores.</canvas></div>
+    </div>
+
+    <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1rem">Priority Recommendations for Governance Advancement</div>
+    <div id="recs"></div>
+
+    <div class="actbar">
+      <button class="btnp" onclick="window.print()">Export PDF / Print Report</button>
+      <button class="btnp" style="background:var(--teal)" onclick="exportExcel()">Export Excel (.xlsx)</button>
+      <button class="btno" onclick="resetA()">Clear Data &amp; Start New Assessment</button>
+      <button class="btno" onclick="showPage('p2')">Review Full Framework</button>
+    </div>
+  </div>
+</div>
+<footer style="margin-top:2rem"><p>GenAI Governance Maturity Model · ASEF INNOLAB7 · Nottingham, UK, 24–29 August 2026</p></footer>
+</div><!-- end p3 -->
+
+
+<button class="back-to-top" id="back-to-top" type="button" onclick="scrollPageTop()" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+</button>
+
+<!-- Third-party libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<!-- Application components: load order matters.
+     config.js is the single source of truth; edit it to change the model. -->
+<script src="js/config.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/assessment.js"></script>
+<script src="js/results.js"></script>
+<script src="js/auditor.js"></script>
+<script src="js/hero-radar.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -87,8 +87,41 @@ function showResults(){
 
   document.getElementById('assess-view').classList.add('hidden');
   document.getElementById('results-view').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'auto'});
+  armSurveyReveal();
   setTimeout(()=>{buildR(main);buildB(ds);},120);
 }
+
+/* The feedback panel is held back until the reader has worked through the
+   score, the charts, and the recommendations. It is revealed when the end of
+   the recommendations comes into view, so the results always come first. */
+let surveyObs=null;
+
+function revealSurvey(){
+  const s=document.getElementById('survey-cta');
+  if(!s)return;
+  if(surveyObs){surveyObs.disconnect();surveyObs=null;}
+  s.classList.remove('is-pending');
+}
+
+function armSurveyReveal(){
+  const s=document.getElementById('survey-cta');
+  const t=document.getElementById('survey-trigger');
+  if(!s)return;
+  s.classList.add('is-pending');
+  if(surveyObs){surveyObs.disconnect();surveyObs=null;}
+
+  if(!t||typeof IntersectionObserver==='undefined'){revealSurvey();return;}
+
+  surveyObs=new IntersectionObserver(entries=>{
+    if(entries.some(e=>e.isIntersecting))revealSurvey();
+  },{threshold:0});
+  surveyObs.observe(t);
+}
+
+// A printed or exported report should always carry the survey, whether or not
+// the reader scrolled that far on screen.
+window.addEventListener('beforeprint',revealSurvey);
 
 function exportExcel(){
   if(!lastResults||typeof XLSX==='undefined'){

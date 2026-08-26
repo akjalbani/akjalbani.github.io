@@ -84,6 +84,19 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);border-bo
 .hr{border:none;border-top:1px solid var(--rule)}
 
 /* Gold callout */
+/* Important Note: data handling and scope of use */
+.imp-note{background:var(--tealL);border:1px solid #9fc7c7;border-left:4px solid var(--teal);border-radius:var(--rl);padding:1.15rem 1.4rem}
+.imp-note-band{max-width:1140px;margin:1.6rem auto 0;padding:0 1.5rem}
+.imp-note-h{display:flex;align-items:center;gap:.5rem;font-family:var(--fb);font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+.imp-note-h svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.imp-note p{font-size:13.5px;line-height:1.68;color:var(--ink-mid);margin:0 0 .65rem}
+.imp-note p:last-child{margin-bottom:0}
+.imp-note strong{color:var(--ink);font-weight:600}
+@media(max-width:900px){
+  .imp-note-band{margin-top:1.1rem;padding:0 1rem}
+  .imp-note{padding:1rem 1.1rem}
+  .imp-note p{font-size:12.5px;line-height:1.62}
+}
 .callout{background:var(--goldL);border:1px solid var(--goldB);border-radius:var(--rl);padding:1.5rem 1.75rem;margin:2rem 0}
 .callout-h{font-family:var(--fd);font-size:1.1rem;color:var(--gold);margin-bottom:.5rem}
 .callout-t{font-size:14px;color:#5a4a10;line-height:1.65}
